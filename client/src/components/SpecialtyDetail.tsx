@@ -1,15 +1,17 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, Building2, Layers, ChevronRight, X } from "lucide-react";
+import { MapPin, Building2, Layers, ChevronRight, X, Map } from "lucide-react";
 import { MODULES, type Specialty } from "../../../shared/data";
+import { useState } from "react";
 
 interface SpecialtyDetailProps {
   specialty: Specialty | null;
   onClose: () => void;
+  onShowMap?: (specialty: Specialty) => void;
 }
 
-export default function SpecialtyDetail({ specialty, onClose }: SpecialtyDetailProps) {
+export default function SpecialtyDetail({ specialty, onClose, onShowMap }: SpecialtyDetailProps) {
   if (!specialty) return null;
 
   const module = MODULES.find((m) => m.id === specialty.module);
@@ -61,20 +63,32 @@ export default function SpecialtyDetail({ specialty, onClose }: SpecialtyDetailP
           <div className="space-y-2">
             <div className="text-sm font-semibold text-foreground">Ubicación</div>
             <div className="space-y-2">
-              <div className="flex items-center gap-3 p-3 bg-accent rounded-lg">
-                <MapPin className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                <div>
-                  <div className="text-sm font-medium text-foreground">{specialty.floor}</div>
-                  <div className="text-xs text-muted-foreground">Piso / Zona</div>
+              <button
+                onClick={() => onShowMap?.(specialty)}
+                className="flex items-center justify-between gap-3 p-3 bg-accent rounded-lg hover:bg-accent/80 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-3 flex-1">
+                  <MapPin className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                  <div className="text-left">
+                    <div className="text-sm font-medium text-foreground">{specialty.floor}</div>
+                    <div className="text-xs text-muted-foreground">Piso / Zona</div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3 p-3 bg-accent rounded-lg">
-                <Building2 className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                <div>
-                  <div className="text-sm font-medium text-foreground">Módulo {specialty.module}</div>
-                  <div className="text-xs text-muted-foreground">Sección del hospital</div>
+                <Map className="w-4 h-4 text-primary flex-shrink-0" />
+              </button>
+              <button
+                onClick={() => onShowMap?.(specialty)}
+                className="flex items-center justify-between gap-3 p-3 bg-accent rounded-lg hover:bg-accent/80 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-3 flex-1">
+                  <Building2 className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                  <div className="text-left">
+                    <div className="text-sm font-medium text-foreground">Módulo {specialty.module}</div>
+                    <div className="text-xs text-muted-foreground">Sección del hospital</div>
+                  </div>
                 </div>
-              </div>
+                <Map className="w-4 h-4 text-primary flex-shrink-0" />
+              </button>
             </div>
           </div>
 
@@ -99,14 +113,23 @@ export default function SpecialtyDetail({ specialty, onClose }: SpecialtyDetailP
             </div>
           )}
 
-          {/* Close Button */}
-          <Button
-            onClick={onClose}
-            variant="outline"
-            className="w-full"
-          >
-            Cerrar
-          </Button>
+          {/* Buttons */}
+          <div className="grid grid-cols-2 gap-3">
+            <Button
+              onClick={() => onShowMap?.(specialty)}
+              className="w-full bg-primary text-primary-foreground hover:opacity-90"
+            >
+              <Map className="w-4 h-4 mr-2" />
+              Ver Mapa
+            </Button>
+            <Button
+              onClick={onClose}
+              variant="outline"
+              className="w-full"
+            >
+              Cerrar
+            </Button>
+          </div>
         </div>
       </Card>
     </div>

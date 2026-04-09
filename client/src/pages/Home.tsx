@@ -10,6 +10,7 @@ import SpecialtyDetail from "@/components/SpecialtyDetail";
 import ModuleGrid from "@/components/ModuleGrid";
 import QuickAccess from "@/components/QuickAccess";
 import RecentSpecialties from "@/components/RecentSpecialties";
+import HospitalMapModal from "@/components/HospitalMapModal";
 import { MODULES, SPECIALTIES, type Specialty, type Module } from "../../../shared/data";
 
 export default function Home() {
@@ -17,6 +18,8 @@ export default function Home() {
   const [selectedModule, setSelectedModule] = useState<Module | null>(null);
   const [activeTab, setActiveTab] = useState("search");
   const [recentSpecialties, setRecentSpecialties] = useState<Specialty[]>([]);
+  const [showMapModal, setShowMapModal] = useState(false);
+  const [mapSpecialty, setMapSpecialty] = useState<Specialty | null>(null);
 
   const handleSelectSpecialty = (specialty: Specialty) => {
     setSelectedSpecialty(specialty);
@@ -24,6 +27,11 @@ export default function Home() {
       const filtered = prev.filter((s) => s.id !== specialty.id);
       return [specialty, ...filtered].slice(0, 5);
     });
+  };
+
+  const handleShowMap = (specialty: Specialty) => {
+    setMapSpecialty(specialty);
+    setShowMapModal(true);
   };
 
   return (
@@ -220,6 +228,17 @@ export default function Home() {
       <SpecialtyDetail
         specialty={selectedSpecialty}
         onClose={() => setSelectedSpecialty(null)}
+        onShowMap={handleShowMap}
+      />
+
+      {/* Hospital Map Modal */}
+      <HospitalMapModal
+        specialty={mapSpecialty}
+        isOpen={showMapModal}
+        onClose={() => {
+          setShowMapModal(false);
+          setMapSpecialty(null);
+        }}
       />
 
       {/* Module Detail Modal */}
