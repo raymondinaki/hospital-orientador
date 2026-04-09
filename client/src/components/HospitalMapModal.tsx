@@ -8,7 +8,21 @@ interface HospitalMapModalProps {
   onClose: () => void;
 }
 
-const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-original-5ZgaWzzLnaWqaCGQidZzjK.webp";
+const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-with-corridors-FMiX7k9a7K7CLrfNURWng2.webp";
+
+// Colores de módulos para resaltado
+const MODULE_COLORS: Record<string, string> = {
+  A: "#3B82F6", // Azul
+  B: "#8B5CF6", // Púrpura
+  C: "#06B6D4", // Cian
+  C2: "#06B6D4", // Cian
+  D: "#10B981", // Verde
+  D2: "#EF4444", // Rojo
+  E: "#EC4899", // Rosa
+  i1: "#F59E0B", // Ámbar
+  i2: "#3B82F6", // Azul
+  i3: "#D946EF", // Magenta
+};
 
 // Coordenadas aproximadas de cada módulo en el mapa (en porcentaje)
 const MODULE_POSITIONS: Record<string, { x: number; y: number; label: string }> = {
@@ -30,6 +44,7 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
   if (!isOpen || !specialty) return null;
 
   const position = MODULE_POSITIONS[specialty.module];
+  const moduleColor = MODULE_COLORS[specialty.module] || "#3B82F6";
 
   const handleZoom = (direction: "in" | "out") => {
     setZoom((prev) => {
@@ -42,16 +57,19 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 animate-in fade-in">
       <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex items-center justify-between">
+        <div 
+          className="px-6 py-4 flex items-center justify-between text-white"
+          style={{ backgroundColor: moduleColor }}
+        >
           <div>
-            <h2 className="text-xl font-bold text-white">{specialty.name}</h2>
-            <p className="text-blue-100 text-sm">{position?.label}</p>
+            <h2 className="text-xl font-bold">{specialty.name}</h2>
+            <p className="text-white/80 text-sm">{position?.label}</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-blue-500 rounded-lg transition-colors"
+            className="p-2 hover:bg-white/20 rounded-lg transition-colors"
           >
-            <X className="w-6 h-6 text-white" />
+            <X className="w-6 h-6" />
           </button>
         </div>
 
@@ -79,9 +97,15 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
               }}
             >
               {/* Animated Pulse */}
-              <div className="absolute inset-0 bg-red-500 rounded-full animate-pulse opacity-75" />
+              <div 
+                className="absolute inset-0 rounded-full animate-pulse opacity-75" 
+                style={{ backgroundColor: moduleColor }}
+              />
               {/* Marker Pin */}
-              <div className="absolute inset-0 bg-red-600 rounded-full border-4 border-white shadow-lg flex items-center justify-center">
+              <div 
+                className="absolute inset-0 rounded-full border-4 border-white shadow-lg flex items-center justify-center" 
+                style={{ backgroundColor: moduleColor }}
+              >
                 <div className="w-2 h-2 bg-white rounded-full" />
               </div>
             </div>
@@ -118,13 +142,19 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
               <div className="text-xs font-semibold text-slate-600 uppercase">Ubicación</div>
               <div className="text-sm font-medium text-slate-900">{specialty.floor}</div>
             </div>
-            <div>
-              <div className="text-xs font-semibold text-slate-600 uppercase">Módulo</div>
-              <div className="text-sm font-medium text-slate-900">{specialty.module}</div>
+            <div className="flex items-center gap-3">
+              <div>
+                <div className="text-xs font-semibold text-slate-600 uppercase">Módulo</div>
+                <div className="text-sm font-medium text-slate-900">{specialty.module}</div>
+              </div>
+              <div 
+                className="w-8 h-8 rounded border-2 border-slate-300 shadow-sm" 
+                style={{ backgroundColor: moduleColor }}
+              />
             </div>
           </div>
           <p className="text-xs text-slate-600 mt-3">
-            💡 Usa los botones de zoom para acercar o alejar el mapa. El marcador rojo indica la ubicación exacta de {specialty.name}.
+            💡 Usa los botones de zoom para acercar o alejar el mapa. El marcador resaltado en color indica la ubicación exacta de {specialty.name}.
           </p>
         </div>
       </div>
