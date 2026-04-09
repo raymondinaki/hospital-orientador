@@ -8,20 +8,20 @@ interface HospitalMapModalProps {
   onClose: () => void;
 }
 
-const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-hd-ECmykUqMvvnapXzynS4rvW.webp";
+const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-original-5ZgaWzzLnaWqaCGQidZzjK.webp";
 
 // Coordenadas aproximadas de cada módulo en el mapa (en porcentaje)
 const MODULE_POSITIONS: Record<string, { x: number; y: number; label: string }> = {
-  A: { x: 35, y: 12, label: "Módulo A" },
-  B: { x: 35, y: 22, label: "Módulo B" },
-  C: { x: 35, y: 32, label: "Módulo C" },
-  C2: { x: 35, y: 42, label: "Módulo C2" },
-  D: { x: 35, y: 58, label: "Módulo D" },
-  D2: { x: 35, y: 68, label: "Módulo D2" },
-  E: { x: 35, y: 78, label: "Módulo E" },
-  i1: { x: 75, y: 22, label: "Módulo i1" },
-  i2: { x: 75, y: 32, label: "Módulo i2" },
-  i3: { x: 75, y: 42, label: "Módulo i3" },
+  A: { x: 12, y: 25, label: "Módulo A" },
+  B: { x: 28, y: 25, label: "Módulo B" },
+  C: { x: 40, y: 25, label: "Módulo C" },
+  C2: { x: 85, y: 55, label: "Módulo C2" },
+  D: { x: 52, y: 25, label: "Módulo D" },
+  D2: { x: 50, y: 80, label: "Módulo D2" },
+  E: { x: 68, y: 25, label: "Módulo E" },
+  i1: { x: 80, y: 25, label: "Módulo i1" },
+  i2: { x: 88, y: 25, label: "Módulo i2" },
+  i3: { x: 96, y: 25, label: "Módulo i3" },
 };
 
 export default function HospitalMapModal({ specialty, isOpen, onClose }: HospitalMapModalProps) {
