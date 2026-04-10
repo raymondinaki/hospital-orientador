@@ -26,16 +26,16 @@ const MODULE_COLORS: Record<string, string> = {
 
 // Áreas de cada módulo en el mapa (en porcentaje: x, y, width, height)
 const MODULE_AREAS: Record<string, { x: number; y: number; width: number; height: number; label: string }> = {
-  A: { x: 42, y: 35, width: 12, height: 40, label: "Módulo A" },
-  B: { x: 25, y: 35, width: 12, height: 40, label: "Módulo B" },
-  C: { x: 75, y: 35, width: 15, height: 40, label: "Módulo C y C2" },
-  C2: { x: 75, y: 35, width: 15, height: 40, label: "Módulo C2" },
-  D: { x: 38, y: 35, width: 12, height: 40, label: "Módulo D" },
-  D2: { x: 20, y: 70, width: 25, height: 15, label: "Módulo D2" },
-  E: { x: 55, y: 35, width: 12, height: 40, label: "Módulo E" },
-  i1: { x: 5, y: 5, width: 15, height: 25, label: "Módulo i1" },
-  i2: { x: 22, y: 5, width: 15, height: 25, label: "Módulo i2" },
-  i3: { x: 5, y: 35, width: 15, height: 40, label: "Módulo i3" },
+  A: { x: 43, y: 38, width: 10, height: 38, label: "Módulo A" },
+  B: { x: 26, y: 38, width: 10, height: 38, label: "Módulo B" },
+  C: { x: 76, y: 38, width: 12, height: 38, label: "Módulo C y C2" },
+  C2: { x: 76, y: 38, width: 12, height: 38, label: "Módulo C2" },
+  D: { x: 36, y: 38, width: 10, height: 38, label: "Módulo D" },
+  D2: { x: 18, y: 72, width: 28, height: 13, label: "Módulo D2" },
+  E: { x: 55, y: 38, width: 10, height: 38, label: "Módulo E" },
+  i1: { x: 5, y: 8, width: 12, height: 22, label: "Módulo i1" },
+  i2: { x: 21, y: 8, width: 12, height: 22, label: "Módulo i2" },
+  i3: { x: 5, y: 38, width: 12, height: 38, label: "Módulo i3" },
 };
 
 export default function HospitalMapModal({ specialty, isOpen, onClose }: HospitalMapModalProps) {
@@ -87,14 +87,15 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
           {/* Module Area Highlight - Filled */}
           {area && (
             <div
-              className="absolute pointer-events-none"
+              className="absolute pointer-events-none transition-all duration-300"
               style={{
                 left: `${area.x}%`,
                 top: `${area.y}%`,
                 width: `${area.width}%`,
                 height: `${area.height}%`,
                 backgroundColor: moduleColor,
-                opacity: 0.4,
+                opacity: 0.35,
+                boxShadow: `inset 0 0 0 2px ${moduleColor}`,
               }}
             />
           )}
