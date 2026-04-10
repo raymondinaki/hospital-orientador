@@ -8,34 +8,34 @@ interface HospitalMapModalProps {
   onClose: () => void;
 }
 
-const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-original_34fcd8e7.jpg";
+const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-clean_9278f0da.jpg";
 
 // Colores de módulos para resaltado
 const MODULE_COLORS: Record<string, string> = {
-  A: "#FFFF00", // Amarillo
-  B: "#FFFF00", // Amarillo
-  C: "#FFFF00", // Amarillo
-  C2: "#FFFF00", // Amarillo
-  D: "#FFFF00", // Amarillo
-  D2: "#FFFF00", // Amarillo
-  E: "#FFFF00", // Amarillo
-  i1: "#FFFF00", // Amarillo
-  i2: "#FFFF00", // Amarillo
-  i3: "#FFFF00", // Amarillo
+  A: "#3B82F6", // Azul
+  B: "#8B5CF6", // Púrpura
+  C: "#06B6D4", // Cian
+  C2: "#06B6D4", // Cian
+  D: "#10B981", // Verde
+  D2: "#EF4444", // Rojo
+  E: "#EC4899", // Rosa
+  i1: "#F59E0B", // Ámbar
+  i2: "#3B82F6", // Azul
+  i3: "#D946EF", // Magenta
 };
 
 // Áreas de cada módulo en el mapa (en porcentaje: x, y, width, height)
 const MODULE_AREAS: Record<string, { x: number; y: number; width: number; height: number; label: string }> = {
-  A: { x: 8, y: 30, width: 15, height: 40, label: "Módulo A" },
-  B: { x: 20, y: 30, width: 15, height: 40, label: "Módulo B" },
-  C: { x: 32, y: 30, width: 15, height: 40, label: "Módulo C" },
-  C2: { x: 80, y: 50, width: 15, height: 35, label: "Módulo C2" },
-  D: { x: 44, y: 30, width: 15, height: 40, label: "Módulo D" },
-  D2: { x: 30, y: 75, width: 35, height: 20, label: "Módulo D2" },
-  E: { x: 56, y: 30, width: 15, height: 40, label: "Módulo E" },
-  i1: { x: 68, y: 30, width: 15, height: 40, label: "Módulo i1" },
-  i2: { x: 80, y: 30, width: 15, height: 40, label: "Módulo i2" },
-  i3: { x: 92, y: 30, width: 15, height: 40, label: "Módulo i3" },
+  A: { x: 42, y: 35, width: 12, height: 40, label: "Módulo A" },
+  B: { x: 25, y: 35, width: 12, height: 40, label: "Módulo B" },
+  C: { x: 75, y: 35, width: 15, height: 40, label: "Módulo C y C2" },
+  C2: { x: 75, y: 35, width: 15, height: 40, label: "Módulo C2" },
+  D: { x: 38, y: 35, width: 12, height: 40, label: "Módulo D" },
+  D2: { x: 20, y: 70, width: 25, height: 15, label: "Módulo D2" },
+  E: { x: 55, y: 35, width: 12, height: 40, label: "Módulo E" },
+  i1: { x: 5, y: 5, width: 15, height: 25, label: "Módulo i1" },
+  i2: { x: 22, y: 5, width: 15, height: 25, label: "Módulo i2" },
+  i3: { x: 5, y: 35, width: 15, height: 40, label: "Módulo i3" },
 };
 
 export default function HospitalMapModal({ specialty, isOpen, onClose }: HospitalMapModalProps) {
@@ -44,7 +44,7 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
   if (!isOpen || !specialty) return null;
 
   const area = MODULE_AREAS[specialty.module];
-  const moduleColor = MODULE_COLORS[specialty.module] || "#FFFF00";
+  const moduleColor = MODULE_COLORS[specialty.module] || "#3B82F6";
 
   const handleZoom = (direction: "in" | "out") => {
     setZoom((prev) => {
@@ -84,17 +84,17 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
             />
           </div>
 
-          {/* Module Area Highlight */}
+          {/* Module Area Highlight - Filled */}
           {area && (
             <div
-              className="absolute pointer-events-none border-4 border-solid animate-pulse"
+              className="absolute pointer-events-none"
               style={{
                 left: `${area.x}%`,
                 top: `${area.y}%`,
                 width: `${area.width}%`,
                 height: `${area.height}%`,
-                borderColor: moduleColor,
-                backgroundColor: moduleColor + "30",
+                backgroundColor: moduleColor,
+                opacity: 0.4,
               }}
             />
           )}
@@ -142,7 +142,7 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
             </div>
           </div>
           <p className="text-xs text-slate-600 mt-3">
-            💡 Usa los botones de zoom para acercar o alejar el mapa. El área resaltada en amarillo indica la ubicación exacta de {specialty.name}.
+            💡 Usa los botones de zoom para acercar o alejar el mapa. El área resaltada indica la ubicación exacta de {specialty.name}.
           </p>
         </div>
       </div>
