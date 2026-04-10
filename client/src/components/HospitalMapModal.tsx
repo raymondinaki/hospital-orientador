@@ -8,34 +8,34 @@ interface HospitalMapModalProps {
   onClose: () => void;
 }
 
-const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-original-exact-esQd6cvZ4nnrSQvqUxz5aY.webp";
+const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-original_34fcd8e7.jpg";
 
 // Colores de módulos para resaltado
 const MODULE_COLORS: Record<string, string> = {
-  A: "#3B82F6", // Azul
-  B: "#8B5CF6", // Púrpura
-  C: "#06B6D4", // Cian
-  C2: "#06B6D4", // Cian
-  D: "#10B981", // Verde
-  D2: "#EF4444", // Rojo
-  E: "#EC4899", // Rosa
-  i1: "#F59E0B", // Ámbar
-  i2: "#3B82F6", // Azul
-  i3: "#D946EF", // Magenta
+  A: "#FFFF00", // Amarillo
+  B: "#FFFF00", // Amarillo
+  C: "#FFFF00", // Amarillo
+  C2: "#FFFF00", // Amarillo
+  D: "#FFFF00", // Amarillo
+  D2: "#FFFF00", // Amarillo
+  E: "#FFFF00", // Amarillo
+  i1: "#FFFF00", // Amarillo
+  i2: "#FFFF00", // Amarillo
+  i3: "#FFFF00", // Amarillo
 };
 
 // Áreas de cada módulo en el mapa (en porcentaje: x, y, width, height)
 const MODULE_AREAS: Record<string, { x: number; y: number; width: number; height: number; label: string }> = {
-  A: { x: 5, y: 12, width: 12, height: 35, label: "Módulo A" },
-  B: { x: 18, y: 12, width: 12, height: 35, label: "Módulo B" },
-  C: { x: 31, y: 12, width: 12, height: 35, label: "Módulo C" },
-  C2: { x: 85, y: 50, width: 12, height: 35, label: "Módulo C2" },
-  D: { x: 44, y: 12, width: 12, height: 35, label: "Módulo D" },
-  D2: { x: 35, y: 75, width: 30, height: 20, label: "Módulo D2" },
-  E: { x: 57, y: 12, width: 12, height: 35, label: "Módulo E" },
-  i1: { x: 70, y: 12, width: 12, height: 35, label: "Módulo i1" },
-  i2: { x: 83, y: 12, width: 12, height: 35, label: "Módulo i2" },
-  i3: { x: 96, y: 12, width: 12, height: 35, label: "Módulo i3" },
+  A: { x: 8, y: 30, width: 15, height: 40, label: "Módulo A" },
+  B: { x: 20, y: 30, width: 15, height: 40, label: "Módulo B" },
+  C: { x: 32, y: 30, width: 15, height: 40, label: "Módulo C" },
+  C2: { x: 80, y: 50, width: 15, height: 35, label: "Módulo C2" },
+  D: { x: 44, y: 30, width: 15, height: 40, label: "Módulo D" },
+  D2: { x: 30, y: 75, width: 35, height: 20, label: "Módulo D2" },
+  E: { x: 56, y: 30, width: 15, height: 40, label: "Módulo E" },
+  i1: { x: 68, y: 30, width: 15, height: 40, label: "Módulo i1" },
+  i2: { x: 80, y: 30, width: 15, height: 40, label: "Módulo i2" },
+  i3: { x: 92, y: 30, width: 15, height: 40, label: "Módulo i3" },
 };
 
 export default function HospitalMapModal({ specialty, isOpen, onClose }: HospitalMapModalProps) {
@@ -44,7 +44,7 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
   if (!isOpen || !specialty) return null;
 
   const area = MODULE_AREAS[specialty.module];
-  const moduleColor = MODULE_COLORS[specialty.module] || "#3B82F6";
+  const moduleColor = MODULE_COLORS[specialty.module] || "#FFFF00";
 
   const handleZoom = (direction: "in" | "out") => {
     setZoom((prev) => {
@@ -57,17 +57,14 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 animate-in fade-in">
       <div className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden">
         {/* Header */}
-        <div 
-          className="px-6 py-4 flex items-center justify-between text-white"
-          style={{ backgroundColor: moduleColor }}
-        >
+        <div className="bg-slate-800 px-6 py-4 flex items-center justify-between text-white">
           <div>
             <h2 className="text-xl font-bold">{specialty.name}</h2>
-            <p className="text-white/80 text-sm">{area?.label}</p>
+            <p className="text-slate-300 text-sm">{area?.label}</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+            className="p-2 hover:bg-slate-700 rounded-lg transition-colors"
           >
             <X className="w-6 h-6" />
           </button>
@@ -90,14 +87,14 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
           {/* Module Area Highlight */}
           {area && (
             <div
-              className="absolute pointer-events-none border-4 border-dashed animate-pulse"
+              className="absolute pointer-events-none border-4 border-solid animate-pulse"
               style={{
                 left: `${area.x}%`,
                 top: `${area.y}%`,
                 width: `${area.width}%`,
                 height: `${area.height}%`,
                 borderColor: moduleColor,
-                backgroundColor: moduleColor + "20",
+                backgroundColor: moduleColor + "30",
               }}
             />
           )}
@@ -145,7 +142,7 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
             </div>
           </div>
           <p className="text-xs text-slate-600 mt-3">
-            💡 Usa los botones de zoom para acercar o alejar el mapa. El marcador resaltado en color indica la ubicación exacta de {specialty.name}.
+            💡 Usa los botones de zoom para acercar o alejar el mapa. El área resaltada en amarillo indica la ubicación exacta de {specialty.name}.
           </p>
         </div>
       </div>
