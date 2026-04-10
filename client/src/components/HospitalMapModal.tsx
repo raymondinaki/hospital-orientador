@@ -8,7 +8,7 @@ interface HospitalMapModalProps {
   onClose: () => void;
 }
 
-const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-exact-6tEQF7nH2hunHHrtpMJBTW.webp";
+const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-original-exact-esQd6cvZ4nnrSQvqUxz5aY.webp";
 
 // Colores de módulos para resaltado
 const MODULE_COLORS: Record<string, string> = {
