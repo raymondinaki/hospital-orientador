@@ -7,7 +7,7 @@ interface HospitalMapModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-final-GQrPih68LuKoLs3fe83DvE.webp";
+const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-clean_9278f0da.jpg";
 
 // Colores de módulos para resaltado (coinciden con MODULES en data.ts)
 const MODULE_COLORS: Record<string, string> = {
