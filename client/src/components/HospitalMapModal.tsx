@@ -8,7 +8,7 @@ interface HospitalMapModalProps {
   onClose: () => void;
 }
 
-const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-clean-YMUwc3GDnLMGbKj9sk9tJE.webp";
+const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-exact-6tEQF7nH2hunHHrtpMJBTW.webp";
 
 // Colores de módulos para resaltado
 const MODULE_COLORS: Record<string, string> = {
@@ -24,18 +24,18 @@ const MODULE_COLORS: Record<string, string> = {
   i3: "#D946EF", // Magenta
 };
 
-// Coordenadas aproximadas de cada módulo en el mapa (en porcentaje)
-const MODULE_POSITIONS: Record<string, { x: number; y: number; label: string }> = {
-  A: { x: 12, y: 25, label: "Módulo A" },
-  B: { x: 28, y: 25, label: "Módulo B" },
-  C: { x: 40, y: 25, label: "Módulo C" },
-  C2: { x: 85, y: 55, label: "Módulo C2" },
-  D: { x: 52, y: 25, label: "Módulo D" },
-  D2: { x: 50, y: 80, label: "Módulo D2" },
-  E: { x: 68, y: 25, label: "Módulo E" },
-  i1: { x: 80, y: 25, label: "Módulo i1" },
-  i2: { x: 88, y: 25, label: "Módulo i2" },
-  i3: { x: 96, y: 25, label: "Módulo i3" },
+// Áreas de cada módulo en el mapa (en porcentaje: x, y, width, height)
+const MODULE_AREAS: Record<string, { x: number; y: number; width: number; height: number; label: string }> = {
+  A: { x: 5, y: 12, width: 12, height: 35, label: "Módulo A" },
+  B: { x: 18, y: 12, width: 12, height: 35, label: "Módulo B" },
+  C: { x: 31, y: 12, width: 12, height: 35, label: "Módulo C" },
+  C2: { x: 85, y: 50, width: 12, height: 35, label: "Módulo C2" },
+  D: { x: 44, y: 12, width: 12, height: 35, label: "Módulo D" },
+  D2: { x: 35, y: 75, width: 30, height: 20, label: "Módulo D2" },
+  E: { x: 57, y: 12, width: 12, height: 35, label: "Módulo E" },
+  i1: { x: 70, y: 12, width: 12, height: 35, label: "Módulo i1" },
+  i2: { x: 83, y: 12, width: 12, height: 35, label: "Módulo i2" },
+  i3: { x: 96, y: 12, width: 12, height: 35, label: "Módulo i3" },
 };
 
 export default function HospitalMapModal({ specialty, isOpen, onClose }: HospitalMapModalProps) {
@@ -43,7 +43,7 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
 
   if (!isOpen || !specialty) return null;
 
-  const position = MODULE_POSITIONS[specialty.module];
+  const area = MODULE_AREAS[specialty.module];
   const moduleColor = MODULE_COLORS[specialty.module] || "#3B82F6";
 
   const handleZoom = (direction: "in" | "out") => {
@@ -63,7 +63,7 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
         >
           <div>
             <h2 className="text-xl font-bold">{specialty.name}</h2>
-            <p className="text-white/80 text-sm">{position?.label}</p>
+            <p className="text-white/80 text-sm">{area?.label}</p>
           </div>
           <button
             onClick={onClose}
@@ -87,28 +87,19 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
             />
           </div>
 
-          {/* Marker Overlay */}
-          {position && (
+          {/* Module Area Highlight */}
+          {area && (
             <div
-              className="absolute w-12 h-12 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+              className="absolute pointer-events-none border-4 border-dashed animate-pulse"
               style={{
-                left: `${position.x}%`,
-                top: `${position.y}%`,
+                left: `${area.x}%`,
+                top: `${area.y}%`,
+                width: `${area.width}%`,
+                height: `${area.height}%`,
+                borderColor: moduleColor,
+                backgroundColor: moduleColor + "20",
               }}
-            >
-              {/* Animated Pulse */}
-              <div 
-                className="absolute inset-0 rounded-full animate-pulse opacity-75" 
-                style={{ backgroundColor: moduleColor }}
-              />
-              {/* Marker Pin */}
-              <div 
-                className="absolute inset-0 rounded-full border-4 border-white shadow-lg flex items-center justify-center" 
-                style={{ backgroundColor: moduleColor }}
-              >
-                <div className="w-2 h-2 bg-white rounded-full" />
-              </div>
-            </div>
+            />
           )}
 
           {/* Zoom Controls */}
