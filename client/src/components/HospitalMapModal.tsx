@@ -25,16 +25,16 @@ const MODULE_COLORS: Record<string, string> = {
 
 // Áreas de cada módulo en el mapa (en porcentaje: x, y, width, height)
 const MODULE_AREAS: Record<string, { x: number; y: number; width: number; height: number; label: string }> = {
-  A: { x: 38, y: 28, width: 12, height: 35, label: "Módulo A" },
-  B: { x: 20, y: 28, width: 12, height: 35, label: "Módulo B" },
-  C: { x: 70, y: 28, width: 12, height: 35, label: "Módulo C y C2" },
-  C2: { x: 70, y: 28, width: 12, height: 35, label: "Módulo C2" },
-  D: { x: 28, y: 28, width: 12, height: 35, label: "Módulo D" },
-  D2: { x: 28, y: 62, width: 25, height: 15, label: "Módulo D2" },
-  E: { x: 48, y: 28, width: 12, height: 35, label: "Módulo E" },
-  i1: { x: 5, y: 5, width: 12, height: 25, label: "Módulo i1" },
-  i2: { x: 5, y: 35, width: 12, height: 25, label: "Módulo i2" },
-  i3: { x: 5, y: 65, width: 12, height: 25, label: "Módulo i3" },
+  A: { x: 42, y: 35, width: 8, height: 28, label: "Módulo A" },
+  B: { x: 24, y: 35, width: 8, height: 28, label: "Módulo B" },
+  C: { x: 72, y: 35, width: 10, height: 28, label: "Módulo C y C2" },
+  C2: { x: 72, y: 35, width: 10, height: 28, label: "Módulo C2" },
+  D: { x: 34, y: 35, width: 8, height: 28, label: "Módulo D" },
+  D2: { x: 30, y: 68, width: 20, height: 10, label: "Módulo D2" },
+  E: { x: 52, y: 35, width: 8, height: 28, label: "Módulo E" },
+  i1: { x: 6, y: 8, width: 10, height: 20, label: "Módulo i1" },
+  i2: { x: 6, y: 32, width: 10, height: 20, label: "Módulo i2" },
+  i3: { x: 6, y: 56, width: 10, height: 20, label: "Módulo i3" },
 };
 
 export default function HospitalMapModal({ specialty, isOpen, onClose }: HospitalMapModalProps) {
