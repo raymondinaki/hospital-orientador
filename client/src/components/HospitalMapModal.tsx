@@ -7,8 +7,7 @@ interface HospitalMapModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
-const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-clean_9278f0da.jpg";
+const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-final-GQrPih68LuKoLs3fe83DvE.webp";
 
 // Colores de módulos para resaltado (coinciden con MODULES en data.ts)
 const MODULE_COLORS: Record<string, string> = {
@@ -26,16 +25,16 @@ const MODULE_COLORS: Record<string, string> = {
 
 // Áreas de cada módulo en el mapa (en porcentaje: x, y, width, height)
 const MODULE_AREAS: Record<string, { x: number; y: number; width: number; height: number; label: string }> = {
-  A: { x: 45, y: 40, width: 8, height: 30, label: "Módulo A" },
-  B: { x: 28, y: 40, width: 8, height: 30, label: "Módulo B" },
-  C: { x: 32, y: 40, width: 8, height: 30, label: "Módulo C y C2" },
-  C2: { x: 72, y: 40, width: 12, height: 30, label: "Módulo C2" },
-  D: { x: 38, y: 40, width: 8, height: 30, label: "Módulo D" },
-  D2: { x: 18, y: 73, width: 28, height: 9, label: "Módulo D2" },
-  E: { x: 55, y: 40, width: 8, height: 30, label: "Módulo E" },
-  i1: { x: 5, y: 10, width: 10, height: 18, label: "Módulo i1" },
-  i2: { x: 20, y: 10, width: 10, height: 18, label: "Módulo i2" },
-  i3: { x: 5, y: 40, width: 10, height: 30, label: "Módulo i3" },
+  A: { x: 38, y: 28, width: 12, height: 35, label: "Módulo A" },
+  B: { x: 20, y: 28, width: 12, height: 35, label: "Módulo B" },
+  C: { x: 70, y: 28, width: 12, height: 35, label: "Módulo C y C2" },
+  C2: { x: 70, y: 28, width: 12, height: 35, label: "Módulo C2" },
+  D: { x: 28, y: 28, width: 12, height: 35, label: "Módulo D" },
+  D2: { x: 28, y: 62, width: 25, height: 15, label: "Módulo D2" },
+  E: { x: 48, y: 28, width: 12, height: 35, label: "Módulo E" },
+  i1: { x: 5, y: 5, width: 12, height: 25, label: "Módulo i1" },
+  i2: { x: 5, y: 35, width: 12, height: 25, label: "Módulo i2" },
+  i3: { x: 5, y: 65, width: 12, height: 25, label: "Módulo i3" },
 };
 
 export default function HospitalMapModal({ specialty, isOpen, onClose }: HospitalMapModalProps) {
