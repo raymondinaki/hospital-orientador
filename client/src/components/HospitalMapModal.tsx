@@ -10,18 +10,18 @@ interface HospitalMapModalProps {
 
 const MAP_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-map-clean_9278f0da.jpg";
 
-// Colores de módulos para resaltado
+// Colores de módulos para resaltado (coinciden con MODULES en data.ts)
 const MODULE_COLORS: Record<string, string> = {
-  A: "#3B82F6", // Azul
-  B: "#8B5CF6", // Púrpura
-  C: "#06B6D4", // Cian
-  C2: "#06B6D4", // Cian
-  D: "#10B981", // Verde
-  D2: "#EF4444", // Rojo
-  E: "#EC4899", // Rosa
-  i1: "#F59E0B", // Ámbar
-  i2: "#3B82F6", // Azul
-  i3: "#D946EF", // Magenta
+  A: "#2E86C1", // Azul
+  B: "#8E44AD", // Púrpura
+  C: "#CA6F1E", // Naranja
+  C2: "#C0392B", // Rojo
+  D: "#1E8449", // Verde
+  D2: "#117A65", // Verde oscuro
+  E: "#D4AC0D", // Oro
+  i1: "#6C3483", // Púrpura oscuro
+  i2: "#1A5276", // Azul oscuro
+  i3: "#922B21", // Rojo oscuro
 };
 
 // Áreas de cada módulo en el mapa (en porcentaje: x, y, width, height)
