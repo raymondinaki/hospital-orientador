@@ -1,0 +1,265 @@
+import { useEffect, useRef, useState } from "react";
+import { hospitalNodes } from "../../../shared/hospitalGraph";
+import { MODULES } from "../../../shared/data";
+
+interface DigitalFloorPlanProps {
+  highlightModuleId?: string;
+  width?: number;
+  height?: number;
+}
+
+export default function DigitalFloorPlan({
+  highlightModuleId,
+  width = 800,
+  height = 600,
+}: DigitalFloorPlanProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [zoom, setZoom] = useState(1);
+  const [panX, setPanX] = useState(0);
+  const [panY, setPanY] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+  // Encontrar el módulo a resaltar
+  const highlightedModule = highlightModuleId
+    ? hospitalNodes.find((node) => node.id === highlightModuleId)
+    : null;
+
+  // Obtener color del módulo
+  const getModuleColor = (moduleId: string): string => {
+    const module = MODULES.find((m) => m.id === moduleId);
+    return module?.color || "#3B82F6";
+  };
+
+  // Convertir coordenadas del JSON (0-100) a píxeles del canvas
+  const toCanvasX = (x: number): number => {
+    return (x / 100) * width * zoom + panX;
+  };
+
+  const toCanvasY = (y: number): number => {
+    return (y / 100) * height * zoom + panY;
+  };
+
+  const toCanvasWidth = (w: number): number => {
+    return (w / 100) * width * zoom;
+  };
+
+  const toCanvasHeight = (h: number): number => {
+    return (h / 100) * height * zoom;
+  };
+
+  // Dibujar el plano
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Limpiar canvas
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, width, height);
+
+    // Dibujar fondo con grid
+    ctx.strokeStyle = "#E5E7EB";
+    ctx.lineWidth = 0.5;
+    const gridSize = 10;
+    for (let i = 0; i <= width; i += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, height);
+      ctx.stroke();
+    }
+    for (let i = 0; i <= height; i += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(0, i);
+      ctx.lineTo(width, i);
+      ctx.stroke();
+    }
+
+    // Dibujar pasillo principal
+    const corridor = hospitalNodes.find((n) => n.id === "corridor_main");
+    if (corridor && corridor.width && corridor.height) {
+      const x = toCanvasX(corridor.x - corridor.width / 2);
+      const y = toCanvasY(corridor.y - corridor.height / 2);
+      const w = toCanvasWidth(corridor.width);
+      const h = toCanvasHeight(corridor.height);
+
+      ctx.fillStyle = "#FEF3C7";
+      ctx.fillRect(x, y, w, h);
+      ctx.strokeStyle = "#F59E0B";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x, y, w, h);
+    }
+
+    // Dibujar módulos
+    hospitalNodes.forEach((node) => {
+      if (node.type === "corridor") return;
+      if (!node.width || !node.height) return;
+
+      const x = toCanvasX(node.x - node.width / 2);
+      const y = toCanvasY(node.y - node.height / 2);
+      const w = toCanvasWidth(node.width);
+      const h = toCanvasHeight(node.height);
+
+      // Determinar color
+      let fillColor = "#E0E7FF";
+      let strokeColor = "#6366F1";
+      let strokeWidth = 1.5;
+
+      if (node.type === "module") {
+        // Buscar el módulo correspondiente en MODULES
+        const moduleData = MODULES.find((m) => {
+          // Mapear IDs del grafo a IDs de MODULES
+          const graphIdToModuleId: Record<string, string> = {
+            modulo_i1_sup: "i1",
+            modulo_d_sup: "D",
+            modulo_i3_inf: "i3",
+            modulo_i2_inf: "i2",
+            modulo_e_inf: "E",
+            modulo_inchijap_inf: "Inchijap",
+            modulo_b_inf: "B",
+            modulo_espera_inf: "Espera",
+            modulo_a_inf: "A",
+            modulo_sui_inf: "SUI",
+            modulo_recaudacion_inf: "Recaudacion",
+            modulo_esperac_inf: "EsperaC",
+            modulo_c_der: "C",
+          };
+          return m.id === graphIdToModuleId[node.id];
+        });
+
+        if (moduleData) {
+          fillColor = moduleData.color + "30"; // 30% opacity
+          strokeColor = moduleData.color;
+        }
+      } else if (node.type === "special_area") {
+        fillColor = "#DDD6FE";
+        strokeColor = "#8B5CF6";
+      }
+
+      // Resaltar si es el módulo seleccionado
+      if (highlightedModule && node.id === highlightedModule.id) {
+        fillColor = highlightedModule.type === "module" ? getModuleColor(node.id) + "60" : "#FBBF24";
+        strokeColor = highlightedModule.type === "module" ? getModuleColor(node.id) : "#F59E0B";
+        strokeWidth = 3;
+      }
+
+      // Dibujar rectángulo del módulo
+      ctx.fillStyle = fillColor;
+      ctx.fillRect(x, y, w, h);
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = strokeWidth;
+      ctx.strokeRect(x, y, w, h);
+
+      // Dibujar etiqueta del módulo
+      ctx.fillStyle = "#1F2937";
+      ctx.font = `bold ${Math.max(10, 12 * zoom)}px Arial`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      // Truncar nombre si es muy largo
+      let displayName = node.name;
+      if (displayName.length > 15) {
+        displayName = displayName.substring(0, 12) + "...";
+      }
+
+      ctx.fillText(displayName, x + w / 2, y + h / 2);
+    });
+
+    // Dibujar información de zoom
+    ctx.fillStyle = "#6B7280";
+    ctx.font = "12px Arial";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.fillText(`Zoom: ${Math.round(zoom * 100)}%`, 10, 10);
+  }, [zoom, panX, panY, width, height, highlightModuleId]);
+
+  // Manejo de mouse para pan y zoom
+  const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - panX, y: e.clientY - panY });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!isDragging) return;
+    setPanX(e.clientX - dragStart.x);
+    setPanY(e.clientY - dragStart.y);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleWheel = (e: React.WheelEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    const newZoom = Math.max(0.5, Math.min(3, zoom * delta));
+    setZoom(newZoom);
+  };
+
+  const handleReset = () => {
+    setZoom(1);
+    setPanX(0);
+    setPanY(0);
+  };
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="relative bg-white border-2 border-slate-200 rounded-lg overflow-hidden">
+        <canvas
+          ref={canvasRef}
+          width={width}
+          height={height}
+          className="cursor-grab active:cursor-grabbing w-full"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          onWheel={handleWheel}
+        />
+      </div>
+
+      {/* Controles */}
+      <div className="flex gap-2 justify-center">
+        <button
+          onClick={() => setZoom((z) => Math.min(3, z * 1.2))}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          + Zoom
+        </button>
+        <button
+          onClick={() => setZoom((z) => Math.max(0.5, z / 1.2))}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          − Zoom
+        </button>
+        <button
+          onClick={handleReset}
+          className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+        >
+          Restablecer
+        </button>
+      </div>
+
+      {/* Leyenda */}
+      <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+        <p className="text-sm font-semibold text-slate-900 mb-2">Leyenda:</p>
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-yellow-100 border-2 border-amber-500" />
+            <span>Pasillo Principal</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-indigo-100 border-2 border-indigo-600" />
+            <span>Módulos</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-purple-100 border-2 border-purple-600" />
+            <span>Áreas Especiales</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
