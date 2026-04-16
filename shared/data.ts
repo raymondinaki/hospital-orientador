@@ -91,6 +91,21 @@ export const SPECIALTIES: Specialty[] = [
   { id: "hemato-adult", name: "Hematología Adulto", module: "i3", floor: "2do piso" },
 ];
 
+// Coordenadas calibradas para el mapa a escala del primer piso
+// Basadas en el plano de MyMap.pdf
+export const MODULE_COORDINATES: Record<string, { x: number; y: number }> = {
+  A: { x: 100, y: 350 },
+  B: { x: 200, y: 350 },
+  C: { x: 350, y: 400 },
+  C2: { x: 500, y: 400 },
+  D: { x: 650, y: 350 },
+  D2: { x: 300, y: 200 },
+  E: { x: 550, y: 300 },
+  i1: { x: 700, y: 300 },
+  i2: { x: 150, y: 150 },
+  i3: { x: 400, y: 150 },
+};
+
 export const MODULES: Module[] = [
   {
     id: "A",

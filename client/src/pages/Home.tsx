@@ -47,6 +47,12 @@ export default function Home() {
           <p className="text-lg text-slate-600">
             Herramienta diseñada para orientadores: busca, localiza y accede a la información de todas las especialidades del hospital en segundos.
           </p>
+          <div className="pt-4">
+            <a href="/navigation" className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+              <MapPin className="w-5 h-5" />
+              Ver Navegación Interactiva
+            </a>
+          </div>
         </div>
       </section>
 
