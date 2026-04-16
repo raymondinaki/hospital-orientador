@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import InteractiveMapNavigator from "@/components/InteractiveMapNavigator";
 import Three3DNavigator from "@/components/Three3DNavigator";
+import Three3DNavigatorAdvanced from "@/components/Three3DNavigatorAdvanced";
 import { SPECIALTIES, MODULES, MODULE_COORDINATES } from "@/../../shared/data";
 import { MapPin, Navigation as NavigationIcon, Box } from "lucide-react";
 
@@ -21,6 +22,7 @@ export default function Navigation() {
   const [filteredStart, setFilteredStart] = useState<typeof SPECIALTIES>([]);
   const [filteredEnd, setFilteredEnd] = useState<typeof SPECIALTIES>([]);
   const [view3D, setView3D] = useState(false);
+  const [view3DAdvanced, setView3DAdvanced] = useState(false);
   const [selectedStartModule, setSelectedStartModule] = useState<string | undefined>();
   const [selectedEndSpecialty, setSelectedEndSpecialty] = useState<any>(null);
 
@@ -198,12 +200,32 @@ export default function Navigation() {
                 <Box className="w-4 h-4" />
                 {view3D ? "Vista 2D" : "Vista 3D"}
               </Button>
+              <Button
+                className="w-full bg-purple-600 hover:bg-purple-700 flex items-center gap-2"
+                onClick={() => setView3DAdvanced(!view3DAdvanced)}
+                disabled={!startPoint || !endPoint}
+              >
+                <Box className="w-4 h-4" />
+                {view3DAdvanced ? "Cerrar 3D" : "Vista 3D Avanzada"}
+              </Button>
             </div>
           </div>
 
           {/* Mapa interactivo */}
           <div className="lg:col-span-3">
-            {view3D ? (
+            {view3DAdvanced ? (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Navegación 3D Avanzada</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Three3DNavigatorAdvanced
+                    startModuleId={selectedStartModule}
+                    endModuleId={selectedEndSpecialty?.module}
+                  />
+                </CardContent>
+              </Card>
+            ) : view3D ? (
               <Three3DNavigator
                 origin={selectedStartModule}
                 destination={selectedEndSpecialty}
