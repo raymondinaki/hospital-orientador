@@ -129,8 +129,8 @@ export default function DigitalFloorPlan({
       const isSelected = selectedModule && getModuleFromNodeId(node.id) === selectedModule;
 
       // Color del módulo
-      const moduleId = getModuleFromNodeId(node.id);
-      let fillColor = getModuleColor(moduleId || "");
+      const nodeModuleId = getModuleFromNodeId(node.id);
+      let fillColor = getModuleColor(nodeModuleId || "");
 
       if (isHighlighted) {
         fillColor = "#3B82F6";
@@ -156,15 +156,18 @@ export default function DigitalFloorPlan({
         toCanvasHeight((node.height || 10) as number)
       );
 
-      // Etiqueta del módulo
+      // Etiqueta del módulo con letra
       const labelX = toCanvasX(node.x + (node.width || 10) / 2);
       const labelY = toCanvasY(node.y + (node.height || 10) / 2);
-      const fontSize = Math.max(10, 12 * zoom);
+      const fontSize = Math.max(14, 16 * zoom);
       ctx.font = `bold ${fontSize}px Arial`;
-      ctx.fillStyle = "#1F2937";
+      ctx.fillStyle = isHighlighted || isSelected ? "#FFFFFF" : "#1F2937";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText(node.id.replace("modulo_", "").replace(/_/g, " ").toUpperCase(), labelX, labelY);
+      // Dibujar la letra del módulo
+      if (nodeModuleId) {
+        ctx.fillText(nodeModuleId.toUpperCase(), labelX, labelY);
+      }
     });
 
     // Leyenda
