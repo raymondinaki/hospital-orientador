@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Search, Layers, Info, MapPin, Building2, Clock, X } from "lucide-react";
+import { Search, Layers, Info, MapPin, Building2, Clock, X, AlertTriangle } from "lucide-react";
 import Header from "@/components/Header";
 import SpecialtySearch from "@/components/SpecialtySearch";
 import SpecialtyDetail from "@/components/SpecialtyDetail";
@@ -11,6 +11,7 @@ import ModuleGrid from "@/components/ModuleGrid";
 import QuickAccess from "@/components/QuickAccess";
 import RecentSpecialties from "@/components/RecentSpecialties";
 import HospitalMapModal from "@/components/HospitalMapModal";
+import EmergencyPlanModal from "@/components/EmergencyPlanModal";
 import { MODULES, SPECIALTIES, type Specialty, type Module } from "../../../shared/data";
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
   const [recentSpecialties, setRecentSpecialties] = useState<Specialty[]>([]);
   const [showMapModal, setShowMapModal] = useState(false);
   const [mapSpecialty, setMapSpecialty] = useState<Specialty | null>(null);
+  const [showEmergencyPlan, setShowEmergencyPlan] = useState(false);
 
   const handleSelectSpecialty = (specialty: Specialty) => {
     setSelectedSpecialty(specialty);
@@ -47,11 +49,15 @@ export default function Home() {
           <p className="text-lg text-slate-600">
             Herramienta diseñada para orientadores: busca, localiza y accede a la información de todas las especialidades del hospital en segundos.
           </p>
-          <div className="pt-4">
+          <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
             <a href="/navigation" className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
               <MapPin className="w-5 h-5" />
               Ver Navegación Interactiva
             </a>
+            <button onClick={() => setShowEmergencyPlan(true)} className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium">
+              <AlertTriangle className="w-5 h-5" />
+              Plan de Emergencia
+            </button>
           </div>
         </div>
       </section>
@@ -245,6 +251,12 @@ export default function Home() {
           setShowMapModal(false);
           setMapSpecialty(null);
         }}
+      />
+
+      {/* Emergency Plan Modal */}
+      <EmergencyPlanModal
+        isOpen={showEmergencyPlan}
+        onClose={() => setShowEmergencyPlan(false)}
       />
 
       {/* Module Detail Modal */}
