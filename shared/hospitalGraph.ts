@@ -50,9 +50,9 @@ export const hospitalNodes: Node[] = [
     name: 'Pasillo Principal',
     type: 'corridor',
     x: 50,
-    y: 50,
+    y: 47,
     width: 90,
-    height: 6,
+    height: 2,
     floor: '1er piso',
     description: 'Pasillo central principal del hospital'
   },
@@ -63,9 +63,9 @@ export const hospitalNodes: Node[] = [
     name: 'Módulo i1',
     type: 'module',
     x: 10,
-    y: 27,
+    y: 20,
     width: 10,
-    height: 32,
+    height: 26,
     floor: '1er piso',
     description: 'Módulo i1 - 1er piso - Arriba del pasillo'
   },
@@ -74,9 +74,9 @@ export const hospitalNodes: Node[] = [
     name: 'Módulo D',
     type: 'module',
     x: 22,
-    y: 27,
+    y: 20,
     width: 10,
-    height: 32,
+    height: 26,
     floor: '1er piso',
     description: 'Módulo D - 1er piso - Arriba del pasillo'
   },
@@ -85,22 +85,22 @@ export const hospitalNodes: Node[] = [
     name: 'Neuro Infantil',
     type: 'special_area',
     x: 75,
-    y: 12,
+    y: 15,
     width: 12,
     height: 12,
     floor: '1er piso',
     description: 'Neuro Infantil - Arriba del pasillo'
   },
 
-  // MÓDULOS ABAJO DEL PASILLO (y=56 a y=90)
+  // MÓDULOS ABAJO DEL PASILLO (y=49 a y=85)
   {
     id: 'modulo_i3_inf',
     name: 'Módulo i3',
     type: 'module',
     x: 4,
-    y: 73,
+    y: 49,
     width: 8,
-    height: 28,
+    height: 26,
     floor: '1er piso',
     description: 'Módulo i3 - 1er piso - Abajo del pasillo'
   },
@@ -109,9 +109,9 @@ export const hospitalNodes: Node[] = [
     name: 'Módulo i2',
     type: 'module',
     x: 14,
-    y: 73,
+    y: 49,
     width: 8,
-    height: 28,
+    height: 26,
     floor: '1er piso',
     description: 'Módulo i2 - 1er piso - Abajo del pasillo'
   },
@@ -120,9 +120,9 @@ export const hospitalNodes: Node[] = [
     name: 'Módulo E',
     type: 'module',
     x: 24,
-    y: 73,
+    y: 49,
     width: 8,
-    height: 28,
+    height: 26,
     floor: '1er piso',
     description: 'Módulo E - 1er piso - Abajo del pasillo'
   },
@@ -131,9 +131,9 @@ export const hospitalNodes: Node[] = [
     name: 'Inchijap',
     type: 'special_area',
     x: 34,
-    y: 73,
+    y: 49,
     width: 8,
-    height: 28,
+    height: 26,
     floor: '1er piso',
     description: 'Inchijap - Abajo del pasillo'
   },
@@ -142,9 +142,9 @@ export const hospitalNodes: Node[] = [
     name: 'Módulo B',
     type: 'module',
     x: 44,
-    y: 73,
+    y: 49,
     width: 8,
-    height: 28,
+    height: 26,
     floor: '1er piso',
     description: 'Módulo B - 1er piso - Abajo del pasillo'
   },
@@ -153,9 +153,9 @@ export const hospitalNodes: Node[] = [
     name: 'Sala de Espera',
     type: 'special_area',
     x: 54,
-    y: 73,
+    y: 49,
     width: 8,
-    height: 28,
+    height: 26,
     floor: '1er piso',
     description: 'Sala de Espera - Abajo del pasillo'
   },
@@ -164,9 +164,9 @@ export const hospitalNodes: Node[] = [
     name: 'Módulo A',
     type: 'module',
     x: 64,
-    y: 73,
+    y: 49,
     width: 8,
-    height: 28,
+    height: 26,
     floor: '1er piso',
     description: 'Módulo A - 1er piso - Abajo del pasillo'
   },
@@ -175,9 +175,9 @@ export const hospitalNodes: Node[] = [
     name: 'SUI',
     type: 'special_area',
     x: 74,
-    y: 73,
+    y: 49,
     width: 4,
-    height: 28,
+    height: 26,
     floor: '1er piso',
     description: 'SUI - Servicio de Urgencias Integrado - Abajo del pasillo'
   },
@@ -186,9 +186,9 @@ export const hospitalNodes: Node[] = [
     name: 'Recaudación',
     type: 'special_area',
     x: 80,
-    y: 68,
+    y: 50,
     width: 6,
-    height: 18,
+    height: 14,
     floor: '1er piso',
     description: 'Recaudación - Abajo del pasillo'
   },
@@ -197,9 +197,9 @@ export const hospitalNodes: Node[] = [
     name: 'Espera C',
     type: 'special_area',
     x: 88,
-    y: 73,
+    y: 49,
     width: 8,
-    height: 28,
+    height: 26,
     floor: '1er piso',
     description: 'Espera C - Abajo del pasillo'
   },
@@ -210,9 +210,9 @@ export const hospitalNodes: Node[] = [
     name: 'Módulo C y C2',
     type: 'module',
     x: 88,
-    y: 40,
+    y: 20,
     width: 8,
-    height: 50,
+    height: 55,
     floor: '1er piso',
     description: 'Módulo C y C2 - Lado derecho'
   }
@@ -253,7 +253,7 @@ export const hospitalGraph: HospitalGraph = {
   mainCorridor: {
     startX: 5,
     endX: 95,
-    y: 50
+    y: 47
   }
 };
 
