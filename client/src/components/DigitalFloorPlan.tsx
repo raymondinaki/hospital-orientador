@@ -236,7 +236,7 @@ export default function DigitalFloorPlan({
     }
   };
 
-  // Manejo de arrastre (pan)
+  // Manejo de arrastre (pan) - Mouse
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     setIsDragging(true);
     setDragStart({ x: e.clientX - panX, y: e.clientY - panY });
@@ -250,6 +250,26 @@ export default function DigitalFloorPlan({
   };
 
   const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Manejo de arrastre (pan) - Touch
+  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (e.touches.length === 1) {
+      setIsDragging(true);
+      setDragStart({ x: e.touches[0].clientX - panX, y: e.touches[0].clientY - panY });
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (isDragging && e.touches.length === 1) {
+      e.preventDefault();
+      setPanX(e.touches[0].clientX - dragStart.x);
+      setPanY(e.touches[0].clientY - dragStart.y);
+    }
+  };
+
+  const handleTouchEnd = () => {
     setIsDragging(false);
   };
 
@@ -301,8 +321,12 @@ export default function DigitalFloorPlan({
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
           onWheel={handleWheel}
-          className="w-full h-auto cursor-grab active:cursor-grabbing"
+          className="w-full h-auto cursor-grab active:cursor-grabbing touch-none"
+          style={{ touchAction: 'none' }}
         />
 
         {/* Controles de zoom */}
