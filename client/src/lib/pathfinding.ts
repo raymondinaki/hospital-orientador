@@ -1,106 +1,82 @@
 /**
  * Algoritmo de enrutamiento A* para encontrar rutas realistas respetando pasillos
+ * Basado en el grafo espacial real del Hospital Clínico San Borja Arriarán
  */
 
-interface Node {
+import { hospitalGraph, getNodeById, getConnectedEdges, calculateDistance } from "@shared/hospitalGraph";
+
+interface PathNode {
+  nodeId: string;
   x: number;
   y: number;
   g: number; // Costo desde el inicio
   h: number; // Heurística (distancia estimada al destino)
   f: number; // g + h
-  parent: Node | null;
+  parent: PathNode | null;
 }
 
-interface PathPoint {
+export interface PathPoint {
   x: number;
   y: number;
+  nodeId?: string;
 }
 
-// Definir pasillos principales del hospital (áreas de circulación permitida)
-// Estos son rectángulos que representan pasillos y espacios abiertos
-export const CORRIDORS: Array<{ x: number; y: number; width: number; height: number }> = [
-  // Pasillo central horizontal
-  { x: 50, y: 350, width: 750, height: 80 },
-  // Pasillo vertical izquierdo
-  { x: 50, y: 150, width: 100, height: 280 },
-  // Pasillo vertical derecho
-  { x: 700, y: 200, width: 100, height: 350 },
-  // Pasillo superior
-  { x: 150, y: 100, width: 600, height: 100 },
-  // Conexiones entre pasillos
-  { x: 250, y: 200, width: 80, height: 180 },
-  { x: 500, y: 250, width: 80, height: 150 },
-];
-
-// Función para verificar si un punto está dentro de un pasillo
-function isInCorridor(x: number, y: number): boolean {
-  return CORRIDORS.some(
-    (corridor) =>
-      x >= corridor.x &&
-      x <= corridor.x + corridor.width &&
-      y >= corridor.y &&
-      y <= corridor.y + corridor.height
-  );
-}
-
-// Función para calcular distancia euclidiana
+/**
+ * Función para calcular distancia euclidiana entre dos puntos
+ */
 function heuristic(a: PathPoint, b: PathPoint): number {
   const dx = a.x - b.x;
   const dy = a.y - b.y;
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-// Función para obtener vecinos válidos
-function getNeighbors(node: Node, stepSize: number = 20): Node[] {
-  const neighbors: Node[] = [];
-  const directions = [
-    { dx: stepSize, dy: 0 },
-    { dx: -stepSize, dy: 0 },
-    { dx: 0, dy: stepSize },
-    { dx: 0, dy: -stepSize },
-    { dx: stepSize, dy: stepSize },
-    { dx: -stepSize, dy: stepSize },
-    { dx: stepSize, dy: -stepSize },
-    { dx: -stepSize, dy: -stepSize },
-  ];
-
-  for (const dir of directions) {
-    const newX = node.x + dir.dx;
-    const newY = node.y + dir.dy;
-
-    if (isInCorridor(newX, newY)) {
-      neighbors.push({
-        x: newX,
-        y: newY,
-        g: 0,
-        h: 0,
-        f: 0,
-        parent: null,
-      });
-    }
-  }
-
-  return neighbors;
+/**
+ * Función para verificar si un punto está dentro del área del hospital
+ */
+function isValidPoint(x: number, y: number): boolean {
+  // Validar que el punto esté dentro de los límites del hospital
+  return x >= 0 && x <= 100 && y >= -50 && y <= 50;
 }
 
-// Algoritmo A* para encontrar la ruta más corta
-export function findPath(start: PathPoint, end: PathPoint): PathPoint[] {
-  const openSet: Node[] = [];
-  const closedSet: Set<string> = new Set();
+/**
+ * Algoritmo A* para encontrar la ruta más corta respetando la geometría del pasillo
+ */
+export function findPath(startNodeId: string, endNodeId: string): PathPoint[] {
+  const startNode = getNodeById(startNodeId);
+  const endNode = getNodeById(endNodeId);
 
-  const startNode: Node = {
-    x: start.x,
-    y: start.y,
+  if (!startNode || !endNode) {
+    console.error("Nodo de inicio o fin no encontrado");
+    return [];
+  }
+
+  // Si es el mismo nodo, retornar ruta directa
+  if (startNodeId === endNodeId) {
+    return [{ x: startNode.x, y: startNode.y, nodeId: startNodeId }];
+  }
+
+  const openSet: PathNode[] = [];
+  const closedSet: Set<string> = new Set();
+  const gScore: Map<string, number> = new Map();
+  const cameFrom: Map<string, PathNode | null> = new Map();
+
+  // Nodo inicial
+  const startPathNode: PathNode = {
+    nodeId: startNodeId,
+    x: startNode.x,
+    y: startNode.y,
     g: 0,
-    h: heuristic(start, end),
-    f: heuristic(start, end),
+    h: heuristic({ x: startNode.x, y: startNode.y }, { x: endNode.x, y: endNode.y }),
+    f: 0,
     parent: null,
   };
 
-  openSet.push(startNode);
+  startPathNode.f = startPathNode.g + startPathNode.h;
+  openSet.push(startPathNode);
+  gScore.set(startNodeId, 0);
 
   while (openSet.length > 0) {
-    // Encontrar el nodo con menor f
+    // Encontrar nodo con menor f en openSet
     let current = openSet[0];
     let currentIndex = 0;
 
@@ -112,12 +88,12 @@ export function findPath(start: PathPoint, end: PathPoint): PathPoint[] {
     }
 
     // Si llegamos al destino, reconstruir la ruta
-    if (heuristic({ x: current.x, y: current.y }, end) < 30) {
+    if (current.nodeId === endNodeId) {
       const path: PathPoint[] = [];
-      let node: Node | null = current;
+      let node: PathNode | null = current;
 
-      while (node) {
-        path.unshift({ x: node.x, y: node.y });
+      while (node !== null) {
+        path.unshift({ x: node.x, y: node.y, nodeId: node.nodeId });
         node = node.parent;
       }
 
@@ -125,65 +101,137 @@ export function findPath(start: PathPoint, end: PathPoint): PathPoint[] {
     }
 
     openSet.splice(currentIndex, 1);
-    closedSet.add(`${current.x},${current.y}`);
+    closedSet.add(current.nodeId);
 
     // Explorar vecinos
-    const neighbors = getNeighbors(current);
+    const edges = getConnectedEdges(current.nodeId);
 
-    for (const neighbor of neighbors) {
-      const key = `${neighbor.x},${neighbor.y}`;
+    for (const edge of edges) {
+      const neighborNodeId = edge.from === current.nodeId ? edge.to : edge.from;
 
-      if (closedSet.has(key)) continue;
+      if (closedSet.has(neighborNodeId)) {
+        continue;
+      }
 
-      const g = current.g + heuristic({ x: current.x, y: current.y }, neighbor);
-      const h = heuristic(neighbor, end);
-      const f = g + h;
+      const neighborNode = getNodeById(neighborNodeId);
+      if (!neighborNode) continue;
 
-      let existingNode = openSet.find((n) => n.x === neighbor.x && n.y === neighbor.y);
+      // Calcular distancia entre nodos
+      const distance = calculateDistance(
+        { x: current.x, y: current.y, id: current.nodeId, name: "", type: "module" },
+        neighborNode
+      );
 
-      if (!existingNode) {
-        neighbor.g = g;
-        neighbor.h = h;
-        neighbor.f = f;
-        neighbor.parent = current;
-        openSet.push(neighbor);
-      } else if (g < existingNode.g) {
-        existingNode.g = g;
-        existingNode.f = g + existingNode.h;
-        existingNode.parent = current;
+      const tentativeGScore = (gScore.get(current.nodeId) || 0) + distance;
+
+      // Si este camino es mejor que el anterior
+      if (!gScore.has(neighborNodeId) || tentativeGScore < gScore.get(neighborNodeId)!) {
+        gScore.set(neighborNodeId, tentativeGScore);
+
+        const hScore = heuristic(
+          { x: neighborNode.x, y: neighborNode.y },
+          { x: endNode.x, y: endNode.y }
+        );
+
+        const neighborPathNode: PathNode = {
+          nodeId: neighborNodeId,
+          x: neighborNode.x,
+          y: neighborNode.y,
+          g: tentativeGScore,
+          h: hScore,
+          f: tentativeGScore + hScore,
+          parent: current,
+        };
+
+        // Verificar si el nodo ya está en openSet
+        const existingIndex = openSet.findIndex((n) => n.nodeId === neighborNodeId);
+        if (existingIndex === -1) {
+          openSet.push(neighborPathNode);
+        } else if (neighborPathNode.f < openSet[existingIndex].f) {
+          openSet[existingIndex] = neighborPathNode;
+        }
       }
     }
   }
 
-  // Si no se encuentra ruta, retornar línea recta como fallback
-  return [start, end];
+  // No se encontró ruta
+  console.warn("No se encontró ruta entre los nodos");
+  return [];
 }
 
-// Función para suavizar la ruta (reducir puntos innecesarios)
-export function smoothPath(path: PathPoint[]): PathPoint[] {
-  if (path.length <= 2) return path;
+/**
+ * Función para obtener puntos interpolados entre dos nodos para suavizar la ruta
+ */
+export function smoothPath(path: PathPoint[], steps: number = 5): PathPoint[] {
+  if (path.length < 2) return path;
 
-  const smoothed: PathPoint[] = [path[0]];
+  const smoothed: PathPoint[] = [];
 
-  for (let i = 1; i < path.length - 1; i++) {
-    const prev = path[i - 1];
+  for (let i = 0; i < path.length - 1; i++) {
     const current = path[i];
     const next = path[i + 1];
 
-    // Calcular si el punto actual es necesario
-    const dx1 = current.x - prev.x;
-    const dy1 = current.y - prev.y;
-    const dx2 = next.x - current.x;
-    const dy2 = next.y - current.y;
+    smoothed.push(current);
 
-    const angle = Math.atan2(dy1, dx1) - Math.atan2(dy2, dx2);
+    // Interpolar puntos entre nodos
+    for (let j = 1; j < steps; j++) {
+      const t = j / steps;
+      const x = current.x + (next.x - current.x) * t;
+      const y = current.y + (next.y - current.y) * t;
 
-    // Si el ángulo es significativo, mantener el punto
-    if (Math.abs(angle) > 0.1) {
-      smoothed.push(current);
+      // Verificar que el punto interpolado sea válido
+      if (isValidPoint(x, y)) {
+        smoothed.push({ x, y });
+      }
     }
   }
 
+  // Agregar el último punto
   smoothed.push(path[path.length - 1]);
+
   return smoothed;
+}
+
+/**
+ * Función para obtener instrucciones de navegación basadas en la ruta
+ */
+export function getNavigationInstructions(path: PathPoint[]): string[] {
+  const instructions: string[] = [];
+
+  if (path.length < 2) {
+    return ["Ya estás en el destino"];
+  }
+
+  for (let i = 0; i < path.length - 1; i++) {
+    const current = path[i];
+    const next = path[i + 1];
+
+    // Calcular ángulo de dirección
+    const dx = next.x - current.x;
+    const dy = next.y - current.y;
+    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+    // Normalizar ángulo a 0-360
+    const normalizedAngle = (angle + 360) % 360;
+
+    // Determinar dirección
+    let direction = "";
+    if (normalizedAngle < 45 || normalizedAngle > 315) {
+      direction = "hacia la derecha";
+    } else if (normalizedAngle < 135) {
+      direction = "hacia arriba";
+    } else if (normalizedAngle < 225) {
+      direction = "hacia la izquierda";
+    } else {
+      direction = "hacia abajo";
+    }
+
+    // Calcular distancia
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const distanceText = distance > 50 ? "bastante" : distance > 30 ? "un poco" : "muy poco";
+
+    instructions.push(`Camina ${distanceText} ${direction}`);
+  }
+
+  return instructions;
 }

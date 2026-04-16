@@ -14,6 +14,9 @@ export interface Module {
   floor: string;
   location: string;
   specialties: string[];
+  nodeId?: string; // ID del nodo en el grafo espacial
+  x?: number; // Coordenada X del grafo
+  y?: number; // Coordenada Y del grafo
 }
 
 export const SPECIALTIES: Specialty[] = [
@@ -114,6 +117,9 @@ export const MODULES: Module[] = [
     floor: "1er piso",
     location: "Lado izquierdo",
     specialties: ["ped", "endo-inf", "uro-inf", "quem-inf", "cir-inf", "reum-inf", "nef-inf", "gastro-inf", "cardio-inf", "nutri-inf", "gine-inf", "inmuno-inf"],
+    nodeId: "modulo_a",
+    x: 65,
+    y: -25,
   },
   {
     id: "B",
@@ -122,6 +128,9 @@ export const MODULES: Module[] = [
     floor: "1er piso",
     location: "Centro-izquierdo",
     specialties: ["oftalmologia", "tm", "gine-general", "gine-onco", "obstetrica"],
+    nodeId: "modulo_b",
+    x: 50,
+    y: -25,
   },
   {
     id: "C",
@@ -130,6 +139,9 @@ export const MODULES: Module[] = [
     floor: "1er piso",
     location: "Centro",
     specialties: ["trauma-adult", "trauma-inf", "ortopedia", "columna", "orl", "maxilo"],
+    nodeId: "modulo_c",
+    x: 90,
+    y: 35,
   },
   {
     id: "C2",
@@ -138,13 +150,19 @@ export const MODULES: Module[] = [
     floor: "1er piso",
     location: "Centro-derecho",
     specialties: ["bronco-adult", "espiro", "cardio-adult", "cardio-cirugia"],
+    nodeId: "modulo_c",
+    x: 90,
+    y: 35,
   },
   {
     id: "D",
     name: "Módulo D",
     color: "#1E8449",
-    floor: "2do piso",
+    floor: "1er piso",
     location: "Lado derecho",
+    nodeId: "modulo_d",
+    x: 80,
+    y: -10,
     specialties: ["cir-abdom", "cir-partes", "cir-vasc", "cir-coloproc", "endocrino", "neuro-adult", "neurocir"],
   },
   {
@@ -154,6 +172,9 @@ export const MODULES: Module[] = [
     floor: "2do piso",
     location: "Bajo centro",
     specialties: ["reum-adult", "med-interna", "nef-adult"],
+    nodeId: "modulo_d2",
+    x: 45,
+    y: 8,
   },
   {
     id: "E",
@@ -162,29 +183,41 @@ export const MODULES: Module[] = [
     floor: "1er piso",
     location: "Centro-derecho",
     specialties: ["taco", "gastro-adult", "espiro-inf"],
+    nodeId: "modulo_e",
+    x: 35,
+    y: -25,
   },
   {
     id: "i1",
     name: "Módulo i1",
     color: "#6C3483",
-    floor: "1er y 2do piso",
+    floor: "1er piso",
     location: "Lado derecho",
     specialties: ["hemato-onco-inf", "urologia-adult", "nefro-enf", "peritoneo-dial"],
+    nodeId: "modulo_i1",
+    x: 80,
+    y: -25,
   },
   {
     id: "i2",
     name: "Módulo i2",
     color: "#1A5276",
-    floor: "1er y 2do piso",
+    floor: "1er piso",
     location: "Lado izquierdo",
     specialties: ["cir-torax", "cir-vasc-torax", "osteomia", "neuro-inf", "neurocir-inf", "bronco-inf"],
+    nodeId: "modulo_i2",
+    x: 20,
+    y: -25,
   },
   {
     id: "i3",
     name: "Módulo i3",
     color: "#922B21",
-    floor: "1er y 2do piso",
+    floor: "1er piso",
     location: "Lado izquierdo",
     specialties: ["onco-quimio-adult", "onco-quimio-amb", "hemato-adult"],
+    nodeId: "modulo_i3",
+    x: 5,
+    y: -25,
   },
 ];

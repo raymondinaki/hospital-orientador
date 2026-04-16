@@ -101,7 +101,7 @@ export default function InteractiveMapNavigator({
 
   // Dibujar ruta entre puntos
   const drawRoute = (ctx: CanvasRenderingContext2D, start: RoutePoint, end: RoutePoint) => {
-    const path = findPath(start, end);
+    const path = findPath(start.label, end.label);
     const smoothedPath = smoothPath(path);
     setRoutePath(smoothedPath);
 
