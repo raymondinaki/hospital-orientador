@@ -19,6 +19,8 @@ export default function DigitalFloorPlan({
   const [panY, setPanY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [touchDistance, setTouchDistance] = useState(0);
+  const lastZoomRef = useRef(1);
 
   // Encontrar el módulo a resaltar
   const highlightedModule = highlightModuleId
@@ -204,9 +206,57 @@ export default function DigitalFloorPlan({
     setPanY(0);
   };
 
+  // Calcular distancia entre dos puntos de toque
+  const getDistance = (touch1: React.Touch, touch2: React.Touch): number => {
+    const dx = touch1.clientX - touch2.clientX;
+    const dy = touch1.clientY - touch2.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  };
+
+  // Obtener punto central entre dos toques
+  const getMidpoint = (touch1: React.Touch, touch2: React.Touch): { x: number; y: number } => {
+    return {
+      x: (touch1.clientX + touch2.clientX) / 2,
+      y: (touch1.clientY + touch2.clientY) / 2,
+    };
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (e.touches.length === 2) {
+      // Pinch zoom
+      const distance = getDistance(e.touches[0], e.touches[1]);
+      setTouchDistance(distance);
+      lastZoomRef.current = zoom;
+    } else if (e.touches.length === 1) {
+      // Pan
+      setIsDragging(true);
+      setDragStart({ x: e.touches[0].clientX - panX, y: e.touches[0].clientY - panY });
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    if (e.touches.length === 2) {
+      // Pinch zoom
+      e.preventDefault();
+      const newDistance = getDistance(e.touches[0], e.touches[1]);
+      const scale = newDistance / touchDistance;
+      const newZoom = Math.max(0.5, Math.min(3, lastZoomRef.current * scale));
+      setZoom(newZoom);
+    } else if (e.touches.length === 1 && isDragging) {
+      // Pan
+      setPanX(e.touches[0].clientX - dragStart.x);
+      setPanY(e.touches[0].clientY - dragStart.y);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    setTouchDistance(0);
+  };
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative bg-white border-2 border-slate-200 rounded-lg overflow-hidden">
+      <div className="relative bg-white border-2 border-slate-200 rounded-lg overflow-hidden touch-none">
         <canvas
           ref={canvasRef}
           width={width}
@@ -217,11 +267,14 @@ export default function DigitalFloorPlan({
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onWheel={handleWheel}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         />
       </div>
 
-      {/* Controles */}
-      <div className="flex gap-2 justify-center">
+      {/* Controles - Solo visible en desktop */}
+      <div className="hidden md:flex gap-2 justify-center">
         <button
           onClick={() => setZoom((z) => Math.min(3, z * 1.2))}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -240,6 +293,13 @@ export default function DigitalFloorPlan({
         >
           Restablecer
         </button>
+      </div>
+
+      {/* Instrucciones para móvil */}
+      <div className="md:hidden bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+        <p className="text-xs text-blue-800">
+          👆 Pellizca para zoom • Arrastra para mover
+        </p>
       </div>
 
       {/* Leyenda */}
