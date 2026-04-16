@@ -104,26 +104,26 @@ export default function DigitalFloorPlan({
     }
 
     // Dibujar pasillo principal
-    const pasillo = { x: 0, y: 45, ancho: 90, alto: 5 };
+    const pasillo = { x: 0, y: 45, width: 90, height: 5 };
     ctx.fillStyle = "#FCD34D";
     ctx.fillRect(
       toCanvasX(pasillo.x),
       toCanvasY(pasillo.y),
-      toCanvasWidth(pasillo.ancho),
-      toCanvasHeight(pasillo.alto)
+      toCanvasWidth(pasillo.width),
+      toCanvasHeight(pasillo.height)
     );
     ctx.strokeStyle = "#F59E0B";
     ctx.lineWidth = 2;
     ctx.strokeRect(
       toCanvasX(pasillo.x),
       toCanvasY(pasillo.y),
-      toCanvasWidth(pasillo.ancho),
-      toCanvasHeight(pasillo.alto)
+      toCanvasWidth(pasillo.width),
+      toCanvasHeight(pasillo.height)
     );
 
     // Dibujar módulos
     hospitalNodes.forEach((node: any) => {
-      if (node.id === "pasillo_principal") return;
+      if (node.id === "corridor_main") return;
 
       const isHighlighted = highlightedModule?.id === node.id;
       const isSelected = selectedModule && getModuleFromNodeId(node.id) === selectedModule;
@@ -142,8 +142,8 @@ export default function DigitalFloorPlan({
       ctx.fillRect(
         toCanvasX(node.x),
         toCanvasY(node.y),
-        toCanvasWidth(node.ancho),
-        toCanvasHeight(node.alto)
+        toCanvasWidth(node.width || 10),
+        toCanvasHeight(node.height || 10)
       );
 
       // Borde del módulo
@@ -152,13 +152,13 @@ export default function DigitalFloorPlan({
       ctx.strokeRect(
         toCanvasX(node.x as number),
         toCanvasY(node.y as number),
-        toCanvasWidth(node.ancho as number),
-        toCanvasHeight(node.alto as number)
+        toCanvasWidth((node.width || 10) as number),
+        toCanvasHeight((node.height || 10) as number)
       );
 
       // Etiqueta del módulo
-      const labelX = toCanvasX(node.x + node.ancho / 2);
-      const labelY = toCanvasY(node.y + node.alto / 2);
+      const labelX = toCanvasX(node.x + (node.width || 10) / 2);
+      const labelY = toCanvasY(node.y + (node.height || 10) / 2);
       const fontSize = Math.max(10, 12 * zoom);
       ctx.font = `bold ${fontSize}px Arial`;
       ctx.fillStyle = "#1F2937";
@@ -219,12 +219,12 @@ export default function DigitalFloorPlan({
       // Buscar módulo en la posición del clic
       for (const node of hospitalNodes) {
         const nodeAny = node as any;
-        if (node.id === "pasillo_principal") continue;
+        if (node.id === "corridor_main") continue;
         if (
           clickX >= nodeAny.x &&
-          clickX <= nodeAny.x + nodeAny.ancho &&
+          clickX <= nodeAny.x + (nodeAny.width || 10) &&
           clickY >= nodeAny.y &&
-          clickY <= nodeAny.y + nodeAny.alto
+          clickY <= nodeAny.y + (nodeAny.height || 10)
         ) {
           const moduleId = getModuleFromNodeId(node.id);
           if (moduleId) {
