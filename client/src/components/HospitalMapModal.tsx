@@ -1,4 +1,4 @@
-import { X, ZoomIn, ZoomOut } from "lucide-react";
+import { X } from "lucide-react";
 import { useState } from "react";
 import { type Specialty } from "../../../shared/data";
 
@@ -24,17 +24,18 @@ const MODULE_COLORS: Record<string, string> = {
 };
 
 // Áreas de cada módulo en el mapa (en porcentaje: x, y, width, height)
+// Calibradas según la estructura real del plano del hospital
 const MODULE_AREAS: Record<string, { x: number; y: number; width: number; height: number; label: string }> = {
-  A: { x: 42, y: 35, width: 8, height: 28, label: "Módulo A" },
-  B: { x: 24, y: 35, width: 8, height: 28, label: "Módulo B" },
-  C: { x: 72, y: 35, width: 10, height: 28, label: "Módulo C y C2" },
-  C2: { x: 72, y: 35, width: 10, height: 28, label: "Módulo C2" },
-  D: { x: 34, y: 35, width: 8, height: 28, label: "Módulo D" },
-  D2: { x: 30, y: 68, width: 20, height: 10, label: "Módulo D2" },
-  E: { x: 52, y: 35, width: 8, height: 28, label: "Módulo E" },
-  i1: { x: 6, y: 8, width: 10, height: 20, label: "Módulo i1" },
-  i2: { x: 6, y: 32, width: 10, height: 20, label: "Módulo i2" },
-  i3: { x: 6, y: 56, width: 10, height: 20, label: "Módulo i3" },
+  A: { x: 44, y: 52, width: 8, height: 28, label: "Módulo A" },
+  B: { x: 29, y: 52, width: 8, height: 28, label: "Módulo B" },
+  C: { x: 80, y: 35, width: 12, height: 40, label: "Módulo C y C2" },
+  C2: { x: 80, y: 35, width: 12, height: 40, label: "Módulo C2" },
+  D: { x: 16, y: 10, width: 12, height: 30, label: "Módulo D" },
+  D2: { x: 25, y: 68, width: 20, height: 10, label: "Módulo D2" },
+  E: { x: 14, y: 52, width: 8, height: 28, label: "Módulo E" },
+  i1: { x: 5, y: 8, width: 12, height: 25, label: "Módulo i1" },
+  i2: { x: 5, y: 32, width: 12, height: 20, label: "Módulo i2" },
+  i3: { x: 1, y: 52, width: 8, height: 28, label: "Módulo i3" },
 };
 
 export default function HospitalMapModal({ specialty, isOpen, onClose }: HospitalMapModalProps) {
@@ -103,47 +104,50 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
           <div className="absolute bottom-4 right-4 flex gap-2 z-10">
             <button
               onClick={() => handleZoom("in")}
-              className="p-2 bg-white rounded-lg shadow-md hover:bg-slate-50 transition-colors"
+              className="bg-white p-2 rounded-lg shadow-lg hover:bg-gray-100 transition-colors"
               title="Zoom in"
             >
-              <ZoomIn className="w-5 h-5 text-slate-700" />
+              <span className="text-lg font-bold">+</span>
             </button>
             <button
               onClick={() => handleZoom("out")}
-              className="p-2 bg-white rounded-lg shadow-md hover:bg-slate-50 transition-colors"
+              className="bg-white p-2 rounded-lg shadow-lg hover:bg-gray-100 transition-colors"
               title="Zoom out"
             >
-              <ZoomOut className="w-5 h-5 text-slate-700" />
+              <span className="text-lg font-bold">−</span>
             </button>
           </div>
 
           {/* Zoom Level Display */}
-          <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-lg shadow-md text-sm font-semibold text-slate-700">
+          <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-lg shadow-lg text-sm font-medium text-slate-700">
             {zoom}%
           </div>
         </div>
 
-        {/* Footer Info */}
+        {/* Footer with Info */}
         <div className="bg-slate-50 px-6 py-4 border-t border-slate-200">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs font-semibold text-slate-600 uppercase">Ubicación</div>
-              <div className="text-sm font-medium text-slate-900">{specialty.floor}</div>
+              <p className="text-sm text-slate-600">
+                <strong>UBICACIÓN</strong>
+              </p>
+              <p className="text-sm font-medium text-slate-800">{specialty.floor}</p>
             </div>
-            <div className="flex items-center gap-3">
-              <div>
-                <div className="text-xs font-semibold text-slate-600 uppercase">Módulo</div>
-                <div className="text-sm font-medium text-slate-900">{specialty.module}</div>
-              </div>
-              <div 
-                className="w-8 h-8 rounded border-2 border-slate-300 shadow-sm" 
+            <div>
+              <p className="text-sm text-slate-600">
+                <strong>MÓDULO</strong>
+              </p>
+              <div
+                className="inline-block px-3 py-1 rounded-full text-white text-sm font-medium"
                 style={{ backgroundColor: moduleColor }}
-              />
+              >
+                {specialty.module}
+              </div>
             </div>
+            <p className="text-xs text-slate-500">
+              Usa los botones de zoom para acercar o alejar el mapa. El área resaltada indica la ubicación exacta de {specialty.name}.
+            </p>
           </div>
-          <p className="text-xs text-slate-600 mt-3">
-            💡 Usa los botones de zoom para acercar o alejar el mapa. El área resaltada indica la ubicación exacta de {specialty.name}.
-          </p>
         </div>
       </div>
     </div>
