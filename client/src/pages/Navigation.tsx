@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import InteractiveMapNavigator from "@/components/InteractiveMapNavigator";
+import Three3DNavigator from "@/components/Three3DNavigator";
 import { SPECIALTIES, MODULES, MODULE_COORDINATES } from "@/../../shared/data";
-import { MapPin, Navigation as NavigationIcon } from "lucide-react";
+import { MapPin, Navigation as NavigationIcon, Box } from "lucide-react";
 
 interface RoutePoint {
   x: number;
@@ -19,6 +20,9 @@ export default function Navigation() {
   const [endPoint, setEndPoint] = useState<RoutePoint | undefined>();
   const [filteredStart, setFilteredStart] = useState<typeof SPECIALTIES>([]);
   const [filteredEnd, setFilteredEnd] = useState<typeof SPECIALTIES>([]);
+  const [view3D, setView3D] = useState(false);
+  const [selectedStartModule, setSelectedStartModule] = useState<string | undefined>();
+  const [selectedEndSpecialty, setSelectedEndSpecialty] = useState<any>(null);
 
   const mapUrl = "https://d2xsxph8kpxj0f.cloudfront.net/310519663362198420/T8T2wZthTUknEzTHtWjSPs/hospital-ground-floor_29f832fc.png";
 
@@ -60,6 +64,7 @@ export default function Navigation() {
         label: `${specialty.name} (${module?.name})`,
       });
       setStartSpecialty(specialty.name);
+      setSelectedStartModule(specialty.module);
       setFilteredStart([]);
     }
   };
@@ -75,6 +80,7 @@ export default function Navigation() {
         label: `${specialty.name} (${module?.name})`,
       });
       setEndSpecialty(specialty.name);
+      setSelectedEndSpecialty(specialty);
       setFilteredEnd([]);
     }
   };
@@ -178,27 +184,45 @@ export default function Navigation() {
                   setEndPoint(undefined);
                   setStartSpecialty("");
                   setEndSpecialty("");
+                  setSelectedStartModule(undefined);
+                  setSelectedEndSpecialty(null);
                 }}
               >
                 Limpiar
+              </Button>
+              <Button
+                className="w-full bg-blue-600 hover:bg-blue-700 flex items-center gap-2"
+                onClick={() => setView3D(!view3D)}
+                disabled={!startPoint || !endPoint}
+              >
+                <Box className="w-4 h-4" />
+                {view3D ? "Vista 2D" : "Vista 3D"}
               </Button>
             </div>
           </div>
 
           {/* Mapa interactivo */}
           <div className="lg:col-span-3">
-            <Card>
-              <CardHeader>
-                <CardTitle>Mapa del Hospital - 1er Piso</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <InteractiveMapNavigator
-                  mapUrl={mapUrl}
-                  startPoint={startPoint}
-                  endPoint={endPoint}
-                />
-              </CardContent>
-            </Card>
+            {view3D ? (
+              <Three3DNavigator
+                origin={selectedStartModule}
+                destination={selectedEndSpecialty}
+                isOpen={view3D}
+              />
+            ) : (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Mapa del Hospital - 1er Piso</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <InteractiveMapNavigator
+                    mapUrl={mapUrl}
+                    startPoint={startPoint}
+                    endPoint={endPoint}
+                  />
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
 
