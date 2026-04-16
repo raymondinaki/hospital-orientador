@@ -32,7 +32,8 @@ export const SPECIALTIES: Specialty[] = [
   { id: "inmuno-inf", name: "Inmunología Infantil", module: "A", floor: "Planta Baja" },
 
   // MÓDULO B - Oftalmología y Ginecología
-  { id: "oftalmologia", name: "Oftalmología", module: "B", floor: "Planta Baja", description: "Enfermedades de los ojos" },
+  { id: "oftalmologia", name: "Oftalmología (box 15)", module: "B", floor: "Planta Baja", description: "Enfermedades de los ojos" },
+  { id: "tm", name: "TM (box 19)", module: "B", floor: "Planta Baja" },
   { id: "gine-general", name: "Ginecología General", module: "B", floor: "Planta Baja" },
   { id: "gine-onco", name: "Ginecología Oncológica", module: "B", floor: "Planta Baja" },
   { id: "obstetrica", name: "Obstetricia", module: "B", floor: "Planta Baja" },
@@ -43,7 +44,7 @@ export const SPECIALTIES: Specialty[] = [
   { id: "ortopedia", name: "Ortopedia", module: "C", floor: "Planta Baja" },
   { id: "columna", name: "Cirugía de Columna", module: "C", floor: "Planta Baja" },
   { id: "orl", name: "Otorrinolaringología", module: "C", floor: "Planta Baja", description: "Enfermedades de oído, nariz y garganta" },
-  { id: "maxilo", name: "Maxilofacial", module: "C", floor: "Planta Baja" },
+  { id: "maxilo", name: "Máxilo Facial", module: "C", floor: "Planta Baja" },
 
   // MÓDULO C2 - Cardiología y Pulmonar
   { id: "bronco-adult", name: "Broncopulmonar Adulto", module: "C2", floor: "Planta Baja" },
@@ -61,19 +62,22 @@ export const SPECIALTIES: Specialty[] = [
   { id: "neurocir", name: "Neurocirugía", module: "D", floor: "2do Piso" },
 
   // MÓDULO D2 - Reumatología y Nefrología
-  { id: "reum-adult", name: "Reumatología", module: "D2", floor: "Planta Baja" },
-  { id: "med-interna", name: "Medicina Interna", module: "D2", floor: "Planta Baja" },
-  { id: "nef-adult", name: "Nefrología Adulto", module: "D2", floor: "Planta Baja" },
+  { id: "reum-adult", name: "Reumatología", module: "D2", floor: "2do Piso" },
+  { id: "med-interna", name: "Medicina Interna", module: "D2", floor: "2do Piso" },
+  { id: "nef-adult", name: "Nefrología Adulto", module: "D2", floor: "2do Piso" },
 
   // MÓDULO E - Gastroenterología y Taco
   { id: "taco", name: "Taco", module: "E", floor: "Planta Baja" },
   { id: "gastro-adult", name: "Gastroenterología", module: "E", floor: "Planta Baja" },
   { id: "espiro-inf", name: "Espirometría Infantil", module: "E", floor: "2do Piso (Box 5)" },
 
-  // MÓDULO i1 - Hemato-Onco Infantil (1er piso - derecha)
+  // MÓDULO i1 - Hemato-Onco Infantil (1er piso - derecha) y Urología (2do piso)
   { id: "hemato-onco-inf", name: "Hemato-Oncología Infantil", module: "i1", floor: "1er Piso" },
+  { id: "urologia-adult", name: "Urología", module: "i1", floor: "2do Piso" },
+  { id: "nefro-enf", name: "Nefrología - Enfermería", module: "i1", floor: "2do Piso" },
+  { id: "peritoneo-dial", name: "Peritoneo Diálisis", module: "i1", floor: "2do Piso" },
 
-  // MÓDULO i2 - Cirugía Tórax y Neuro (1er piso izq. y 2do piso izq.)
+  // MÓDULO i2 - Cirugía Tórax (1er piso izq.) y Neuro (2do piso izq.)
   { id: "cir-torax", name: "Cirugía de Tórax", module: "i2", floor: "1er Piso" },
   { id: "cir-vasc-torax", name: "Cirugía Vascular", module: "i2", floor: "1er Piso" },
   { id: "osteomia", name: "Tens Osteomía", module: "i2", floor: "1er Piso" },
@@ -81,15 +85,10 @@ export const SPECIALTIES: Specialty[] = [
   { id: "neurocir-inf", name: "Neurocirugía Infantil", module: "i2", floor: "2do Piso" },
   { id: "bronco-inf", name: "Broncopulmonar Infantil y Prematuro", module: "i2", floor: "2do Piso" },
 
-  // MÓDULO i3 - Oncología-Quimioterapia (1er piso izq. y 2do piso izq.)
+  // MÓDULO i3 - Oncología-Quimioterapia (1er piso izq.) y Hemato (2do piso izq.)
   { id: "onco-quimio-adult", name: "Oncología-Quimioterapia Adulto", module: "i3", floor: "1er Piso" },
-  { id: "onco-quimio-amb", name: "Oncología-Quimioterapia Ambulatoria", module: "i3", floor: "2do Piso" },
+  { id: "onco-quimio-amb", name: "Oncología-Quimioterapia (Horas ambulatorias)", module: "i3", floor: "2do Piso" },
   { id: "hemato-adult", name: "Hematología Adulto", module: "i3", floor: "2do Piso" },
-
-  // MÓDULO i1 - Urología (2do piso - derecha)
-  { id: "urologia-adult", name: "Urología", module: "i1", floor: "2do Piso" },
-  { id: "nefro-enf", name: "Nefrología - Enfermería", module: "i1", floor: "2do Piso" },
-  { id: "peritoneo-dial", name: "Peritoneo Diálisis", module: "i1", floor: "2do Piso" },
 ];
 
 export const MODULES: Module[] = [
@@ -107,7 +106,7 @@ export const MODULES: Module[] = [
     color: "#8E44AD",
     floor: "Planta Baja",
     location: "Centro-izquierdo",
-    specialties: ["oftalmologia", "gine-general", "gine-onco", "obstetrica"],
+    specialties: ["oftalmologia", "tm", "gine-general", "gine-onco", "obstetrica"],
   },
   {
     id: "C",
@@ -137,7 +136,7 @@ export const MODULES: Module[] = [
     id: "D2",
     name: "Módulo D2",
     color: "#117A65",
-    floor: "Planta Baja",
+    floor: "2do Piso",
     location: "Bajo centro",
     specialties: ["reum-adult", "med-interna", "nef-adult"],
   },
