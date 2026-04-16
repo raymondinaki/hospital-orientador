@@ -23,7 +23,9 @@ export default function DigitalFloorPlan({
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [touchDistance, setTouchDistance] = useState(0);
   const lastZoomRef = useRef(1);
+  const lastTouchDistanceRef = useRef(0);
   const [selectedModule, setSelectedModule] = useState<string | null>(null);
+  const [isPinching, setIsPinching] = useState(false);
 
   // Encontrar el módulo a resaltar
   const highlightedModule = highlightModuleId
@@ -249,22 +251,26 @@ export default function DigitalFloorPlan({
   const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
     if (e.touches.length === 2) {
       // Pinch zoom
+      e.preventDefault();
       const distance = getDistance(e.touches[0], e.touches[1]);
-      setTouchDistance(distance);
+      lastTouchDistanceRef.current = distance;
       lastZoomRef.current = zoom;
+      setIsPinching(true);
+      setIsDragging(false);
     } else if (e.touches.length === 1) {
       // Pan
+      setIsPinching(false);
       setIsDragging(true);
       setDragStart({ x: e.touches[0].clientX - panX, y: e.touches[0].clientY - panY });
     }
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
-    if (e.touches.length === 2) {
+    if (e.touches.length === 2 && isPinching) {
       // Pinch zoom
       e.preventDefault();
       const newDistance = getDistance(e.touches[0], e.touches[1]);
-      const scale = newDistance / touchDistance;
+      const scale = newDistance / lastTouchDistanceRef.current;
       const newZoom = Math.max(0.5, Math.min(3, lastZoomRef.current * scale));
       setZoom(newZoom);
     } else if (e.touches.length === 1 && isDragging) {
@@ -276,7 +282,8 @@ export default function DigitalFloorPlan({
 
   const handleTouchEnd = () => {
     setIsDragging(false);
-    setTouchDistance(0);
+    setIsPinching(false);
+    lastTouchDistanceRef.current = 0;
   };
 
   // Obtener especialidades del módulo seleccionado
