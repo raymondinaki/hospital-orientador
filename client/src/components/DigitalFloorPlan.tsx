@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+'use client';
+
+import { useRef, useState, useEffect } from "react";
 import { hospitalNodes } from "../../../shared/hospitalGraph";
 import { MODULES, SPECIALTIES } from "../../../shared/data";
 import { X } from "lucide-react";
@@ -16,16 +18,13 @@ export default function DigitalFloorPlan({
 }: DigitalFloorPlanProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(0.8);
   const [panX, setPanX] = useState(0);
   const [panY, setPanY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [touchDistance, setTouchDistance] = useState(0);
-  const lastZoomRef = useRef(1);
-  const lastTouchDistanceRef = useRef(0);
   const [selectedModule, setSelectedModule] = useState<string | null>(null);
-  const [isPinching, setIsPinching] = useState(false);
+  const lastClickTimeRef = useRef(0);
 
   // Encontrar el módulo a resaltar
   const highlightedModule = highlightModuleId
@@ -87,10 +86,10 @@ export default function DigitalFloorPlan({
     ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(0, 0, width, height);
 
-    // Dibujar fondo con grid
+    // Dibujar fondo con grid sutil
     ctx.strokeStyle = "#E5E7EB";
     ctx.lineWidth = 0.5;
-    const gridSize = 10;
+    const gridSize = 20;
     for (let i = 0; i <= width; i += gridSize) {
       ctx.beginPath();
       ctx.moveTo(i, 0);
@@ -105,129 +104,156 @@ export default function DigitalFloorPlan({
     }
 
     // Dibujar pasillo principal
-    const corridor = hospitalNodes.find((n) => n.id === "corridor_main");
-    if (corridor && corridor.width && corridor.height) {
-      const x = toCanvasX(corridor.x - corridor.width / 2);
-      const y = toCanvasY(corridor.y - corridor.height / 2);
-      const w = toCanvasWidth(corridor.width);
-      const h = toCanvasHeight(corridor.height);
-
-      ctx.fillStyle = "#FEF3C7";
-      ctx.fillRect(x, y, w, h);
-      ctx.strokeStyle = "#F59E0B";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(x, y, w, h);
-    }
+    const pasillo = { x: 0, y: 45, ancho: 90, alto: 5 };
+    ctx.fillStyle = "#FCD34D";
+    ctx.fillRect(
+      toCanvasX(pasillo.x),
+      toCanvasY(pasillo.y),
+      toCanvasWidth(pasillo.ancho),
+      toCanvasHeight(pasillo.alto)
+    );
+    ctx.strokeStyle = "#F59E0B";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(
+      toCanvasX(pasillo.x),
+      toCanvasY(pasillo.y),
+      toCanvasWidth(pasillo.ancho),
+      toCanvasHeight(pasillo.alto)
+    );
 
     // Dibujar módulos
-    hospitalNodes.forEach((node) => {
-      if (node.type === "corridor") return;
-      if (!node.width || !node.height) return;
+    hospitalNodes.forEach((node: any) => {
+      if (node.id === "pasillo_principal") return;
 
-      const x = toCanvasX(node.x - node.width / 2);
-      const y = toCanvasY(node.y - node.height / 2);
-      const w = toCanvasWidth(node.width);
-      const h = toCanvasHeight(node.height);
+      const isHighlighted = highlightedModule?.id === node.id;
+      const isSelected = selectedModule && getModuleFromNodeId(node.id) === selectedModule;
 
-      // Determinar color
-      let fillColor = "#E0E7FF";
-      let strokeColor = "#6366F1";
-      let strokeWidth = 1.5;
+      // Color del módulo
+      const moduleId = getModuleFromNodeId(node.id);
+      let fillColor = getModuleColor(moduleId || "");
 
-      if (node.type === "module") {
-        // Buscar el módulo correspondiente en MODULES
-        const moduleData = MODULES.find((m) => {
-          // Mapear IDs del grafo a IDs de MODULES
-          const graphIdToModuleId: Record<string, string> = {
-            modulo_i1_sup: "i1",
-            modulo_d_sup: "D",
-            modulo_i3_inf: "i3",
-            modulo_i2_inf: "i2",
-            modulo_e_inf: "E",
-            modulo_inchijap_inf: "Inchijap",
-            modulo_b_inf: "B",
-            modulo_espera_inf: "Espera",
-            modulo_a_inf: "A",
-            modulo_sui_inf: "SUI",
-            modulo_recaudacion_inf: "Recaudacion",
-            modulo_esperac_inf: "EsperaC",
-            modulo_c_der: "C",
-          };
-          return m.id === graphIdToModuleId[node.id];
-        });
-
-        if (moduleData) {
-          fillColor = moduleData.color + "30"; // 30% opacity
-          strokeColor = moduleData.color;
-        }
-      } else if (node.type === "special_area") {
-        fillColor = "#DDD6FE";
-        strokeColor = "#8B5CF6";
+      if (isHighlighted) {
+        fillColor = "#3B82F6";
+      } else if (isSelected) {
+        fillColor = "#10B981";
       }
 
-      // Resaltar si es el módulo seleccionado
-      if (selectedModule && node.id === selectedModule) {
-        const moduleId = getModuleFromNodeId(node.id);
-        if (moduleId) {
-          fillColor = getModuleColor(moduleId) + "60";
-          strokeColor = getModuleColor(moduleId);
-          strokeWidth = 3;
-        }
-      }
-
-      // Resaltar si es el módulo del highlight inicial
-      if (highlightedModule && node.id === highlightedModule.id) {
-        fillColor = highlightedModule.type === "module" ? getModuleColor(node.id) + "60" : "#FBBF24";
-        strokeColor = highlightedModule.type === "module" ? getModuleColor(node.id) : "#F59E0B";
-        strokeWidth = 3;
-      }
-
-      // Dibujar rectángulo del módulo
       ctx.fillStyle = fillColor;
-      ctx.fillRect(x, y, w, h);
-      ctx.strokeStyle = strokeColor;
-      ctx.lineWidth = strokeWidth;
-      ctx.strokeRect(x, y, w, h);
+      ctx.fillRect(
+        toCanvasX(node.x),
+        toCanvasY(node.y),
+        toCanvasWidth(node.ancho),
+        toCanvasHeight(node.alto)
+      );
 
-      // Dibujar etiqueta del módulo
+      // Borde del módulo
+      ctx.strokeStyle = isHighlighted || isSelected ? "#1F2937" : "#D1D5DB";
+      ctx.lineWidth = isHighlighted || isSelected ? 3 : 1;
+      ctx.strokeRect(
+        toCanvasX(node.x as number),
+        toCanvasY(node.y as number),
+        toCanvasWidth(node.ancho as number),
+        toCanvasHeight(node.alto as number)
+      );
+
+      // Etiqueta del módulo
+      const labelX = toCanvasX(node.x + node.ancho / 2);
+      const labelY = toCanvasY(node.y + node.alto / 2);
+      const fontSize = Math.max(10, 12 * zoom);
+      ctx.font = `bold ${fontSize}px Arial`;
       ctx.fillStyle = "#1F2937";
-      ctx.font = `bold ${Math.max(10, 12 * zoom)}px Arial`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-
-      // Truncar nombre si es muy largo
-      let displayName = node.name;
-      if (displayName.length > 15) {
-        displayName = displayName.substring(0, 12) + "...";
-      }
-
-      ctx.fillText(displayName, x + w / 2, y + h / 2);
+      ctx.fillText(node.id.replace("modulo_", "").replace(/_/g, " ").toUpperCase(), labelX, labelY);
     });
 
-    // Dibujar información de zoom
-    ctx.fillStyle = "#6B7280";
-    ctx.font = "12px Arial";
-    ctx.textAlign = "left";
-    ctx.textBaseline = "top";
-    ctx.fillText(`Zoom: ${Math.round(zoom * 100)}%`, 10, 10);
-  }, [zoom, panX, panY, width, height, highlightModuleId, selectedModule]);
+    // Leyenda
+    const legendY = height - 60;
+    ctx.fillStyle = "#F3F4F6";
+    ctx.fillRect(0, legendY, width, 60);
+    ctx.strokeStyle = "#D1D5DB";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0, legendY, width, 60);
 
-  // Manejo de mouse para pan y zoom
+    ctx.font = "12px Arial";
+    ctx.fillStyle = "#1F2937";
+    ctx.textAlign = "left";
+    ctx.fillText("Leyenda:", 10, legendY + 15);
+    
+    ctx.fillStyle = "#FCD34D";
+    ctx.fillRect(10, legendY + 20, 15, 15);
+    ctx.strokeStyle = "#F59E0B";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(10, legendY + 20, 15, 15);
+    ctx.fillStyle = "#1F2937";
+    ctx.fillText("Pasillo Principal", 30, legendY + 27);
+
+    ctx.fillStyle = "#E5E7EB";
+    ctx.fillRect(200, legendY + 20, 15, 15);
+    ctx.strokeStyle = "#D1D5DB";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(200, legendY + 20, 15, 15);
+    ctx.fillStyle = "#1F2937";
+    ctx.fillText("Áreas Especiales", 220, legendY + 27);
+  }, [zoom, panX, panY, highlightModuleId, selectedModule, width, height]);
+
+  // Detectar doble clic para zoom
+  const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const now = Date.now();
+    const isDoubleClick = now - lastClickTimeRef.current < 300;
+    lastClickTimeRef.current = now;
+
+    if (isDoubleClick) {
+      // Doble clic: zoom in
+      const newZoom = Math.min(3, zoom * 1.5);
+      setZoom(newZoom);
+    } else {
+      // Clic simple: detectar módulo
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left - panX) / zoom / (width / 100);
+      const clickY = (e.clientY - rect.top - panY) / zoom / (height / 100);
+
+      // Buscar módulo en la posición del clic
+      for (const node of hospitalNodes) {
+        const nodeAny = node as any;
+        if (node.id === "pasillo_principal") continue;
+        if (
+          clickX >= nodeAny.x &&
+          clickX <= nodeAny.x + nodeAny.ancho &&
+          clickY >= nodeAny.y &&
+          clickY <= nodeAny.y + nodeAny.alto
+        ) {
+          const moduleId = getModuleFromNodeId(node.id);
+          if (moduleId) {
+            setSelectedModule(moduleId);
+          }
+          break;
+        }
+      }
+    }
+  };
+
+  // Manejo de arrastre (pan)
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     setIsDragging(true);
     setDragStart({ x: e.clientX - panX, y: e.clientY - panY });
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!isDragging) return;
-    setPanX(e.clientX - dragStart.x);
-    setPanY(e.clientY - dragStart.y);
+    if (isDragging) {
+      setPanX(e.clientX - dragStart.x);
+      setPanY(e.clientY - dragStart.y);
+    }
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
   };
 
+  // Zoom con rueda del mouse
   const handleWheel = (e: React.WheelEvent<HTMLCanvasElement>) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? 0.9 : 1.1;
@@ -235,229 +261,125 @@ export default function DigitalFloorPlan({
     setZoom(newZoom);
   };
 
+  const handleZoomIn = () => {
+    setZoom((z) => Math.min(3, z * 1.2));
+  };
+
+  const handleZoomOut = () => {
+    setZoom((z) => Math.max(0.5, z * 0.8));
+  };
+
   const handleReset = () => {
-    setZoom(1);
+    setZoom(0.8);
     setPanX(0);
     setPanY(0);
-  };
-
-  // Calcular distancia entre dos puntos de toque
-  const getDistance = (touch1: React.Touch, touch2: React.Touch): number => {
-    const dx = touch1.clientX - touch2.clientX;
-    const dy = touch1.clientY - touch2.clientY;
-    return Math.sqrt(dx * dx + dy * dy);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
-    if (e.touches.length === 2) {
-      // Pinch zoom
-      e.preventDefault();
-      const distance = getDistance(e.touches[0], e.touches[1]);
-      lastTouchDistanceRef.current = distance;
-      lastZoomRef.current = zoom;
-      setIsPinching(true);
-      setIsDragging(false);
-    } else if (e.touches.length === 1) {
-      // Pan
-      setIsPinching(false);
-      setIsDragging(true);
-      setDragStart({ x: e.touches[0].clientX - panX, y: e.touches[0].clientY - panY });
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
-    if (e.touches.length === 2 && isPinching) {
-      // Pinch zoom
-      e.preventDefault();
-      const newDistance = getDistance(e.touches[0], e.touches[1]);
-      const scale = newDistance / lastTouchDistanceRef.current;
-      const newZoom = Math.max(0.5, Math.min(3, lastZoomRef.current * scale));
-      setZoom(newZoom);
-    } else if (e.touches.length === 1 && isDragging) {
-      // Pan
-      setPanX(e.touches[0].clientX - dragStart.x);
-      setPanY(e.touches[0].clientY - dragStart.y);
-    }
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-    setIsPinching(false);
-    lastTouchDistanceRef.current = 0;
   };
 
   // Obtener especialidades del módulo seleccionado
   const getSelectedModuleSpecialties = () => {
     if (!selectedModule) return null;
 
-    const moduleId = getModuleFromNodeId(selectedModule);
-    if (!moduleId) return null;
-
-    const module = MODULES.find((m) => m.id === moduleId);
+    const module = MODULES.find((m) => m.id === selectedModule);
     if (!module) return null;
 
-    const specialties = SPECIALTIES.filter((s) => module.specialties.includes(s.id));
+    const specialties = SPECIALTIES.filter((s) => s.module === selectedModule);
     return { module, specialties };
   };
 
   const moduleData = getSelectedModuleSpecialties();
 
-  // Renderizar botones interactivos sobre los módulos
-  const renderModuleButtons = () => {
-    return hospitalNodes
-      .filter((node) => node.type === "module" && node.width && node.height)
-      .map((node) => {
-        const x = toCanvasX(node.x - (node.width || 0) / 2);
-        const y = toCanvasY(node.y - (node.height || 0) / 2);
-        const w = toCanvasWidth(node.width || 0);
-        const h = toCanvasHeight(node.height || 0);
-
-        return (
-          <button
-            key={node.id}
-            onClick={() => setSelectedModule(node.id)}
-            className="absolute hover:opacity-80 transition-opacity"
-            style={{
-              left: `${x}px`,
-              top: `${y}px`,
-              width: `${w}px`,
-              height: `${h}px`,
-              backgroundColor: "transparent",
-              border: "none",
-              cursor: "pointer",
-              zIndex: 10,
-            }}
-            title={`Haz clic para ver especialidades de ${node.name}`}
-          />
-        );
-      });
-  };
-
   return (
-    <div className="flex flex-col gap-4">
-      <div ref={containerRef} className="relative bg-white border-2 border-slate-200 rounded-lg overflow-hidden touch-none inline-block" style={{ width: `${width}px`, height: `${height}px`, position: "relative" }}>
+    <div ref={containerRef} className="flex flex-col gap-4 w-full">
+      {/* Canvas del plano */}
+      <div className="relative bg-gray-50 rounded-lg border border-gray-200 overflow-hidden">
         <canvas
           ref={canvasRef}
           width={width}
           height={height}
-          className="cursor-grab active:cursor-grabbing w-full"
+          onClick={handleCanvasClick}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           onWheel={handleWheel}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+          className="w-full h-auto cursor-grab active:cursor-grabbing"
         />
-        {/* Botones interactivos sobre los módulos */}
-        <div className="absolute inset-0" style={{ pointerEvents: "none" }}>
-          <div style={{ pointerEvents: "auto", position: "relative", width: "100%", height: "100%" }}>
-            {renderModuleButtons()}
-          </div>
+
+        {/* Controles de zoom */}
+        <div className="absolute bottom-4 right-4 flex gap-2">
+          <button
+            onClick={handleZoomIn}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded font-semibold text-sm"
+          >
+            +
+          </button>
+          <button
+            onClick={handleZoomOut}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded font-semibold text-sm"
+          >
+            −
+          </button>
+          <button
+            onClick={handleReset}
+            className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded font-semibold text-sm"
+          >
+            Restablecer
+          </button>
+        </div>
+
+        {/* Instrucciones en móvil */}
+        <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-2 rounded text-xs md:hidden">
+          Doble clic para zoom • Arrastra para mover
         </div>
       </div>
 
-      {/* Controles - Solo visible en desktop */}
-      <div className="hidden md:flex gap-2 justify-center">
-        <button
-          onClick={() => setZoom((z) => Math.min(3, z * 1.2))}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          + Zoom
-        </button>
-        <button
-          onClick={() => setZoom((z) => Math.max(0.5, z / 1.2))}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          − Zoom
-        </button>
-        <button
-          onClick={handleReset}
-          className="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
-        >
-          Restablecer
-        </button>
-      </div>
-
-      {/* Instrucciones para móvil */}
-      <div className="md:hidden bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
-        <p className="text-xs text-blue-800">
-          👆 Pellizca para zoom • Arrastra para mover • Toca un módulo para ver especialidades
-        </p>
-      </div>
-
-      {/* Leyenda */}
-      <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
-        <p className="text-sm font-semibold text-slate-900 mb-2">Leyenda:</p>
-        <div className="grid grid-cols-2 gap-2 text-xs">
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-yellow-100 border-2 border-amber-500" />
-            <span>Pasillo Principal</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-indigo-100 border-2 border-indigo-600" />
-            <span>Módulos</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-purple-100 border-2 border-purple-600" />
-            <span>Áreas Especiales</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Modal con especialidades del módulo seleccionado */}
+      {/* Modal de especialidades del módulo seleccionado */}
       {moduleData && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-in fade-in">
-          <div className="w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-hidden max-h-[80vh] flex flex-col">
-            {/* Header */}
-            <div
-              className="px-6 py-4 text-white flex items-center justify-between"
-              style={{ backgroundColor: moduleData.module.color }}
+        <div className="bg-white rounded-lg border border-gray-200 p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg font-bold text-gray-900">{moduleData.module.name}</h3>
+              <p className="text-sm text-gray-600">{moduleData.module.floor} • {moduleData.module.location}</p>
+            </div>
+            <button
+              onClick={() => setSelectedModule(null)}
+              className="p-1 hover:bg-gray-100 rounded"
             >
-              <div>
-                <h2 className="text-2xl font-bold">{moduleData.module.name}</h2>
-                <p className="text-sm opacity-90">{moduleData.module.floor} • {moduleData.module.location}</p>
-              </div>
-              <button
-                onClick={() => setSelectedModule(null)}
-                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Contenido */}
-            <div className="overflow-y-auto flex-1 px-6 py-4">
-              <p className="text-sm font-semibold text-slate-900 mb-4">
-                {moduleData.specialties.length} especialidades disponibles:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {moduleData.specialties.map((specialty) => (
-                  <div
-                    key={specialty.id}
-                    className="p-3 bg-slate-50 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-100 transition-colors"
-                  >
-                    <p className="font-semibold text-slate-900">{specialty.name}</p>
-                    {specialty.description && (
-                      <p className="text-xs text-slate-600 mt-1">{specialty.description}</p>
-                    )}
-                    <p className="text-xs text-slate-500 mt-2">{specialty.floor}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="bg-slate-50 px-6 py-4 border-t border-slate-200">
-              <button
-                onClick={() => setSelectedModule(null)}
-                className="w-full px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
-              >
-                Cerrar
-              </button>
-            </div>
+              <X className="w-5 h-5" />
+            </button>
           </div>
+
+          <div className="mb-3">
+            <p className="text-sm font-semibold text-gray-700 mb-2">
+              {moduleData.specialties.length} especialidades disponibles:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto">
+            {moduleData.specialties.map((specialty) => (
+              <div key={specialty.id} className="p-3 bg-gray-50 rounded border border-gray-200">
+                <p className="font-semibold text-gray-900 text-sm">{specialty.name}</p>
+                {specialty.description && (
+                  <p className="text-xs text-gray-600 mt-1">{specialty.description}</p>
+                )}
+                <p className="text-xs text-gray-500 mt-2">{specialty.floor}</p>
+              </div>
+            ))}
+          </div>
+
+          <button
+            onClick={() => setSelectedModule(null)}
+            className="mt-4 w-full bg-gray-200 hover:bg-gray-300 text-gray-900 py-2 rounded font-semibold text-sm"
+          >
+            Cerrar
+          </button>
+        </div>
+      )}
+
+      {/* Mensaje cuando no hay módulo seleccionado */}
+      {!moduleData && (
+        <div className="text-center text-gray-500 text-sm py-4">
+          Haz clic en un módulo para ver sus especialidades
         </div>
       )}
     </div>
