@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { hospitalNodes } from "../../../shared/hospitalGraph";
-import { MODULES } from "../../../shared/data";
+import { MODULES, SPECIALTIES } from "../../../shared/data";
+import { X } from "lucide-react";
 
 interface DigitalFloorPlanProps {
   highlightModuleId?: string;
@@ -14,6 +15,7 @@ export default function DigitalFloorPlan({
   height = 600,
 }: DigitalFloorPlanProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(1);
   const [panX, setPanX] = useState(0);
   const [panY, setPanY] = useState(0);
@@ -21,6 +23,7 @@ export default function DigitalFloorPlan({
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [touchDistance, setTouchDistance] = useState(0);
   const lastZoomRef = useRef(1);
+  const [selectedModule, setSelectedModule] = useState<string | null>(null);
 
   // Encontrar el módulo a resaltar
   const highlightedModule = highlightModuleId
@@ -48,6 +51,26 @@ export default function DigitalFloorPlan({
 
   const toCanvasHeight = (h: number): number => {
     return (h / 100) * height * zoom;
+  };
+
+  // Obtener módulo desde nodeId
+  const getModuleFromNodeId = (nodeId: string): string | null => {
+    const graphIdToModuleId: Record<string, string> = {
+      modulo_i1_sup: "i1",
+      modulo_d_sup: "D",
+      modulo_i3_inf: "i3",
+      modulo_i2_inf: "i2",
+      modulo_e_inf: "E",
+      modulo_inchijap_inf: "Inchijap",
+      modulo_b_inf: "B",
+      modulo_espera_inf: "Espera",
+      modulo_a_inf: "A",
+      modulo_sui_inf: "SUI",
+      modulo_recaudacion_inf: "Recaudacion",
+      modulo_esperac_inf: "EsperaC",
+      modulo_c_der: "C",
+    };
+    return graphIdToModuleId[nodeId] || null;
   };
 
   // Dibujar el plano
@@ -141,6 +164,16 @@ export default function DigitalFloorPlan({
       }
 
       // Resaltar si es el módulo seleccionado
+      if (selectedModule && node.id === selectedModule) {
+        const moduleId = getModuleFromNodeId(node.id);
+        if (moduleId) {
+          fillColor = getModuleColor(moduleId) + "60";
+          strokeColor = getModuleColor(moduleId);
+          strokeWidth = 3;
+        }
+      }
+
+      // Resaltar si es el módulo del highlight inicial
       if (highlightedModule && node.id === highlightedModule.id) {
         fillColor = highlightedModule.type === "module" ? getModuleColor(node.id) + "60" : "#FBBF24";
         strokeColor = highlightedModule.type === "module" ? getModuleColor(node.id) : "#F59E0B";
@@ -175,7 +208,7 @@ export default function DigitalFloorPlan({
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
     ctx.fillText(`Zoom: ${Math.round(zoom * 100)}%`, 10, 10);
-  }, [zoom, panX, panY, width, height, highlightModuleId]);
+  }, [zoom, panX, panY, width, height, highlightModuleId, selectedModule]);
 
   // Manejo de mouse para pan y zoom
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -213,14 +246,6 @@ export default function DigitalFloorPlan({
     return Math.sqrt(dx * dx + dy * dy);
   };
 
-  // Obtener punto central entre dos toques
-  const getMidpoint = (touch1: React.Touch, touch2: React.Touch): { x: number; y: number } => {
-    return {
-      x: (touch1.clientX + touch2.clientX) / 2,
-      y: (touch1.clientY + touch2.clientY) / 2,
-    };
-  };
-
   const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
     if (e.touches.length === 2) {
       // Pinch zoom
@@ -254,9 +279,56 @@ export default function DigitalFloorPlan({
     setTouchDistance(0);
   };
 
+  // Obtener especialidades del módulo seleccionado
+  const getSelectedModuleSpecialties = () => {
+    if (!selectedModule) return null;
+
+    const moduleId = getModuleFromNodeId(selectedModule);
+    if (!moduleId) return null;
+
+    const module = MODULES.find((m) => m.id === moduleId);
+    if (!module) return null;
+
+    const specialties = SPECIALTIES.filter((s) => module.specialties.includes(s.id));
+    return { module, specialties };
+  };
+
+  const moduleData = getSelectedModuleSpecialties();
+
+  // Renderizar botones interactivos sobre los módulos
+  const renderModuleButtons = () => {
+    return hospitalNodes
+      .filter((node) => node.type === "module" && node.width && node.height)
+      .map((node) => {
+        const x = toCanvasX(node.x - (node.width || 0) / 2);
+        const y = toCanvasY(node.y - (node.height || 0) / 2);
+        const w = toCanvasWidth(node.width || 0);
+        const h = toCanvasHeight(node.height || 0);
+
+        return (
+          <button
+            key={node.id}
+            onClick={() => setSelectedModule(node.id)}
+            className="absolute hover:opacity-80 transition-opacity"
+            style={{
+              left: `${x}px`,
+              top: `${y}px`,
+              width: `${w}px`,
+              height: `${h}px`,
+              backgroundColor: "transparent",
+              border: "none",
+              cursor: "pointer",
+              zIndex: 10,
+            }}
+            title={`Haz clic para ver especialidades de ${node.name}`}
+          />
+        );
+      });
+  };
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative bg-white border-2 border-slate-200 rounded-lg overflow-hidden touch-none">
+      <div ref={containerRef} className="relative bg-white border-2 border-slate-200 rounded-lg overflow-hidden touch-none inline-block" style={{ width: `${width}px`, height: `${height}px`, position: "relative" }}>
         <canvas
           ref={canvasRef}
           width={width}
@@ -271,6 +343,12 @@ export default function DigitalFloorPlan({
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         />
+        {/* Botones interactivos sobre los módulos */}
+        <div className="absolute inset-0" style={{ pointerEvents: "none" }}>
+          <div style={{ pointerEvents: "auto", position: "relative", width: "100%", height: "100%" }}>
+            {renderModuleButtons()}
+          </div>
+        </div>
       </div>
 
       {/* Controles - Solo visible en desktop */}
@@ -298,7 +376,7 @@ export default function DigitalFloorPlan({
       {/* Instrucciones para móvil */}
       <div className="md:hidden bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
         <p className="text-xs text-blue-800">
-          👆 Pellizca para zoom • Arrastra para mover
+          👆 Pellizca para zoom • Arrastra para mover • Toca un módulo para ver especialidades
         </p>
       </div>
 
@@ -320,6 +398,61 @@ export default function DigitalFloorPlan({
           </div>
         </div>
       </div>
+
+      {/* Modal con especialidades del módulo seleccionado */}
+      {moduleData && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 animate-in fade-in">
+          <div className="w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-hidden max-h-[80vh] flex flex-col">
+            {/* Header */}
+            <div
+              className="px-6 py-4 text-white flex items-center justify-between"
+              style={{ backgroundColor: moduleData.module.color }}
+            >
+              <div>
+                <h2 className="text-2xl font-bold">{moduleData.module.name}</h2>
+                <p className="text-sm opacity-90">{moduleData.module.floor} • {moduleData.module.location}</p>
+              </div>
+              <button
+                onClick={() => setSelectedModule(null)}
+                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Contenido */}
+            <div className="overflow-y-auto flex-1 px-6 py-4">
+              <p className="text-sm font-semibold text-slate-900 mb-4">
+                {moduleData.specialties.length} especialidades disponibles:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {moduleData.specialties.map((specialty) => (
+                  <div
+                    key={specialty.id}
+                    className="p-3 bg-slate-50 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-100 transition-colors"
+                  >
+                    <p className="font-semibold text-slate-900">{specialty.name}</p>
+                    {specialty.description && (
+                      <p className="text-xs text-slate-600 mt-1">{specialty.description}</p>
+                    )}
+                    <p className="text-xs text-slate-500 mt-2">{specialty.floor}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="bg-slate-50 px-6 py-4 border-t border-slate-200">
+              <button
+                onClick={() => setSelectedModule(null)}
+                className="w-full px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
