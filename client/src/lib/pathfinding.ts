@@ -118,8 +118,10 @@ export function findPath(startNodeId: string, endNodeId: string): PathPoint[] {
 
       // Calcular distancia entre nodos
       const distance = calculateDistance(
-        { x: current.x, y: current.y, id: current.nodeId, name: "", type: "module" },
-        neighborNode
+        current.x,
+        current.y,
+        neighborNode.x,
+        neighborNode.y
       );
 
       const tentativeGScore = (gScore.get(current.nodeId) || 0) + distance;
