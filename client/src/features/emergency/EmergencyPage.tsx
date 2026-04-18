@@ -38,7 +38,12 @@ export default function EmergencyPage() {
       {/* Main content */}
       <div className="container max-w-6xl mx-auto px-4 py-6 space-y-6">
         {/* Emergency Warning Banner */}
-        <Card className="bg-red-600 text-white border-red-700 animate-pulse">
+        <Card
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+          className="bg-red-600 text-white border-red-700 animate-pulse"
+        >
           <CardContent className="p-6 text-center">
             <AlertTriangle className="size-12 mx-auto mb-3" />
             <h2 className="text-2xl font-bold mb-2">{t('emergency.subtitle')}</h2>
@@ -157,7 +162,7 @@ export default function EmergencyPage() {
                 <div className="flex items-center gap-3">
                   <AlertTriangle className="size-6 text-red-600" />
                   <div>
-                    <h3 className="font-semibold text-red-800">Urgencias del Hospital</h3>
+                    <h3 className="font-semibold text-red-800">{t('emergency.hospitalEmergency')}</h3>
                     <p className="text-sm text-red-600">{t('emergency.instructions')}</p>
                   </div>
                 </div>

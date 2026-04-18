@@ -66,11 +66,12 @@
     "evacuationMap": "Evacuation map",
     "emergencyProcedures": "Emergency procedures",
     "findYourExit": "Find your exit",
-    "ifTrapped": "If trapped, call emergency number and wait for help."
+    "ifTrapped": "If trapped, call emergency number and wait for help.",
+    "hospitalEmergency": "Hospital Emergency"
   },
   "common": {
     "loading": "Loading...",
-    "offline": "You are offline. Some features may be unavailable.",
+    "offline": "You're offline - Using saved data",
     "language": "Language",
     "close": "Close",
     "back": "Back",

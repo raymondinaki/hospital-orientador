@@ -68,11 +68,12 @@
     "evacuationMap": "Mapa de evacuación",
     "emergencyProcedures": "Procedimientos de emergencia",
     "findYourExit": "Encuentre su salida",
-    "ifTrapped": "Si queda atrapado, llame al número de emergencia y espere ayuda."
+    "ifTrapped": "Si queda atrapado, llame al número de emergencia y espere ayuda.",
+    "hospitalEmergency": "Urgencias del Hospital"
   },
   "common": {
     "loading": "Cargando...",
-    "offline": "Estás sin conexión. 部分功能可能不可用。",
+    "offline": "Estás sin conexión - Usando datos guardados",
     "language": "Idioma",
     "close": "Cerrar",
     "back": "Volver",

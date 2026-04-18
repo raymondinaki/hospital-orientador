@@ -37,7 +37,11 @@ export function TipBanner({ tips }: TipBannerProps) {
   const emergencyTips = tips.filter((t) => t.type === 'emergency');
 
   return (
-    <div className="space-y-3 animate-slide-in-bottom">
+    <div
+      role="complementary"
+      aria-label={t('tips.viewDetails')}
+      className="space-y-3 animate-slide-in-bottom"
+    >
       {/* Payment tips */}
       {paymentTips.length > 0 && (
         <div className="space-y-1">

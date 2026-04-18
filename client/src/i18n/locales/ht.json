@@ -66,11 +66,12 @@
     "evacuationMap": "Plan evakyasyon",
     "emergencyProcedures": "Prosedi ijans",
     "findYourExit": "Jwenn sòti ou",
-    "ifTrapped": "Si ou bloke, rele nimewo ijans la e atann èd."
+    "ifTrapped": "Si ou bloke, rele nimewo ijans la e atann èd.",
+    "hospitalEmergency": "Ijans Lopital"
   },
   "common": {
     "loading": "Chajman...",
-    "offline": "Ou san kourik. Genadan fonksyon ka pa disponib.",
+    "offline": "Ou san kourik - Sèvi ak done sove",
     "language": "Lang",
     "close": "Fèmen",
     "back": "Retounen",

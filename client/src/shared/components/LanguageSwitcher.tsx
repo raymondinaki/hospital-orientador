@@ -46,8 +46,9 @@ export function LanguageSwitcher() {
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2 text-muted-foreground hover:text-foreground"
+          className="gap-2 text-muted-foreground hover:text-foreground focus-ring"
           aria-label={t('accessibility.languageMenu')}
+          aria-haspopup="menu"
         >
           <Globe className="size-4" />
           <span className="font-medium uppercase tracking-wider">
@@ -58,6 +59,7 @@ export function LanguageSwitcher() {
       <DropdownMenuContent
         align="end"
         className="animate-fade-in"
+        role="menu"
         onCloseAutoFocus={(e) => e.preventDefault()}
       >
         <DropdownMenuLabel className="text-xs text-muted-foreground font-normal pb-2">
@@ -69,6 +71,7 @@ export function LanguageSwitcher() {
             key={lang.code}
             onClick={() => handleLanguageChange(lang.code)}
             className="flex items-center gap-3 cursor-pointer"
+            role="menuitem"
             aria-label={`${lang.label} (${
               lang.code === language ? t('common.language') : ''
             })`}

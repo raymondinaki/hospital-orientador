@@ -112,9 +112,10 @@ export default function MapPage() {
               <CardContent className="p-0">
                 <div
                   id="floor-map"
-                  role="tabpanel"
-                  aria-label={`${selectedFloor === 1 ? t('map.floor1') : t('map.floor2')}`}
+                  role="application"
+                  aria-label={`${t('accessibility.floorMap')}: ${selectedFloor === 1 ? t('map.floor1') : t('map.floor2')}`}
                   className="relative aspect-[1000/600] bg-muted/30 animate-fade-in"
+                  data-map-container
                 >
                   <HospitalMap />
                 </div>

@@ -50,6 +50,13 @@ export function ModuleMarker({
         }}
         onMouseEnter={() => onHover(true)}
         onMouseLeave={() => onHover(false)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            onClick();
+          }
+        }}
         className={`
           relative flex flex-col items-center justify-center
           w-12 h-12 rounded-full
@@ -66,7 +73,7 @@ export function ModuleMarker({
           borderColor: isSelected ? undefined : module.color,
           backgroundColor: isSelected ? undefined : `${module.color}15`,
         }}
-        aria-label={`${module.name[language as Language] || module.name.es} - ${t('accessibility.moduleInfo')}`}
+        aria-label={`${module.name[language as Language] || module.name.es} - ${t('accessibility.moduleInfo')} (${t('floors.' + (module.floor === 1 ? 'first' : 'second'))})`}
         aria-pressed={isSelected}
       >
         {/* Module ID */}
