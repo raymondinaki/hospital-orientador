@@ -42,14 +42,33 @@
     "payment": "Información de pago",
     "hours": "Horarios de atención",
     "instructions": "Instrucciones importantes",
-    "viewDetails": "Ver detalles"
+    "viewDetails": "Ver detalles",
+    "noTips": "No hay consejos disponibles para este módulo"
   },
   "emergency": {
     "title": "Emergencias",
+    "subtitle": "Información de emergencia y evacuación",
     "instructions": "Para emergencias, dirígete al módulo de urgencias ubicado en la entrada principal.",
+    "fire": "En caso de incendio: Active la alarma, evacúe el edificio por las escaleras, no use el ascensor.",
+    "earthquake": "En caso de terremoto: Ubíquese bajo una mesa resistente, protéjase la cabeza, manténgase alejado de ventanas.",
+    "evacuation": "Evacuación: Siga las rutas de escape marcadas en rojo, diríjase a la salida más cercana.",
     "contacts": "Contactos de emergencia",
     "callNow": "Llamar ahora",
-    "stayCalm": "Mantén la calma y sigue las indicaciones del personal."
+    "stayCalm": "Mantén la calma y sigue las indicaciones del personal.",
+    "exits": "Salidas de emergencia",
+    "nearestExit": "Salida más cercana",
+    "evacuationRoute": "Ruta de evacuación",
+    "floor1": "1er Piso",
+    "floor2": "2do Piso",
+    "backToHome": "Volver al inicio",
+    "callInstructions": "Para emergencias médicas graves, llame inmediatamente.",
+    "ambulance": "Ambulancia",
+    "police": "Policía",
+    "fireDept": "Bomberos",
+    "evacuationMap": "Mapa de evacuación",
+    "emergencyProcedures": "Procedimientos de emergencia",
+    "findYourExit": "Encuentre su salida",
+    "ifTrapped": "Si queda atrapado, llame al número de emergencia y espere ayuda."
   },
   "common": {
     "loading": "Cargando...",

@@ -40,14 +40,33 @@
     "payment": "Payment information",
     "hours": "Opening hours",
     "instructions": "Important instructions",
-    "viewDetails": "View details"
+    "viewDetails": "View details",
+    "noTips": "No tips available for this module"
   },
   "emergency": {
     "title": "Emergency",
+    "subtitle": "Emergency and evacuation information",
     "instructions": "For emergencies, go to the emergency module located at the main entrance.",
+    "fire": "In case of fire: Activate the alarm, evacuate the building using stairs, do not use elevators.",
+    "earthquake": "In case of earthquake: Get under a sturdy table, protect your head, stay away from windows.",
+    "evacuation": "Evacuation: Follow marked escape routes in red, head to the nearest exit.",
     "contacts": "Emergency contacts",
     "callNow": "Call now",
-    "stayCalm": "Stay calm and follow the staff's instructions."
+    "stayCalm": "Stay calm and follow the staff's instructions.",
+    "exits": "Emergency exits",
+    "nearestExit": "Nearest exit",
+    "evacuationRoute": "Evacuation route",
+    "floor1": "Floor 1",
+    "floor2": "Floor 2",
+    "backToHome": "Back to home",
+    "callInstructions": "For serious medical emergencies, call immediately.",
+    "ambulance": "Ambulance",
+    "police": "Police",
+    "fireDept": "Fire Department",
+    "evacuationMap": "Evacuation map",
+    "emergencyProcedures": "Emergency procedures",
+    "findYourExit": "Find your exit",
+    "ifTrapped": "If trapped, call emergency number and wait for help."
   },
   "common": {
     "loading": "Loading...",

@@ -5,6 +5,8 @@ import { Link } from 'wouter';
 import { useAppStore } from '@/shared/hooks/useAppStore';
 import { HospitalMap } from './HospitalMap';
 import { FloorSwitcher } from './FloorSwitcher';
+import { TipBanner } from '@/features/tips/TipBanner';
+import { useTips } from '@/features/tips/useTips';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -29,6 +31,9 @@ export default function MapPage() {
   } = useAppStore();
 
   const language = useAppStore((state) => state.language);
+
+  // Get tips for selected module
+  const { tips: selectedModuleTips, hasTips } = useTips(selectedModule);
 
   // Parse URL search params
   useEffect(() => {
@@ -102,7 +107,7 @@ export default function MapPage() {
       <div className="container max-w-6xl mx-auto px-4 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Map Section */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 space-y-4">
             <Card className="overflow-hidden">
               <CardContent className="p-0">
                 <div
@@ -116,9 +121,23 @@ export default function MapPage() {
               </CardContent>
             </Card>
 
+            {/* Tips for selected module */}
+            {selectedModule && hasTips && (
+              <Card className="animate-slide-in-bottom">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm text-muted-foreground">
+                    💡 {t('tips.viewDetails')}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <TipBanner tips={selectedModuleTips} />
+                </CardContent>
+              </Card>
+            )}
+
             {/* Route info bar */}
             {routeOrigin && routeDestination && (
-              <Card className="mt-4 animate-fade-in">
+              <Card className="animate-fade-in">
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between flex-wrap gap-4">
                     <div className="flex items-center gap-4">
@@ -172,7 +191,7 @@ export default function MapPage() {
             )}
 
             {/* Instructions */}
-            <p className="mt-4 text-sm text-muted-foreground text-center">
+            <p className="text-sm text-muted-foreground text-center">
               {t('map.instructions')}
             </p>
           </div>

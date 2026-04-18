@@ -40,14 +40,33 @@
     "payment": "Enfomasyon pou peye",
     "hours": "Lè ouvèti",
     "instructions": "Enstriksyon enpòtan",
-    "viewDetails": "Wè detay"
+    "viewDetails": "Wè detay",
+    "noTips": "Pa gen konsèy disponib pou modil sa a"
   },
   "emergency": {
     "title": "Ijans",
+    "subtitle": "Enfomasyon ijans ak evakyasyon",
     "instructions": "Pou ijans, ale nan modil ijans ki sitiye nan antre prensipal la.",
+    "fire": "An ka dife: Aktive alaf, evakye bilding la lè l sèvi ak eskalye, pa itilize asansè.",
+    "earthquake": "An ka tranblemanntè: Met tèt ou anba yon tab solid, pwoteje tèt ou, rete aleje de fennèt.",
+    "evacuation": "Evakyasyon: Swiv wout eskap ki make an wouj, ale nan pi pre alyen.",
     "contacts": "Kontak ijans",
     "callNow": "Reklamde kounye a",
-    "stayCalm": "Rete trankil e swiv konsèy pèsonèl la."
+    "stayCalm": "Rete trankil e swiv konsèy pèsonèl la.",
+    "exits": "Sòti ijans",
+    "nearestExit": "Pi pre alyen",
+    "evacuationRoute": "Wout evakyasyon",
+    "floor1": "Sòl 1",
+    "floor2": "Sòl 2",
+    "backToHome": "Retounen nan kay",
+    "callInstructions": "Pou ijans medikal serye, reklamde touswit.",
+    "ambulance": "Ambilans",
+    "police": "Polis",
+    "fireDept": "Sape Pompye",
+    "evacuationMap": "Plan evakyasyon",
+    "emergencyProcedures": "Prosedi ijans",
+    "findYourExit": "Jwenn sòti ou",
+    "ifTrapped": "Si ou bloke, rele nimewo ijans la e atann èd."
   },
   "common": {
     "loading": "Chajman...",

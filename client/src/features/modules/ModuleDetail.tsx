@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useRoute } from 'wouter';
 import { useAppStore } from '@/shared/hooks/useAppStore';
+import { TipBanner } from '@/features/tips/TipBanner';
+import { useTips } from '@/features/tips/useTips';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -15,6 +17,9 @@ export default function ModuleDetail() {
 
   const moduleId = params?.id;
   const module = modules.find((m) => m.id === moduleId);
+
+  // Get tips for this module
+  const { tips: moduleTips, hasTips } = useTips(moduleId || null);
 
   if (!module) {
     return (
@@ -41,6 +46,20 @@ export default function ModuleDetail() {
           {t('common.back')}
         </Button>
       </Link>
+
+      {/* Tips for this module */}
+      {hasTips && (
+        <Card className="mb-6 animate-slide-in-bottom">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm text-muted-foreground">
+              💡 {t('tips.viewDetails')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <TipBanner tips={moduleTips} />
+          </CardContent>
+        </Card>
+      )}
 
       {/* Module Header */}
       <Card

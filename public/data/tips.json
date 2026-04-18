@@ -14,6 +14,13 @@
     "type": "hours"
   },
   {
+    "id": "tip-a-exit",
+    "moduleId": "A",
+    "title": { "es": "Salida de emergencia", "ht": "Sòti ijans", "en": "Emergency exit", "arn": "Sòti ijans" },
+    "content": { "es": "Salida más cercana: lado derecho del pasillo, 20 metros", "ht": "Pi pre alyen: kote dwat ranpa a, 20 mèt", "en": "Nearest exit: right side of hallway, 20 meters", "arn": "Pi pre alyen: kote dwat ranpa a, 20 mèt" },
+    "type": "instruction"
+  },
+  {
     "id": "tip-b-payment",
     "moduleId": "B",
     "title": { "es": "Pago en caja central", "ht": "Peman nan bwat santral", "en": "Payment at central box", "arn": "Peman nan bwat santral" },
@@ -21,10 +28,31 @@
     "type": "payment"
   },
   {
+    "id": "tip-b-hours",
+    "moduleId": "B",
+    "title": { "es": "Horario de Oftalmología", "ht": "Lè Ofitalmoloji", "en": "Ophthalmology hours", "arn": "Lè Ofitalmoloji" },
+    "content": { "es": "Lunes a jueves 08:00 - 16:00", "ht": "Lendi pou jèdi 08:00 - 16:00", "en": "Monday to Thursday 08:00 - 16:00", "arn": "Lendi pou jèdi 08:00 - 16:00" },
+    "type": "hours"
+  },
+  {
+    "id": "tip-b-exit",
+    "moduleId": "B",
+    "title": { "es": "Salida de emergencia", "ht": "Sòti ijans", "en": "Emergency exit", "arn": "Sòti ijans" },
+    "content": { "es": "Salida más cercana: centro del pasillo, escaleras 30m", "ht": "Pi pre alyen: sant ranpa a, eskalye 30m", "en": "Nearest exit: center hallway, stairs 30m", "arn": "Pi pre alyen: sant ranpa a, eskalye 30m" },
+    "type": "instruction"
+  },
+  {
     "id": "tip-c-trauma",
     "moduleId": "C",
     "title": { "es": "Área de trauma", "ht": "Zòn trauma", "en": "Trauma area", "arn": "Zòn trauma" },
     "content": { "es": "Traumatología atiende casos de urgencia sin cita previa", "ht": "Twatmatoloji trete ka ijans san randevou", "en": "Traumatology handles emergency cases without appointment", "arn": "Twatmatoloji trete ka ijans san randevou" },
+    "type": "instruction"
+  },
+  {
+    "id": "tip-c-exit",
+    "moduleId": "C",
+    "title": { "es": "Salida de emergencia", "ht": "Sòti ijans", "en": "Emergency exit", "arn": "Sòti ijans" },
+    "content": { "es": "Salida más cercana: lado derecho, 15 metros. También usar escaleras centrales.", "ht": "Pi pre alyen: kote dwat, 15 mèt. Sèvi ak eskalye santral la tou.", "en": "Nearest exit: right side, 15 meters. Also use central stairs.", "arn": "Pi pre alyen: kote dwat, 15 mèt. Sèvi ak eskalye santral la tou." },
     "type": "instruction"
   },
   {
@@ -35,10 +63,24 @@
     "type": "instruction"
   },
   {
+    "id": "tip-c2-hours",
+    "moduleId": "C2",
+    "title": { "es": "Horario de Cardiología", "ht": "Lè Kadyoloji", "en": "Cardiology hours", "arn": "Lè Kadyoloji" },
+    "content": { "es": "Lunes a viernes 08:00 - 17:00", "ht": "Lendi pou vandredi 08:00 - 17:00", "en": "Monday to Friday 08:00 - 17:00", "arn": "Lendi pou vandredi 08:00 - 17:00" },
+    "type": "hours"
+  },
+  {
     "id": "tip-d-floor",
     "moduleId": "D",
     "title": { "es": "2do piso", "ht": "2e etaj", "en": "2nd floor", "arn": "2e etaj" },
     "content": { "es": "Módulo D se encuentra en el 2do piso. Tome escaleras o ascensor.", "ht": "Modil D nan 2e etaj la. Pral eskalye oubyen asansè.", "en": "Module D is on the 2nd floor. Take stairs or elevator.", "arn": "Modil D nan 2e etaj la. Pral eskalye oubyen asansè." },
+    "type": "instruction"
+  },
+  {
+    "id": "tip-d-exit",
+    "moduleId": "D",
+    "title": { "es": "Salida de emergencia", "ht": "Sòti ijans", "en": "Emergency exit", "arn": "Sòti ijans" },
+    "content": { "es": "Para evacuar: use escaleras centrales hacia el 1er piso, luego salida principal", "ht": "Pou evakye: sèvi ak eskalye santral la pou ale nan 1e etaj, lè sa a sòti prensipal la", "en": "To evacuate: use central stairs to 1st floor, then main exit", "arn": "Pou evakye: sèvi ak eskalye santral la pou ale nan 1e etaj, lè sa a sòti prensipal la" },
     "type": "instruction"
   },
   {
@@ -49,10 +91,24 @@
     "type": "payment"
   },
   {
+    "id": "tip-d2-exit",
+    "moduleId": "D2",
+    "title": { "es": "Salida de emergencia", "ht": "Sòti ijans", "en": "Emergency exit", "arn": "Sòti ijans" },
+    "content": { "es": "Para evacuar: use escaleras centrales hacia el 1er piso, luego salida principal", "ht": "Pou evakye: sèvi ak eskalye santral la pou ale nan 1e etaj, lè sa a sòti prensipal la", "en": "To evacuate: use central stairs to 1st floor, then main exit", "arn": "Pou evakye: sèvi ak eskalye santral la pou ale nan 1e etaj, lè sa a sòti prensipal la" },
+    "type": "instruction"
+  },
+  {
     "id": "tip-e-gastro",
     "moduleId": "E",
     "title": { "es": "Gastroenterología y Taco", "ht": "Gastroantewoloji ak Tako", "en": "Gastroenterology and Taco", "arn": "Gastroantewoloji ak Tako" },
     "content": { "es": "TACO es atención de fractures. Proceda a box asignado.", "ht": "TACO se konsiltasyon frakti. Ale nan bwat la.", "en": "TACO is fracture care. Proceed to assigned box.", "arn": "TACO se konsiltasyon frakti. Ale nan bwat la." },
+    "type": "instruction"
+  },
+  {
+    "id": "tip-e-exit",
+    "moduleId": "E",
+    "title": { "es": "Salida de emergencia", "ht": "Sòti ijans", "en": "Emergency exit", "arn": "Sòti ijans" },
+    "content": { "es": "Salida más cercana: lado izquierdo del pasillo, 25 metros", "ht": "Pi pre alyen: kote goch ranpa a, 25 mèt", "en": "Nearest exit: left side of hallway, 25 meters", "arn": "Pi pre alyen: kote goch ranpa a, 25 mèt" },
     "type": "instruction"
   },
   {
@@ -63,6 +119,13 @@
     "type": "instruction"
   },
   {
+    "id": "tip-i1-exit",
+    "moduleId": "i1",
+    "title": { "es": "Salida de emergencia", "ht": "Sòti ijans", "en": "Emergency exit", "arn": "Sòti ijans" },
+    "content": { "es": "Salida más cercana: escaleras centrales, 40 metros. En el 2do piso, use escaleras hacia abajo.", "ht": "Pi pre alyen: eskalye santral la, 40 mèt. Nan 2e etaj la, sèvi ak eskalye pou desann.", "en": "Nearest exit: central stairs, 40 meters. On 2nd floor, use stairs going down.", "arn": "Pi pre alyen: eskalye santral la, 40 mèt. Nan 2e etaj la, sèvi ak eskalye pou desann." },
+    "type": "instruction"
+  },
+  {
     "id": "tip-i2-neuro",
     "moduleId": "i2",
     "title": { "es": "Neurología y Neurocirugía", "ht": "Neyoloji ak Neyosiji", "en": "Neurology and Neurosurgery", "arn": "Neyoloji ak Neyosiji" },
@@ -70,10 +133,24 @@
     "type": "instruction"
   },
   {
+    "id": "tip-i2-exit",
+    "moduleId": "i2",
+    "title": { "es": "Salida de emergencia", "ht": "Sòti ijans", "en": "Emergency exit", "arn": "Sòti ijans" },
+    "content": { "es": "Salida más cercana: lado izquierdo, 30 metros hacia salida lateral", "ht": "Pi pre alyen: kote goch la, 30 mèt ale nan sòti lateral la", "en": "Nearest exit: left side, 30 meters to side exit", "arn": "Pi pre alyen: kote goch la, 30 mèt ale nan sòti lateral la" },
+    "type": "instruction"
+  },
+  {
     "id": "tip-i3-chemo",
     "moduleId": "i3",
     "title": { "es": "Quimioterapia", "ht": "Kimyo", "en": "Chemotherapy", "arn": "Kimyo" },
     "content": { "es": "Zona de quimioterapia. Mantenga silencio y respeto.", "ht": "Zòn kimyo. Kenbe silans ak respè.", "en": "Chemotherapy area. Maintain silence and respect.", "arn": "Zòn kimyo. Kenbe silans ak respè." },
+    "type": "instruction"
+  },
+  {
+    "id": "tip-i3-exit",
+    "moduleId": "i3",
+    "title": { "es": "Salida de emergencia", "ht": "Sòti ijans", "en": "Emergency exit", "arn": "Sòti ijans" },
+    "content": { "es": "Salida más cercana: lado izquierdo, 35 metros hacia salida lateral", "ht": "Pi pre alyen: kote goch la, 35 mèt ale nan sòti lateral la", "en": "Nearest exit: left side, 35 meters to side exit", "arn": "Pi pre alyen: kote goch la, 35 mèt ale nan sòti lateral la" },
     "type": "instruction"
   },
   {
