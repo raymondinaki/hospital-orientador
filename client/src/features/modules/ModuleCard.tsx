@@ -6,13 +6,14 @@ import { Badge } from '@/components/ui/badge';
 import { MapPin } from 'lucide-react';
 import type { Language } from '@shared/types';
 import type { Module } from '@shared/types';
+import { memo } from 'react';
 
 interface ModuleCardProps {
   module: Module;
   index: number;
 }
 
-export function ModuleCard({ module, index }: ModuleCardProps) {
+export const ModuleCard = memo(function ModuleCard({ module, index }: ModuleCardProps) {
   const { t } = useTranslation();
   const language = useAppStore((state) => state.language);
 
@@ -52,4 +53,4 @@ export function ModuleCard({ module, index }: ModuleCardProps) {
       </Card>
     </Link>
   );
-}
+});

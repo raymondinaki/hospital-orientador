@@ -7,7 +7,71 @@ import { useSearch } from './useSearch';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Clock, Layers } from 'lucide-react';
-import type { Language } from '@shared/types';
+import type { Language, Specialty, Module } from '@shared/types';
+import { memo } from 'react';
+
+interface SpecialtyCardProps {
+  specialty: Specialty;
+  floorLabel: string;
+  moduleLink: string;
+}
+
+// Memoized SpecialtyCard to prevent re-renders on language change
+const SpecialtyCard = memo(function SpecialtyCard({ specialty, floorLabel, moduleLink }: SpecialtyCardProps) {
+  const { t } = useTranslation();
+  const language = useAppStore((state) => state.language);
+
+  return (
+    <Link href={moduleLink}>
+      <Card className="hover:shadow-md hover:border-primary/50 transition-all cursor-pointer h-full">
+        <CardContent className="p-3 text-center">
+          <p className="font-medium text-sm truncate">
+            {specialty.name[language as Language] || specialty.name.es}
+          </p>
+          <Badge variant="secondary" className="mt-2 text-xs">
+            {floorLabel}
+          </Badge>
+        </CardContent>
+      </Card>
+    </Link>
+  );
+});
+
+interface ModuleCardProps {
+  module: Module;
+  index: number;
+}
+
+// Memoized ModuleCard to prevent re-renders on language change
+const ModuleCard = memo(function ModuleCard({ module, index }: ModuleCardProps) {
+  const { t } = useTranslation();
+  const language = useAppStore((state) => state.language);
+
+  return (
+    <Link href={`/module/${module.id}`}>
+      <Card
+        className="hover:shadow-md transition-all cursor-pointer h-full"
+        style={{ borderLeftColor: module.color, borderLeftWidth: '4px' }}
+      >
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="font-semibold">
+              {module.name[language as Language] || module.name.es}
+            </h3>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Badge variant="outline" style={{ borderColor: module.color }}>
+              {t('floors.first')}
+            </Badge>
+            <span className="text-xs">
+              {module.specialties.length} {t('specialties.title').toLowerCase()}
+            </span>
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
+  );
+});
 
 export default function SearchPage() {
   const { t } = useTranslation();
@@ -35,7 +99,7 @@ export default function SearchPage() {
         <div className="container max-w-3xl mx-auto text-center space-y-4">
           <h1 className="text-3xl md:text-4xl font-bold">{t('header.title')}</h1>
           <p className="text-lg text-muted-foreground">{t('header.tagline')}</p>
-          
+
           {/* Search Input */}
           <div className="pt-4">
             <SearchInput value={query} onChange={setQuery} isSearching={isSearching} />
@@ -94,18 +158,12 @@ export default function SearchPage() {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
               {specialties.slice(0, 12).map((specialty) => (
-                <Link key={specialty.id} href={`/map?to=${specialty.module}`}>
-                  <Card className="hover:shadow-md hover:border-primary/50 transition-all cursor-pointer h-full">
-                    <CardContent className="p-3 text-center">
-                      <p className="font-medium text-sm truncate">
-                        {specialty.name[language as Language] || specialty.name.es}
-                      </p>
-                      <Badge variant="secondary" className="mt-2 text-xs">
-                        {specialty.floor === 1 ? t('floors.first') : t('floors.second')}
-                      </Badge>
-                    </CardContent>
-                  </Card>
-                </Link>
+                <SpecialtyCard
+                  key={specialty.id}
+                  specialty={specialty}
+                  floorLabel={specialty.floor === 1 ? t('floors.first') : t('floors.second')}
+                  moduleLink={`/map?to=${specialty.module}`}
+                />
               ))}
             </div>
           </section>
@@ -142,29 +200,8 @@ export default function SearchPage() {
               {t('modules.title')}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {modules.map((module) => (
-                <Link key={module.id} href={`/module/${module.id}`}>
-                  <Card
-                    className="hover:shadow-md transition-all cursor-pointer h-full"
-                    style={{ borderLeftColor: module.color, borderLeftWidth: '4px' }}
-                  >
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-semibold">
-                          {module.name[language as Language] || module.name.es}
-                        </h3>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Badge variant="outline" style={{ borderColor: module.color }}>
-                          {t('floors.first')}
-                        </Badge>
-                        <span className="text-xs">
-                          {module.specialties.length} {t('specialties.title').toLowerCase()}
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
+              {modules.map((module, index) => (
+                <ModuleCard key={module.id} module={module} index={index} />
               ))}
             </div>
           </section>

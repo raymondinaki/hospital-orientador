@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearch } from 'wouter';
 import { Link } from 'wouter';
@@ -33,27 +33,31 @@ export default function MapPage() {
   const language = useAppStore((state) => state.language);
 
   // Get tips for selected module
-  const { tips: selectedModuleTips, hasTips } = useTips(selectedModule);
+  const { paymentTips, hoursTips, instructionTips, emergencyTips, hasTips } = useTips(selectedModule);
+
+  // Use a ref to track if URL params were already applied to prevent double renders
+  const paramsApplied = useRef(false);
 
   // Parse URL search params
   useEffect(() => {
+    if (paramsApplied.current) return;
     const params = new URLSearchParams(searchParams);
     const from = params.get('from');
     const to = params.get('to');
 
-    if (from) {
-      setRoute(from, routeDestination);
-    }
-    if (to) {
-      setRoute(routeOrigin, to);
+    if (from || to) {
+      setRoute(from || null, to || null);
 
       // Auto-switch floor if destination is on different floor
-      const destModule = modules.find((m) => m.id === to);
-      if (destModule && destModule.floor !== selectedFloor) {
-        setFloor(destModule.floor);
+      if (to) {
+        const destModule = modules.find((m) => m.id === to);
+        if (destModule && destModule.floor !== selectedFloor) {
+          setFloor(destModule.floor);
+        }
       }
+      paramsApplied.current = true;
     }
-  }, [searchParams, modules, selectedFloor, routeOrigin, routeDestination, setRoute, setFloor]);
+  }, [searchParams, modules, selectedFloor, setRoute, setFloor]);
 
   // Get selected module data
   const selectedModuleData = useMemo(() => {
@@ -131,7 +135,12 @@ export default function MapPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <TipBanner tips={selectedModuleTips} />
+                  <TipBanner
+                    paymentTips={paymentTips}
+                    hoursTips={hoursTips}
+                    instructionTips={instructionTips}
+                    emergencyTips={emergencyTips}
+                  />
                 </CardContent>
               </Card>
             )}

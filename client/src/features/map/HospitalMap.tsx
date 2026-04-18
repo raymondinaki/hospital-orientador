@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect, useState } from 'react';
+import { useRef, useCallback, useEffect, useState, useMemo, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/shared/hooks/useAppStore';
 import { ModuleMarker } from './ModuleMarker';
@@ -229,9 +229,8 @@ interface HospitalMapProps {
   className?: string;
 }
 
-export function HospitalMap({ className = '' }: HospitalMapProps) {
+export const HospitalMap = memo(function HospitalMap({ className = '' }: HospitalMapProps) {
   const { t } = useTranslation();
-  const svgRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredModule, setHoveredModule] = useState<string | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
@@ -251,81 +250,60 @@ export function HospitalMap({ className = '' }: HospitalMapProps) {
   // Get module positions based on floor
   const modulePositions = selectedFloor === 1 ? FLOOR1_MODULE_POSITIONS : FLOOR2_MODULE_POSITIONS;
 
-  // Handle SVG click on module areas
-  const handleSvgClick = useCallback(
-    (event: MouseEvent) => {
-      const target = event.target as SVGElement;
-      const moduleId = target.closest('[data-module-id]')?.getAttribute('data-module-id');
-
-      if (moduleId) {
-        // Check if this module is on the current floor
-        const module = modules.find((m) => m.id === moduleId);
-        if (module && module.floor === selectedFloor) {
-          setSelectedModule(moduleId === selectedModule ? null : moduleId);
-        }
-      }
-    },
-    [modules, selectedFloor, selectedModule, setSelectedModule]
+  // Memoize SVG content - only changes when floor changes
+  const svgContent = useMemo(
+    () => (selectedFloor === 1 ? FLOOR1_SVG_CONTENT : FLOOR2_SVG_CONTENT),
+    [selectedFloor]
   );
 
-  // Handle hover on SVG module areas
-  const handleSvgHover = useCallback(
-    (event: MouseEvent | null, moduleId: string | null) => {
-      if (event && moduleId) {
-        const rect = containerRef.current?.getBoundingClientRect();
-        if (rect) {
-          setTooltipPos({
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top,
-          });
-        }
-      }
-      setHoveredModule(moduleId);
-    },
-    []
+  // Memoize hovered module data
+  const hoveredModuleData = useMemo(
+    () => (hoveredModule ? modules.find((m) => m.id === hoveredModule) : null),
+    [hoveredModule, modules]
   );
 
-  // Attach click handlers to SVG module areas
+  // Event delegation for click and hover on SVG module areas
   useEffect(() => {
-    const container = svgRef.current;
+    const container = containerRef.current;
     if (!container) return;
 
-    const moduleAreas = container.querySelectorAll('[data-module-id]');
-    moduleAreas.forEach((area) => {
-      const moduleId = area.getAttribute('data-module-id');
+    const handleClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('[data-module-id]');
+      if (!target) return;
+      const moduleId = target.getAttribute('data-module-id');
       if (!moduleId) return;
 
-      // Check if module is on current floor
       const module = modules.find((m) => m.id === moduleId);
-      if (!module || module.floor !== selectedFloor) {
-        (area as SVGElement).style.opacity = '0.3';
-        (area as SVGElement).style.pointerEvents = 'none';
-      } else {
-        (area as SVGElement).style.opacity = '1';
-        (area as SVGElement).style.pointerEvents = 'auto';
+      if (module && module.floor === selectedFloor) {
+        setSelectedModule(moduleId === selectedModule ? null : moduleId);
       }
+    };
 
-      // Add click handler
-      area.addEventListener('click', handleSvgClick as EventListener);
-      area.addEventListener('mouseenter', (e) =>
-        handleSvgHover(e as MouseEvent, moduleId)
-      );
-      area.addEventListener('mouseleave', () => handleSvgHover(null, null));
-    });
+    const handleHover = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('[data-module-id]');
+      if (target) {
+        const moduleId = target.getAttribute('data-module-id');
+        setHoveredModule(moduleId);
+
+        // Update tooltip position
+        const rect = container.getBoundingClientRect();
+        setTooltipPos({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+        });
+      } else {
+        setHoveredModule(null);
+      }
+    };
+
+    container.addEventListener('click', handleClick);
+    container.addEventListener('mousemove', handleHover);
 
     return () => {
-      moduleAreas.forEach((area) => {
-        area.removeEventListener('click', handleSvgClick as EventListener);
-        area.removeEventListener('mouseenter', handleSvgHover as EventListener);
-        area.removeEventListener('mouseleave', () => handleSvgHover(null, null));
-      });
+      container.removeEventListener('click', handleClick);
+      container.removeEventListener('mousemove', handleHover);
     };
-  }, [modules, selectedFloor, handleSvgClick, handleSvgHover]);
-
-  // Find module by ID helper
-  const getModuleById = (id: string): Module | undefined => {
-    return modules.find((m) => m.id === id);
-  };
+  }, [modules, selectedFloor, selectedModule, setSelectedModule]);
 
   return (
     <div
@@ -334,11 +312,10 @@ export function HospitalMap({ className = '' }: HospitalMapProps) {
       role="img"
       aria-label={t('accessibility.floorMap')}
     >
-      {/* SVG Floor Map */}
+      {/* SVG Floor Map - memoized, only re-parses when floor changes */}
       <div
-        ref={svgRef}
         className="absolute inset-0 flex items-center justify-center"
-        dangerouslySetInnerHTML={{ __html: selectedFloor === 1 ? FLOOR1_SVG_CONTENT : FLOOR2_SVG_CONTENT }}
+        dangerouslySetInnerHTML={{ __html: svgContent }}
       />
 
       {/* Module Markers Overlay */}
@@ -373,7 +350,7 @@ export function HospitalMap({ className = '' }: HospitalMapProps) {
       )}
 
       {/* Tooltip */}
-      {hoveredModule && (
+      {hoveredModule && hoveredModuleData && (
         <div
           className="absolute z-50 bg-popover border border-border rounded-md shadow-lg px-3 py-2 text-sm pointer-events-none animate-fade-in"
           style={{
@@ -381,20 +358,14 @@ export function HospitalMap({ className = '' }: HospitalMapProps) {
             top: tooltipPos.y - 40,
           }}
         >
-          {(() => {
-            const module = getModuleById(hoveredModule);
-            if (!module) return null;
-            return (
-              <div>
-                <p className="font-semibold">{module.name.es}</p>
-                <p className="text-xs text-muted-foreground">
-                  {module.specialties.length} {t('modules.specialties').toLowerCase()}
-                </p>
-              </div>
-            );
-          })()}
+          <div>
+            <p className="font-semibold">{hoveredModuleData.name.es}</p>
+            <p className="text-xs text-muted-foreground">
+              {hoveredModuleData.specialties.length} {t('modules.specialties').toLowerCase()}
+            </p>
+          </div>
         </div>
       )}
     </div>
   );
-}
+});

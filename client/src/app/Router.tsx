@@ -30,13 +30,30 @@ function LazyPage({ Component }: { Component: React.LazyExoticComponent<React.Co
   );
 }
 
+// Stable wrapper components to prevent remount on every render
+function SearchPageWrapper() {
+  return <LazyPage Component={SearchPage} />;
+}
+
+function MapPageWrapper() {
+  return <LazyPage Component={MapPage} />;
+}
+
+function ModuleDetailWrapper() {
+  return <LazyPage Component={ModuleDetail} />;
+}
+
+function EmergencyPageWrapper() {
+  return <LazyPage Component={EmergencyPage} />;
+}
+
 export function Router() {
   return (
     <Switch>
-      <Route path="/" component={() => <LazyPage Component={SearchPage} />} />
-      <Route path="/map" component={() => <LazyPage Component={MapPage} />} />
-      <Route path="/module/:id" component={() => <LazyPage Component={ModuleDetail} />} />
-      <Route path="/emergency" component={() => <LazyPage Component={EmergencyPage} />} />
+      <Route path="/" component={SearchPageWrapper} />
+      <Route path="/map" component={MapPageWrapper} />
+      <Route path="/module/:id" component={ModuleDetailWrapper} />
+      <Route path="/emergency" component={EmergencyPageWrapper} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -4,7 +4,10 @@ import { useAppStore } from '@/shared/hooks/useAppStore';
 import type { Tip, Language } from '@shared/types';
 
 interface TipBannerProps {
-  tips: Tip[];
+  paymentTips: Tip[];
+  hoursTips: Tip[];
+  instructionTips: Tip[];
+  emergencyTips: Tip[];
 }
 
 const TIP_COLORS: Record<Tip['type'], string> = {
@@ -22,19 +25,19 @@ function getLocalizedContent(tip: Tip, language: Language): { title: string; con
   };
 }
 
-export function TipBanner({ tips }: TipBannerProps) {
+export function TipBanner({ paymentTips, hoursTips, instructionTips, emergencyTips }: TipBannerProps) {
   const { t } = useTranslation();
   const language = useAppStore((state) => state.language);
 
-  if (tips.length === 0) {
+  // If no tips of any type, return null
+  if (
+    paymentTips.length === 0 &&
+    hoursTips.length === 0 &&
+    instructionTips.length === 0 &&
+    emergencyTips.length === 0
+  ) {
     return null;
   }
-
-  // Group tips by type
-  const paymentTips = tips.filter((t) => t.type === 'payment');
-  const hoursTips = tips.filter((t) => t.type === 'hours');
-  const instructionTips = tips.filter((t) => t.type === 'instruction');
-  const emergencyTips = tips.filter((t) => t.type === 'emergency');
 
   return (
     <div

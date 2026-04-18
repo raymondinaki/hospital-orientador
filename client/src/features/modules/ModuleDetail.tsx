@@ -19,7 +19,7 @@ export default function ModuleDetail() {
   const module = modules.find((m) => m.id === moduleId);
 
   // Get tips for this module
-  const { tips: moduleTips, hasTips } = useTips(moduleId || null);
+  const { paymentTips, hoursTips, instructionTips, emergencyTips, hasTips } = useTips(moduleId || null);
 
   if (!module) {
     return (
@@ -56,7 +56,12 @@ export default function ModuleDetail() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <TipBanner tips={moduleTips} />
+            <TipBanner
+              paymentTips={paymentTips}
+              hoursTips={hoursTips}
+              instructionTips={instructionTips}
+              emergencyTips={emergencyTips}
+            />
           </CardContent>
         </Card>
       )}
