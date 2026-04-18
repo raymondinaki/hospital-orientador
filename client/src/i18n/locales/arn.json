@@ -1,0 +1,108 @@
+{
+  "_warning": "⚠️ ADVERTENCIA: Este archivo contiene traducciones de PLACEHOLDER en español. Se REQUIERE una traducción profesional al Mapudungún antes del uso en producción.",
+  "_isPlaceholder": "true",
+  "header": {
+    "title": "Hospital Orientador",
+    "subtitle": "Hospital Clínico San Borja Arriarán",
+    "tagline": "Tu guía de navegación hospitalaria"
+  },
+  "search": {
+    "placeholder": "Buscar especialidad o módulo...",
+    "noResults": "No se encontraron resultados",
+    "resultsCount": "{{count}} resultado(s) encontrado(s)",
+    "recentSearches": "Búsquedas recientes",
+    "clearHistory": "Limpiar historial"
+  },
+  "map": {
+    "floor1": "Piso 1",
+    "floor2": "Piso 2",
+    "youAreHere": "Estás aquí",
+    "routeFrom": "Desde",
+    "routeTo": "Hasta",
+    "routeHighlight": "Ruta marcada",
+    "clearRoute": "Limpiar ruta",
+    "floorSelector": "Seleccionar piso",
+    "instructions": "Usa los botones para seleccionar piso y tocar módulos para ver detalles"
+  },
+  "modules": {
+    "title": "Módulos",
+    "specialties": "Especialidades",
+    "floor": "Piso",
+    "location": "Ubicación",
+    "moduleDetails": "Detalles del módulo",
+    "selectModule": "Selecciona un módulo para ver sus especialidades",
+    "noSpecialties": "Este módulo no tiene especialidades asignadas"
+  },
+  "tips": {
+    "payment": "Información de pago",
+    "hours": "Horarios de atención",
+    "instructions": "Instrucciones importantes",
+    "viewDetails": "Ver detalles"
+  },
+  "emergency": {
+    "title": "Emergencias",
+    "instructions": "Para emergencias, dirígete al módulo de urgencias ubicado en la entrada principal.",
+    "contacts": "Contactos de emergencia",
+    "callNow": "Llamar ahora",
+    "stayCalm": "Mantén la calma y sigue las indicaciones del personal."
+  },
+  "common": {
+    "loading": "Cargando...",
+    "offline": "Estás sin conexión. 部分功能可能不可用。",
+    "language": "Idioma",
+    "close": "Cerrar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "noData": "No hay datos disponibles",
+    "error": "Ha ocurrido un error",
+    "retry": "Reintentar",
+    "hours": "Horario",
+    "phone": "Teléfono",
+    "address": "Dirección"
+  },
+  "languages": {
+    "es": "Español",
+    "ht": "Kreyòl Ayisyen",
+    "en": "English",
+    "arn": "Mapudungún"
+  },
+  "floors": {
+    "first": "Primer piso",
+    "second": "Segundo piso"
+  },
+  "specialties": {
+    "title": "Especialidades",
+    "allSpecialties": "Todas las especialidades",
+    "byModule": "Por módulo"
+  },
+  "error": {
+    "title": "Error",
+    "generic": "Algo salió mal. Por favor, intenta de nuevo.",
+    "network": "Error de conexión. Verifica tu conexión a internet.",
+    "notFound": "No se encontró lo que buscabas."
+  },
+  "empty": {
+    "searchTitle": "Comienza tu búsqueda",
+    "searchDescription": "Escribe el nombre de una especialidad o módulo para comenzar.",
+    "favoritesTitle": "Sin favoritos",
+    "favoritesDescription": "Marca especialidades como favoritas para verlas aquí.",
+    "historyTitle": "Sin historial",
+    "historyDescription": "Tu historial de búsquedas aparecerá aquí."
+  },
+  "accessibility": {
+    "skipToContent": "Saltar al contenido principal",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "languageMenu": "Cambiar idioma",
+    "floorMap": "Mapa del piso",
+    "moduleInfo": "Información del módulo"
+  }
+}

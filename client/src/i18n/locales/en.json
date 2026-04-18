@@ -1,0 +1,106 @@
+{
+  "header": {
+    "title": "Hospital Wayfinder",
+    "subtitle": "Hospital Clínico San Borja Arriarán",
+    "tagline": "Your hospital navigation guide"
+  },
+  "search": {
+    "placeholder": "Search specialty or module...",
+    "noResults": "No results found",
+    "resultsCount": "{{count}} result(s) found",
+    "recentSearches": "Recent searches",
+    "clearHistory": "Clear history"
+  },
+  "map": {
+    "floor1": "Floor 1",
+    "floor2": "Floor 2",
+    "youAreHere": "You are here",
+    "routeFrom": "From",
+    "routeTo": "To",
+    "routeHighlight": "Route marked",
+    "clearRoute": "Clear route",
+    "floorSelector": "Select floor",
+    "instructions": "Use the buttons to select floor and tap modules to see details"
+  },
+  "modules": {
+    "title": "Modules",
+    "specialties": "Specialties",
+    "floor": "Floor",
+    "location": "Location",
+    "moduleDetails": "Module details",
+    "selectModule": "Select a module to view its specialties",
+    "noSpecialties": "This module has no assigned specialties"
+  },
+  "tips": {
+    "payment": "Payment information",
+    "hours": "Opening hours",
+    "instructions": "Important instructions",
+    "viewDetails": "View details"
+  },
+  "emergency": {
+    "title": "Emergency",
+    "instructions": "For emergencies, go to the emergency module located at the main entrance.",
+    "contacts": "Emergency contacts",
+    "callNow": "Call now",
+    "stayCalm": "Stay calm and follow the staff's instructions."
+  },
+  "common": {
+    "loading": "Loading...",
+    "offline": "You are offline. Some features may be unavailable.",
+    "language": "Language",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "noData": "No data available",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "hours": "Hours",
+    "phone": "Phone",
+    "address": "Address"
+  },
+  "languages": {
+    "es": "Spanish",
+    "ht": "Haitian Creole",
+    "en": "English",
+    "arn": "Mapudungún"
+  },
+  "floors": {
+    "first": "First floor",
+    "second": "Second floor"
+  },
+  "specialties": {
+    "title": "Specialties",
+    "allSpecialties": "All specialties",
+    "byModule": "By module"
+  },
+  "error": {
+    "title": "Error",
+    "generic": "Something went wrong. Please try again.",
+    "network": "Connection error. Check your internet connection.",
+    "notFound": "What you were looking for was not found."
+  },
+  "empty": {
+    "searchTitle": "Start your search",
+    "searchDescription": "Type the name of a specialty or module to begin.",
+    "favoritesTitle": "No favorites",
+    "favoritesDescription": "Mark specialties as favorites to see them here.",
+    "historyTitle": "No history",
+    "historyDescription": "Your search history will appear here."
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "languageMenu": "Change language",
+    "floorMap": "Floor map",
+    "moduleInfo": "Module information"
+  }
+}

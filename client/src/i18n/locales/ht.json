@@ -1,0 +1,106 @@
+{
+  "header": {
+    "title": "Spital Oriyante",
+    "subtitle": "Lopital Klinik San Borja Arriarán",
+    "tagline": "Gid ou nan spital la"
+  },
+  "search": {
+    "placeholder": "Search espesyalite ou modil...",
+    "noResults": "Pa te jwenn okenn rezilta",
+    "resultsCount": "{{count}} rezilta yo trov",
+    "recentSearches": "Rechèch ki fèk la",
+    "clearHistory": "Efase istwa"
+  },
+  "map": {
+    "floor1": "Sòl 1",
+    "floor2": "Sòl 2",
+    "youAreHere": "Ou la",
+    "routeFrom": "Soti",
+    "routeTo": "Al",
+    "routeHighlight": "Wout ou marked",
+    "clearRoute": "Efase wout la",
+    "floorSelector": "Chwazi sòl",
+    "instructions": "Sèvi ak bouton yo pou chwazi sòl la e peze sou modil yo pou wè detay"
+  },
+  "modules": {
+    "title": "Modil",
+    "specialties": "Espesyalite",
+    "floor": "Sòl",
+    "location": "Location",
+    "moduleDetails": "Detay modil",
+    "selectModule": "Chwazi yon modil pou wè espesyalite li yo",
+    "noSpecialties": "Modil sa a pa gen espesyalite"
+  },
+  "tips": {
+    "payment": "Enfomasyon pou peye",
+    "hours": "Lè ouvèti",
+    "instructions": "Enstriksyon enpòtan",
+    "viewDetails": "Wè detay"
+  },
+  "emergency": {
+    "title": "Ijans",
+    "instructions": "Pou ijans, ale nan modil ijans ki sitiye nan antre prensipal la.",
+    "contacts": "Kontak ijans",
+    "callNow": "Reklamde kounye a",
+    "stayCalm": "Rete trankil e swiv konsèy pèsonèl la."
+  },
+  "common": {
+    "loading": "Chajman...",
+    "offline": "Ou san kourik. Genadan fonksyon ka pa disponib.",
+    "language": "Lang",
+    "close": "Fèmen",
+    "back": "Retounen",
+    "next": "Sou sa",
+    "cancel": "Anile",
+    "confirm": "Konfime",
+    "save": "Sove",
+    "delete": "Efase",
+    "edit": "Modifye",
+    "search": "Rechèch",
+    "filter": "Filtre",
+    "sort": "Triye",
+    "noData": "Pa gen done disponib",
+    "error": "Yon erè te fèt",
+    "retry": "Reeseye",
+    "hours": "Lè",
+    "phone": "Telefòn",
+    "address": "Adrès"
+  },
+  "languages": {
+    "es": "Panyòl",
+    "ht": "Kreyòl Ayisyen",
+    "en": "Angle",
+    "arn": "Mapudungún"
+  },
+  "floors": {
+    "first": "Premye sòl",
+    "second": "Dezyèm sòl"
+  },
+  "specialties": {
+    "title": "Espesyalite",
+    "allSpecialties": "Tout espesyalite yo",
+    "byModule": "Pa modil"
+  },
+  "error": {
+    "title": "Erè",
+    "generic": "Yon bagay pa mache. Tanpri eseeye ankò.",
+    "network": "Erè koneksyon. Kontwole koneksyon entènèt ou.",
+    "notFound": "Sa ou te chache a pa touve."
+  },
+  "empty": {
+    "searchTitle": "Kòmanse rechèch ou",
+    "searchDescription": "Ekri non yon espesyalite ou yon modil pou kòmanse.",
+    "favoritesTitle": "Sanорит",
+    "favoritesDescription": "Make espesyalite kòm favoriesi pou wè yo isit la.",
+    "historyTitle": "San istwa",
+    "historyDescription": "Istwa rechèch ou yo ap parè isit la."
+  },
+  "accessibility": {
+    "skipToContent": "Ale nan kontni prensipal la",
+    "openMenu": "Louvri meni",
+    "closeMenu": "Fèmen meni",
+    "languageMenu": "Chanje lang",
+    "floorMap": "Plan sòl la",
+    "moduleInfo": "Enfomasyon modil"
+  }
+}

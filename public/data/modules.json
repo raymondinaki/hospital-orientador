@@ -1,0 +1,112 @@
+[
+  {
+    "id": "A",
+    "name": { "es": "Módulo A", "ht": "Modil A", "en": "Module A", "arn": "Modil A" },
+    "color": "#2E86C1",
+    "floor": 1,
+    "location": { "es": "Abajo del pasillo", "ht": "Anba ranpa", "en": "Below the hallway", "arn": "Anba ranpa" },
+    "specialties": ["ped", "endo-inf", "uro-inf", "quem-inf", "cir-inf", "reum-inf", "nef-inf", "gastro-inf", "cardio-inf", "nutri-inf", "gine-inf", "inmuno-inf"],
+    "nodeId": "modulo_a_inf",
+    "x": 60,
+    "y": 67
+  },
+  {
+    "id": "B",
+    "name": { "es": "Módulo B", "ht": "Modil B", "en": "Module B", "arn": "Modil B" },
+    "color": "#8E44AD",
+    "floor": 1,
+    "location": { "es": "Abajo del pasillo", "ht": "Anba ranpa", "en": "Below the hallway", "arn": "Anba ranpa" },
+    "specialties": ["oftalmologia", "tm", "gine-general", "gine-onco", "obstetrica"],
+    "nodeId": "modulo_b_inf",
+    "x": 42,
+    "y": 67
+  },
+  {
+    "id": "C",
+    "name": { "es": "Módulo C y C2", "ht": "Modil C ak C2", "en": "Module C and C2", "arn": "Modil C ak C2" },
+    "color": "#CA6F1E",
+    "floor": 1,
+    "location": { "es": "Lado derecho", "ht": "Kote dwat", "en": "Right side", "arn": "Kote dwat" },
+    "specialties": ["trauma-adult", "trauma-inf", "ortopedia", "columna", "orl", "maxilo"],
+    "nodeId": "modulo_c_der",
+    "x": 92,
+    "y": 57.5
+  },
+  {
+    "id": "C2",
+    "name": { "es": "Módulo C2", "ht": "Modil C2", "en": "Module C2", "arn": "Modil C2" },
+    "color": "#C0392B",
+    "floor": 1,
+    "location": { "es": "Lado derecho", "ht": "Kote dwat", "en": "Right side", "arn": "Kote dwat" },
+    "specialties": ["bronco-adult", "espiro", "cardio-adult", "cardio-cirugia"],
+    "nodeId": "modulo_c_der",
+    "x": 92,
+    "y": 57.5
+  },
+  {
+    "id": "D",
+    "name": { "es": "Módulo D", "ht": "Modil D", "en": "Module D", "arn": "Modil D" },
+    "color": "#1E8449",
+    "floor": 2,
+    "location": { "es": "Arriba del pasillo", "ht": "Anwo ranpa", "en": "Above the hallway", "arn": "Anwo ranpa" },
+    "specialties": ["cir-abdom", "cir-partes", "cir-vasc", "cir-coloproc", "endocrino", "neuro-adult", "neurocir"],
+    "nodeId": "modulo_d_sup",
+    "x": 27,
+    "y": 26.5
+  },
+  {
+    "id": "D2",
+    "name": { "es": "Módulo D2", "ht": "Modil D2", "en": "Module D2", "arn": "Modil D2" },
+    "color": "#117A65",
+    "floor": 2,
+    "location": { "es": "Arriba del pasillo", "ht": "Anwo ranpa", "en": "Above the hallway", "arn": "Anwo ranpa" },
+    "specialties": ["reum-adult", "med-interna", "nef-adult"],
+    "nodeId": "modulo_d_sup",
+    "x": 27,
+    "y": 26.5
+  },
+  {
+    "id": "E",
+    "name": { "es": "Módulo E", "ht": "Modil E", "en": "Module E", "arn": "Modil E" },
+    "color": "#D4AC0D",
+    "floor": 1,
+    "location": { "es": "Abajo del pasillo", "ht": "Anba ranpa", "en": "Below the hallway", "arn": "Anba ranpa" },
+    "specialties": ["taco", "gastro-adult", "espiro-inf"],
+    "nodeId": "modulo_e_inf",
+    "x": 24,
+    "y": 67
+  },
+  {
+    "id": "i1",
+    "name": { "es": "Módulo i1", "ht": "Modil i1", "en": "Module i1", "arn": "Modil i1" },
+    "color": "#6C3483",
+    "floor": 1,
+    "location": { "es": "Arriba del pasillo", "ht": "Anwo ranpa", "en": "Above the hallway", "arn": "Anwo ranpa" },
+    "specialties": ["hemato-onco-inf", "urologia-adult", "nefro-enf", "peritoneo-dial"],
+    "nodeId": "modulo_i1_sup",
+    "x": 15,
+    "y": 23
+  },
+  {
+    "id": "i2",
+    "name": { "es": "Módulo i2", "ht": "Modil i2", "en": "Module i2", "arn": "Modil i2" },
+    "color": "#AF7AC5",
+    "floor": 1,
+    "location": { "es": "Abajo del pasillo", "ht": "Anba ranpa", "en": "Below the hallway", "arn": "Anba ranpa" },
+    "specialties": ["cir-torax", "cir-vasc-torax", "osteomia", "neuro-inf", "neurocir-inf", "bronco-inf"],
+    "nodeId": "modulo_i2_inf",
+    "x": 15,
+    "y": 62
+  },
+  {
+    "id": "i3",
+    "name": { "es": "Módulo i3", "ht": "Modil i3", "en": "Module i3", "arn": "Modil i3" },
+    "color": "#884EA0",
+    "floor": 1,
+    "location": { "es": "Abajo del pasillo", "ht": "Anba ranpa", "en": "Below the hallway", "arn": "Anba ranpa" },
+    "specialties": ["onco-quimio-adult", "onco-quimio-amb", "hemato-adult"],
+    "nodeId": "modulo_i3_inf",
+    "x": 6,
+    "y": 62
+  }
+]

@@ -1,0 +1,324 @@
+[
+  {
+    "id": "ped",
+    "name": { "es": "Pediatría", "ht": "Pedyatrik", "en": "Pediatrics", "arn": "Pedyatrik" },
+    "module": "A",
+    "floor": 1,
+    "description": { "es": "Atención médica general para niños", "ht": "Swen Medikal Jeneral pou timoun", "en": "General medical care for children", "arn": "Kuranción medikal jeneral para timoun" }
+  },
+  {
+    "id": "endo-inf",
+    "name": { "es": "Endocrinología Infantil", "ht": "Endokrinoloji Timoun", "en": "Pediatric Endocrinology", "arn": "Endokrinoloji Timoun" },
+    "module": "A",
+    "floor": 1
+  },
+  {
+    "id": "uro-inf",
+    "name": { "es": "Urología Infantil", "ht": "Uroloji Timoun", "en": "Pediatric Urology", "arn": "Uroloji Timoun" },
+    "module": "A",
+    "floor": 1
+  },
+  {
+    "id": "quem-inf",
+    "name": { "es": "Quemados Infantil", "ht": "Boulen Timoun", "en": "Pediatric Burns", "arn": "Boulen Timoun" },
+    "module": "A",
+    "floor": 1
+  },
+  {
+    "id": "cir-inf",
+    "name": { "es": "Cirugía Infantil", "ht": "Siriji Timoun", "en": "Pediatric Surgery", "arn": "Siriji Timoun" },
+    "module": "A",
+    "floor": 1
+  },
+  {
+    "id": "reum-inf",
+    "name": { "es": "Reumatología Infantil", "ht": "Reomatoloji Timoun", "en": "Pediatric Rheumatology", "arn": "Reomatoloji Timoun" },
+    "module": "A",
+    "floor": 1
+  },
+  {
+    "id": "nef-inf",
+    "name": { "es": "Nefrología Infantil", "ht": "Nefoloji Timoun", "en": "Pediatric Nephrology", "arn": "Nefoloji Timoun" },
+    "module": "A",
+    "floor": 1
+  },
+  {
+    "id": "gastro-inf",
+    "name": { "es": "Gastroenterología Infantil", "ht": "Gastroantewoloji Timoun", "en": "Pediatric Gastroenterology", "arn": "Gastroantewoloji Timoun" },
+    "module": "A",
+    "floor": 1
+  },
+  {
+    "id": "cardio-inf",
+    "name": { "es": "Cardiología Infantil", "ht": "Kadyoloji Timoun", "en": "Pediatric Cardiology", "arn": "Kadyoloji Timoun" },
+    "module": "A",
+    "floor": 1
+  },
+  {
+    "id": "nutri-inf",
+    "name": { "es": "Nutrición Infantil", "ht": "Nitrisyon Timoun", "en": "Pediatric Nutrition", "arn": "Nitrisyon Timoun" },
+    "module": "A",
+    "floor": 1
+  },
+  {
+    "id": "gine-inf",
+    "name": { "es": "Ginecología Infantil", "ht": "Jinekoloji Timoun", "en": "Pediatric Gynecology", "arn": "Jinekoloji Timoun" },
+    "module": "A",
+    "floor": 1
+  },
+  {
+    "id": "inmuno-inf",
+    "name": { "es": "Inmunología Infantil", "ht": "Imonoloji Timoun", "en": "Pediatric Immunology", "arn": "Imonoloji Timoun" },
+    "module": "A",
+    "floor": 1
+  },
+  {
+    "id": "oftalmologia",
+    "name": { "es": "Oftalmología (box 15)", "ht": "Ofitalmoloji (bwat 15)", "en": "Ophthalmology (box 15)", "arn": "Ofitalmoloji (bwat 15)" },
+    "module": "B",
+    "floor": 1,
+    "description": { "es": "Enfermedades de los ojos", "ht": "Maladi je yo", "en": "Eye diseases", "arn": "Maladi je yo" }
+  },
+  {
+    "id": "tm",
+    "name": { "es": "TM (box 19)", "ht": "TM (bwat 19)", "en": "TM (box 19)", "arn": "TM (bwat 19)" },
+    "module": "B",
+    "floor": 1
+  },
+  {
+    "id": "gine-general",
+    "name": { "es": "Ginecología General", "ht": "Jinekoloji Jeneral", "en": "General Gynecology", "arn": "Jinekoloji Jeneral" },
+    "module": "B",
+    "floor": 1
+  },
+  {
+    "id": "gine-onco",
+    "name": { "es": "Ginecología Oncológica", "ht": "Jinekoloji Onkolojik", "en": "Oncological Gynecology", "arn": "Jinekoloji Onkolojik" },
+    "module": "B",
+    "floor": 1
+  },
+  {
+    "id": "obstetrica",
+    "name": { "es": "Obstetricia", "ht": "Obstetrik", "en": "Obstetrics", "arn": "Obstetrik" },
+    "module": "B",
+    "floor": 1
+  },
+  {
+    "id": "trauma-adult",
+    "name": { "es": "Traumatología Adulto", "ht": "Twatmatoloji Adilt", "en": "Adult Traumatology", "arn": "Twatmatoloji Adilt" },
+    "module": "C",
+    "floor": 1
+  },
+  {
+    "id": "trauma-inf",
+    "name": { "es": "Traumatología Infantil", "ht": "Twatmatoloji Timoun", "en": "Pediatric Traumatology", "arn": "Twatmatoloji Timoun" },
+    "module": "C",
+    "floor": 1
+  },
+  {
+    "id": "ortopedia",
+    "name": { "es": "Ortopedia", "ht": "Otope", "en": "Orthopedics", "arn": "Otope" },
+    "module": "C",
+    "floor": 1
+  },
+  {
+    "id": "columna",
+    "name": { "es": "Cirugía de Columna", "ht": "Siriji Kolonn", "en": "Spine Surgery", "arn": "Siriji Kolonn" },
+    "module": "C",
+    "floor": 1
+  },
+  {
+    "id": "orl",
+    "name": { "es": "Otorrinolaringología", "ht": "Otoino-larengoloji", "en": "Otorhinolaryngology", "arn": "Otoino-larengoloji" },
+    "module": "C",
+    "floor": 1,
+    "description": { "es": "Enfermedades de oído, nariz y garganta", "ht": "Maladi zòrèy,nen ak gòj", "en": "Ear, nose and throat diseases", "arn": "Maladi zòrèy,nen ak gòj" }
+  },
+  {
+    "id": "maxilo",
+    "name": { "es": "Máxilo Facial", "ht": "Maksilo Fasial", "en": "Maxillofacial", "arn": "Maksilo Fasial" },
+    "module": "C",
+    "floor": 1
+  },
+  {
+    "id": "bronco-adult",
+    "name": { "es": "Broncopulmonar Adulto", "ht": "Bronkopilmonè Adilt", "en": "Adult Broncopulmonary", "arn": "Bronkopilmonè Adilt" },
+    "module": "C2",
+    "floor": 1
+  },
+  {
+    "id": "espiro",
+    "name": { "es": "Espirometrías", "ht": "Espirometri", "en": "Spirometry", "arn": "Espirometri" },
+    "module": "C2",
+    "floor": 1
+  },
+  {
+    "id": "cardio-adult",
+    "name": { "es": "Cardiología", "ht": "Kadyoloji", "en": "Cardiology", "arn": "Kadyoloji" },
+    "module": "C2",
+    "floor": 1,
+    "description": { "es": "Enfermedades del corazón", "ht": "Maladi kè a", "en": "Heart diseases", "arn": "Maladi kè a" }
+  },
+  {
+    "id": "cardio-cirugia",
+    "name": { "es": "Cardiocirugía", "ht": "Kadyosiji", "en": "Cardiac Surgery", "arn": "Kadyosiji" },
+    "module": "C2",
+    "floor": 1
+  },
+  {
+    "id": "cir-abdom",
+    "name": { "es": "Cirugía Abdominal", "ht": "Siriji Abdomal", "en": "Abdominal Surgery", "arn": "Siriji Abdomal" },
+    "module": "D",
+    "floor": 2
+  },
+  {
+    "id": "cir-partes",
+    "name": { "es": "Cirugía de Partes Blandas", "ht": "Siriji Tisou", "en": "Soft Tissue Surgery", "arn": "Siriji Tisou" },
+    "module": "D",
+    "floor": 2
+  },
+  {
+    "id": "cir-vasc",
+    "name": { "es": "Cirugía Vascular Periférica", "ht": "Siriji Vaskilè", "en": "Peripheral Vascular Surgery", "arn": "Siriji Vaskilè" },
+    "module": "D",
+    "floor": 2
+  },
+  {
+    "id": "cir-coloproc",
+    "name": { "es": "Cirugía Coloproctología", "ht": "Siriji Kolopwoktoloji", "en": "Coloproctology Surgery", "arn": "Siriji Kolopwoktoloji" },
+    "module": "D",
+    "floor": 2
+  },
+  {
+    "id": "endocrino",
+    "name": { "es": "Endocrinología", "ht": "Endokrinoloji", "en": "Endocrinology", "arn": "Endokrinoloji" },
+    "module": "D",
+    "floor": 2
+  },
+  {
+    "id": "neuro-adult",
+    "name": { "es": "Neurología", "ht": "Neyoloji", "en": "Neurology", "arn": "Neyoloji" },
+    "module": "D",
+    "floor": 2
+  },
+  {
+    "id": "neurocir",
+    "name": { "es": "Neurocirugía", "ht": "Neyosiji", "en": "Neurosurgery", "arn": "Neyosiji" },
+    "module": "D",
+    "floor": 2
+  },
+  {
+    "id": "reum-adult",
+    "name": { "es": "Reumatología", "ht": "Reomatoloji", "en": "Rheumatology", "arn": "Reomatoloji" },
+    "module": "D2",
+    "floor": 2
+  },
+  {
+    "id": "med-interna",
+    "name": { "es": "Medicina Interna", "ht": "Medisin Entèn", "en": "Internal Medicine", "arn": "Medisin Entèn" },
+    "module": "D2",
+    "floor": 2
+  },
+  {
+    "id": "nef-adult",
+    "name": { "es": "Nefrología Adulto", "ht": "Nefoloji Adilt", "en": "Adult Nephrology", "arn": "Nefoloji Adilt" },
+    "module": "D2",
+    "floor": 2
+  },
+  {
+    "id": "taco",
+    "name": { "es": "Taco", "ht": "Tako", "en": "Taco", "arn": "Tako" },
+    "module": "E",
+    "floor": 1
+  },
+  {
+    "id": "gastro-adult",
+    "name": { "es": "Gastroenterología", "ht": "Gastroantewoloji", "en": "Gastroenterology", "arn": "Gastroantewoloji" },
+    "module": "E",
+    "floor": 1
+  },
+  {
+    "id": "espiro-inf",
+    "name": { "es": "Espirometría Infantil", "ht": "Espirometri Timoun", "en": "Pediatric Spirometry", "arn": "Espirometri Timoun" },
+    "module": "E",
+    "floor": 2
+  },
+  {
+    "id": "hemato-onco-inf",
+    "name": { "es": "Hemato-Oncología Infantil", "ht": "Emato-Onkoloji Timoun", "en": "Pediatric Hemato-Oncology", "arn": "Emato-Onkoloji Timoun" },
+    "module": "i1",
+    "floor": 1
+  },
+  {
+    "id": "urologia-adult",
+    "name": { "es": "Urología", "ht": "Uroloji", "en": "Urology", "arn": "Uroloji" },
+    "module": "i1",
+    "floor": 2
+  },
+  {
+    "id": "nefro-enf",
+    "name": { "es": "Nefrología - Enfermería", "ht": "Nefoloji - Anfimyè", "en": "Nephrology - Nursing", "arn": "Nefoloji - Anfimyè" },
+    "module": "i1",
+    "floor": 2
+  },
+  {
+    "id": "peritoneo-dial",
+    "name": { "es": "Peritoneo Diálisis", "ht": "Peritoneyal Dijaliz", "en": "Peritoneal Dialysis", "arn": "Peritoneyal Dijaliz" },
+    "module": "i1",
+    "floor": 2
+  },
+  {
+    "id": "cir-torax",
+    "name": { "es": "Cirugía de Tórax", "ht": "Siriji Towas", "en": "Thorax Surgery", "arn": "Siriji Towas" },
+    "module": "i2",
+    "floor": 1
+  },
+  {
+    "id": "cir-vasc-torax",
+    "name": { "es": "Cirugía Vascular", "ht": "Siriji Vaskilè", "en": "Vascular Surgery", "arn": "Siriji Vaskilè" },
+    "module": "i2",
+    "floor": 1
+  },
+  {
+    "id": "osteomia",
+    "name": { "es": "Tens Osteomía", "ht": "Tens Osteomi", "en": "Tens Osteotomy", "arn": "Tens Osteomi" },
+    "module": "i2",
+    "floor": 1
+  },
+  {
+    "id": "neuro-inf",
+    "name": { "es": "Neurología Infantil", "ht": "Neyoloji Timoun", "en": "Pediatric Neurology", "arn": "Neyoloji Timoun" },
+    "module": "i2",
+    "floor": 2
+  },
+  {
+    "id": "neurocir-inf",
+    "name": { "es": "Neurocirugía Infantil", "ht": "Neyosiji Timoun", "en": "Pediatric Neurosurgery", "arn": "Neyosiji Timoun" },
+    "module": "i2",
+    "floor": 2
+  },
+  {
+    "id": "bronco-inf",
+    "name": { "es": "Broncopulmonar Infantil y Prematuro", "ht": "Bronkopilmonè Timoun ak Premati", "en": "Pediatric and Premature Broncopulmonary", "arn": "Bronkopilmonè Timoun ak Premati" },
+    "module": "i2",
+    "floor": 2
+  },
+  {
+    "id": "onco-quimio-adult",
+    "name": { "es": "Oncología-Quimioterapia Adulto", "ht": "Onkoloji-Kimyo Adilt", "en": "Adult Oncology-Chemotherapy", "arn": "Onkoloji-Kimyo Adilt" },
+    "module": "i3",
+    "floor": 1
+  },
+  {
+    "id": "onco-quimio-amb",
+    "name": { "es": "Oncología-Quimioterapia (Horas ambulatorias)", "ht": "Onkoloji-Kimyo (Lè Ambilatwa)", "en": "Oncology-Chemotherapy (Ambulatory hours)", "arn": "Onkoloji-Kimyo (Lè Ambilatwa)" },
+    "module": "i3",
+    "floor": 2
+  },
+  {
+    "id": "hemato-adult",
+    "name": { "es": "Hematología Adulto", "ht": "Ematoloji Adilt", "en": "Adult Hematology", "arn": "Ematoloji Adilt" },
+    "module": "i3",
+    "floor": 2
+  }
+]
