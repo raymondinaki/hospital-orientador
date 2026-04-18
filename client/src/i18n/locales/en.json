@@ -67,7 +67,12 @@
     "emergencyProcedures": "Emergency procedures",
     "findYourExit": "Find your exit",
     "ifTrapped": "If trapped, call emergency number and wait for help.",
-    "hospitalEmergency": "Hospital Emergency"
+    "hospitalEmergency": "Hospital Emergency",
+    "mainExit": "Main Exit (right)",
+    "sideExit": "Side Exit (left)",
+    "stairs": "Emergency Stairs",
+    "floor1Instructions": "Both exits on the 1st floor lead directly outside.",
+    "floor2Instructions": "Use the stairs to go down to the 1st floor and exit through the main exits."
   },
   "common": {
     "loading": "Loading...",

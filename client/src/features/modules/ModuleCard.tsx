@@ -37,7 +37,7 @@ export function ModuleCard({ module, index }: ModuleCardProps) {
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Badge variant="outline" style={{ borderColor: module.color }}>
-                {t('floors.first')}
+                {module.floor === 1 ? t('floors.first') : t('floors.second')}
               </Badge>
               <span className="text-sm text-muted-foreground">
                 {module.specialties.length} {t('specialties.title').toLowerCase()}

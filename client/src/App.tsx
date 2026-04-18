@@ -10,7 +10,7 @@ import i18n from '@/i18n';
 import { useTranslation } from 'react-i18next';
 
 // Lazy load Router to enable code splitting
-const Router = lazy(() => import('./app/Router'));
+const Router = lazy(() => import('./app/Router').then(m => ({ default: m.Router })));
 
 function LoadingScreen() {
   return (

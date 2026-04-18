@@ -67,7 +67,12 @@
     "emergencyProcedures": "Procedimientos de emergencia",
     "findYourExit": "Encuentre su salida",
     "ifTrapped": "Si queda atrapado, llame al número de emergencia y espere ayuda.",
-    "hospitalEmergency": "Urgencias del Hospital"
+    "hospitalEmergency": "Urgencias del Hospital",
+    "mainExit": "Salida Principal (derecha)",
+    "sideExit": "Salida Lateral (izquierda)",
+    "stairs": "Escaleras de emergencia",
+    "floor1Instructions": "Ambas salidas en el 1er piso lo llevan directamente afuera.",
+    "floor2Instructions": "Use las escaleras para bajar al 1er piso y salir por las salidas principales."
   },
   "common": {
     "loading": "Cargando...",

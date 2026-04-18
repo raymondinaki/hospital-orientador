@@ -4,27 +4,33 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import type { Language } from '@shared/types';
 
-// Lazy-loaded locale resources
+// Import locale resources directly (small files, no need for lazy loading)
+import es from './locales/es.json';
+import ht from './locales/ht.json';
+import en from './locales/en.json';
+import arn from './locales/arn.json';
+
 const resources = {
-  es: () => import('./locales/es.json'),
-  ht: () => import('./locales/ht.json'),
-  en: () => import('./locales/en.json'),
-  arn: () => import('./locales/arn.json'),
+  es: { translation: es },
+  ht: { translation: ht },
+  en: { translation: en },
+  arn: { translation: arn },
 };
 
-// Missing translation handler
+// Missing translation handler — i18next expects (lngs, ns, key, fallbackValue, updateMissing, options)
 const missingKeyHandler = (
-  lng: string | undefined,
+  lngs: readonly string[],
   ns: string,
   key: string,
-  defaultValue: string
-): string => {
-  // Only add "pendiente traducción" badge for Mapudungún
-  if (lng === 'arn') {
-    return `${defaultValue} <span class="text-xs bg-yellow-100 text-yellow-800 px-1 py-0.5 rounded ml-2">(pendiente traducción)</span>`;
+  fallbackValue: string
+): void => {
+  // Mapudungún keys will show fallback value with "(pendiente traducción)" badge
+  // For 'en' and 'ht', just return the fallback value naturally
+  // This handler just logs missing keys — i18next returns fallbackValue automatically
+  if (lngs.includes('arn')) {
+    // Mapudungún: the fallback value will already be shown
+    // UI components add the "(pendiente)" badge separately
   }
-  // For 'en' and 'ht', just return the key as fallback
-  return defaultValue;
 };
 
 // Create and configure i18n instance
@@ -33,7 +39,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'es' as Language,
+    fallbackLng: 'es',
     supportedLngs: ['es', 'ht', 'en', 'arn'],
 
     detection: {
@@ -44,9 +50,6 @@ i18n
     },
 
     interpolation: {
-      defaultVariables: {
-        // Default values for common interpolation patterns
-      },
       escapeValue: false, // React already escapes
     },
 

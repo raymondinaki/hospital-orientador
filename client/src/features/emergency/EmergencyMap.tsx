@@ -2,15 +2,15 @@ import { useRef, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/shared/hooks/useAppStore';
 
-// Emergency exit positions for each floor
+// Emergency exit positions for each floor (labels are i18n keys now)
 const EMERGENCY_EXITS = {
   floor1: [
-    { id: 'exit-main', x: 935, y: 310, label: 'Salida Principal' },
-    { id: 'exit-side', x: 50, y: 310, label: 'Salida Lateral' },
+    { id: 'exit-main', x: 935, y: 310, labelKey: 'emergency.mainExit' },
+    { id: 'exit-side', x: 50, y: 310, labelKey: 'emergency.sideExit' },
   ],
   floor2: [
-    { id: 'exit-stairs', x: 500, y: 240, label: 'Escaleras' },
-    { id: 'exit-main', x: 935, y: 310, label: 'Salida Principal' },
+    { id: 'exit-stairs', x: 500, y: 240, labelKey: 'emergency.stairs' },
+    { id: 'exit-main', x: 935, y: 310, labelKey: 'emergency.mainExit' },
   ],
 };
 
@@ -251,23 +251,19 @@ export function EmergencyMap({ className = '' }: EmergencyMapProps) {
           <span>⚠️</span> {t('emergency.exits')}
         </h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-red-700">
-              {selectedFloor === 1 ? 'Salida Principal (derecha)' : 'Escaleras de emergencia'}
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-red-700">
-              {selectedFloor === 1 ? 'Salida Lateral (izquierda)' : 'Salida Principal (derecha)'}
-            </span>
-          </div>
+          {EMERGENCY_EXITS[`floor${selectedFloor}`].map((exit) => (
+            <div key={exit.id} className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-full bg-red-500 animate-pulse" />
+              <span className="text-red-700">
+                {t(exit.labelKey)}
+              </span>
+            </div>
+          ))}
         </div>
         <p className="mt-3 text-xs text-red-600">
           {selectedFloor === 1
-            ? 'Ambas salidas en el 1er piso lo llevan directamente afuera.'
-            : 'Use las escaleras para bajar al 1er piso y salir por las salidas principales.'}
+            ? t('emergency.floor1Instructions')
+            : t('emergency.floor2Instructions')}
         </p>
       </div>
     </div>

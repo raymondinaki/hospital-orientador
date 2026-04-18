@@ -15,6 +15,7 @@ interface SearchResultsProps {
 export function SearchResults({ results, isSearching }: SearchResultsProps) {
   const { t } = useTranslation();
   const language = useAppStore((state) => state.language);
+  const addRecentSearch = useAppStore((state) => state.addRecentSearch);
 
   if (isSearching) {
     return null;
@@ -39,6 +40,7 @@ export function SearchResults({ results, isSearching }: SearchResultsProps) {
           key={specialty.id}
           href={`/map?to=${specialty.module}`}
           className="block"
+          onClick={() => addRecentSearch(specialty.id)}
         >
           <Card className="hover:shadow-md transition-shadow cursor-pointer">
             <CardContent className="p-4 flex items-center justify-between gap-4">

@@ -67,7 +67,12 @@
     "emergencyProcedures": "Prosedi ijans",
     "findYourExit": "Jwenn sòti ou",
     "ifTrapped": "Si ou bloke, rele nimewo ijans la e atann èd.",
-    "hospitalEmergency": "Ijans Lopital"
+    "hospitalEmergency": "Ijans Lopital",
+    "mainExit": "Sòti Prensipal (adwat)",
+    "sideExit": "Sòti Kote (agòch)",
+    "stairs": "Eskalye ijans",
+    "floor1Instructions": "Tout sòti sou 1e etaj la mennen ou deyò dirèkteman.",
+    "floor2Instructions": "Sève eskalye a pou desann nan 1e etaj epi sòti nan sòti prensipal yo."
   },
   "common": {
     "loading": "Chajman...",

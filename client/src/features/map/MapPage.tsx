@@ -15,7 +15,7 @@ import type { Language } from '@shared/types';
 
 export default function MapPage() {
   const { t } = useTranslation();
-  const [searchParams] = useSearch();
+  const searchParams = useSearch();
 
   const {
     modules,
