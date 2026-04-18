@@ -4,7 +4,7 @@ import { useAppStore } from '@/shared/hooks/useAppStore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, MapPin, Layers } from 'lucide-react';
+import { ArrowLeft, MapPin, Layers, Map } from 'lucide-react';
 import type { Language } from '@shared/types';
 
 export default function ModuleDetail() {
@@ -58,7 +58,7 @@ export default function ModuleDetail() {
               className="text-sm"
             >
               <Layers className="size-3 mr-1" />
-              {t('floors.first')}
+              {module.floor === 1 ? t('floors.first') : t('floors.second')}
             </Badge>
           </div>
         </CardHeader>
@@ -68,6 +68,15 @@ export default function ModuleDetail() {
               <MapPin className="size-4" />
               <span>{module.location[language as Language] || module.location.es}</span>
             </div>
+          </div>
+          {/* View on Map button */}
+          <div className="mt-4">
+            <Link href={`/map?to=${module.id}`}>
+              <Button variant="outline" size="sm" className="gap-2">
+                <Map className="size-4" />
+                {t('map.viewOnMap')}
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>

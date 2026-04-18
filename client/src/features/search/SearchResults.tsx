@@ -62,7 +62,7 @@ export function SearchResults({ results, isSearching }: SearchResultsProps) {
                   </Badge>
                 )}
                 <Badge variant="secondary">
-                  {t('floors.first')}
+                  {specialty.floor === 1 ? t('floors.first') : t('floors.second')}
                 </Badge>
                 <ArrowRight className="size-4 text-muted-foreground" />
               </div>

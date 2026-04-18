@@ -12,6 +12,7 @@
     "clearHistory": "Clear history"
   },
   "map": {
+    "title": "Hospital Map",
     "floor1": "Floor 1",
     "floor2": "Floor 2",
     "youAreHere": "You are here",
@@ -20,7 +21,11 @@
     "routeHighlight": "Route marked",
     "clearRoute": "Clear route",
     "floorSelector": "Select floor",
-    "instructions": "Use the buttons to select floor and tap modules to see details"
+    "goToFloor": "Go to floor",
+    "stairsIndicator": "Use stairs",
+    "emergencyRoute": "Emergency route",
+    "viewOnMap": "View on map",
+    "instructions": "Tap a module to see details. Use buttons to change floors."
   },
   "modules": {
     "title": "Modules",

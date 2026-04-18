@@ -12,6 +12,7 @@
     "clearHistory": "Efase istwa"
   },
   "map": {
+    "title": "Plan Lopital la",
     "floor1": "Sòl 1",
     "floor2": "Sòl 2",
     "youAreHere": "Ou la",
@@ -20,7 +21,11 @@
     "routeHighlight": "Wout ou marked",
     "clearRoute": "Efase wout la",
     "floorSelector": "Chwazi sòl",
-    "instructions": "Sèvi ak bouton yo pou chwazi sòl la e peze sou modil yo pou wè detay"
+    "goToFloor": "Ale nan sòl",
+    "stairsIndicator": "Sèvi ak eskalye",
+    "emergencyRoute": "Wout ijans",
+    "viewOnMap": "Wè nan plan",
+    "instructions": "Peze sou yon modil pou wè detay. Sèvi ak bouton yo pou chanje sòl."
   },
   "modules": {
     "title": "Modil",

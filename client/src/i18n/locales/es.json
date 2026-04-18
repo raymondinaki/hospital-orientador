@@ -12,15 +12,20 @@
     "clearHistory": "Limpiar historial"
   },
   "map": {
-    "floor1": "Piso 1",
-    "floor2": "Piso 2",
+    "title": "Mapa del Hospital",
+    "floor1": "1er Piso",
+    "floor2": "2do Piso",
     "youAreHere": "Estás aquí",
     "routeFrom": "Desde",
     "routeTo": "Hasta",
     "routeHighlight": "Ruta marcada",
     "clearRoute": "Limpiar ruta",
     "floorSelector": "Seleccionar piso",
-    "instructions": "Usa los botones para seleccionar piso y tocar módulos para ver detalles"
+    "goToFloor": "Ir al piso",
+    "stairsIndicator": "Usar escaleras",
+    "emergencyRoute": "Ruta de emergencia",
+    "viewOnMap": "Ver en mapa",
+    "instructions": "Toca un módulo para ver detalles. Usa los botones para cambiar de piso."
   },
   "modules": {
     "title": "Módulos",
