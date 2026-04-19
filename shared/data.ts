@@ -109,6 +109,41 @@ export const MODULE_COORDINATES: Record<string, { x: number; y: number }> = {
   i3: { x: 400, y: 150 },
 };
 
+/**
+ * Función para obtener resumen de especialidades por módulo
+ * Agrupa las especialidades por piso y categoría
+ */
+export function getModuleSpecialtiesSummary(moduleId: string): { floor: string; specialties: Specialty[] }[] {
+  const moduleSpecialties = SPECIALTIES.filter(s => s.module === moduleId);
+  
+  // Agrupar por piso
+  const grouped = moduleSpecialties.reduce((acc, specialty) => {
+    const floor = specialty.floor;
+    if (!acc[floor]) {
+      acc[floor] = [];
+    }
+    acc[floor].push(specialty);
+    return acc;
+  }, {} as Record<string, Specialty[]>);
+
+  // Convertir a array de objetos
+  return Object.entries(grouped).map(([floor, specialties]) => ({
+    floor,
+    specialties: specialties.sort((a, b) => a.name.localeCompare(b.name))
+  }));
+}
+
+/**
+ * Función para obtener lista de especialidades principales de un módulo
+ * Retorna hasta 5 especialidades principales para resumen rápido
+ */
+export function getModuleSpecialtiesPreview(moduleId: string, limit: number = 5): string {
+  const specialties = SPECIALTIES.filter(s => s.module === moduleId);
+  const preview = specialties.slice(0, limit).map(s => s.name).join(', ');
+  const remaining = specialties.length - limit;
+  return remaining > 0 ? `${preview} y ${remaining} más` : preview;
+}
+
 export const MODULES: Module[] = [
   {
     id: "A",

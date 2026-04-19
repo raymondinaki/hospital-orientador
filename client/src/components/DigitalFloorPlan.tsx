@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { hospitalNodes } from "../../../shared/hospitalGraph";
-import { MODULES, SPECIALTIES } from "../../../shared/data";
+import { MODULES, SPECIALTIES, getModuleSpecialtiesSummary } from "../../../shared/data";
 import { X } from "lucide-react";
 
 interface DigitalFloorPlanProps {
@@ -382,14 +382,20 @@ export default function DigitalFloorPlan({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto">
-            {moduleData.specialties.map((specialty) => (
-              <div key={specialty.id} className="p-3 bg-gray-50 rounded border border-gray-200">
-                <p className="font-semibold text-gray-900 text-sm">{specialty.name}</p>
-                {specialty.description && (
-                  <p className="text-xs text-gray-600 mt-1">{specialty.description}</p>
-                )}
-                <p className="text-xs text-gray-500 mt-2">{specialty.floor}</p>
+          <div className="space-y-4 max-h-96 overflow-y-auto">
+            {getModuleSpecialtiesSummary(selectedModule || "").map((group) => (
+              <div key={group.floor}>
+                <p className="text-xs font-semibold text-blue-700 uppercase mb-2">{group.floor}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  {group.specialties.map((specialty) => (
+                    <div key={specialty.id} className="p-3 bg-gradient-to-br from-blue-50 to-blue-100 rounded border border-blue-200">
+                      <p className="font-semibold text-gray-900 text-sm">{specialty.name}</p>
+                      {specialty.description && (
+                        <p className="text-xs text-gray-600 mt-1">{specialty.description}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

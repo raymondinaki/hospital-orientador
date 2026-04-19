@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { type Specialty } from "../../../shared/data";
+import { type Specialty, getModuleSpecialtiesSummary, SPECIALTIES } from "../../../shared/data";
 import { hospitalNodes } from "../../../shared/hospitalGraph";
 
 interface HospitalMapModalProps {
@@ -35,12 +35,16 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
   // Obtener información del nodo
   const highlightedNode = hospitalNodes.find((n) => n.id === highlightNodeId);
   const floor = highlightedNode?.floor || "1er piso";
+  
+  // Obtener resumen de especialidades del módulo
+  const moduleSpecialtiesSummary = getModuleSpecialtiesSummary(specialty.module);
+  const allModuleSpecialties = SPECIALTIES.filter(s => s.module === specialty.module);
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 animate-in fade-in">
-      <div className="w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-hidden">
+      <div className="w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex items-center justify-between text-white">
+        <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex items-center justify-between text-white sticky top-0">
           <div>
             <h2 className="text-2xl font-bold">{specialty.name}</h2>
             <p className="text-blue-100 text-sm mt-1">
@@ -74,11 +78,31 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
                 <p className="text-gray-700">{specialty.description}</p>
               </div>
             )}
+
+            {/* Resumen de especialidades del módulo */}
+            <div className="bg-white p-4 rounded-lg border border-blue-200">
+              <h3 className="font-semibold text-gray-900 mb-3">🏥 Especialidades en Módulo {specialty.module}</h3>
+              <div className="space-y-3">
+                {moduleSpecialtiesSummary.map((group) => (
+                  <div key={group.floor}>
+                    <p className="text-xs font-semibold text-blue-700 uppercase mb-2">{group.floor}</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      {group.specialties.map((spec) => (
+                        <div key={spec.id} className="text-sm text-gray-700 pl-3 border-l-2 border-blue-300">
+                          {spec.name}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-gray-500 mt-3">Total: {allModuleSpecialties.length} especialidades</p>
+            </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="bg-blue-50 px-6 py-4 border-t border-blue-200">
+        <div className="bg-blue-50 px-6 py-4 border-t border-blue-200 sticky bottom-0">
           <div className="flex items-center justify-between">
             <p className="text-sm text-blue-800">
               Dirígete al módulo {specialty.module} para acceder a {specialty.name}
