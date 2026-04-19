@@ -11,7 +11,7 @@ import ModuleGrid from "@/components/ModuleGrid";
 import QuickAccess from "@/components/QuickAccess";
 import RecentSpecialties from "@/components/RecentSpecialties";
 import { MappedinMapModal } from "@/components/MappedinMapModal";
-
+import { InteractiveNavigationModal } from "@/components/InteractiveNavigationModal";
 import SecurityZonesMap from "@/components/SecurityZonesMap";
 import { MODULES, SPECIALTIES, type Specialty, type Module } from "../../../shared/data";
 
@@ -22,7 +22,7 @@ export default function Home() {
   const [recentSpecialties, setRecentSpecialties] = useState<Specialty[]>([]);
   const [showMapModal, setShowMapModal] = useState(false);
   const [mapSpecialty, setMapSpecialty] = useState<Specialty | null>(null);
-
+  const [showNavigationModal, setShowNavigationModal] = useState(false);
   const [showSecurityZones, setShowSecurityZones] = useState(false);
 
   const handleSelectSpecialty = (specialty: Specialty) => {
@@ -52,10 +52,10 @@ export default function Home() {
             Herramienta diseñada para orientadores: busca, localiza y accede a la información de todas las especialidades del hospital en segundos.
           </p>
           <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="/navigation" className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+            <button onClick={() => setShowNavigationModal(true)} className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
               <MapPin className="w-5 h-5" />
               Ver Navegación Interactiva
-            </a>
+            </button>
 
             <button onClick={() => setShowSecurityZones(true)} className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
               <MapPin className="w-5 h-5" />
@@ -255,6 +255,12 @@ export default function Home() {
           setShowMapModal(false);
           setMapSpecialty(null);
         }}
+      />
+
+      {/* Interactive Navigation Modal */}
+      <InteractiveNavigationModal
+        isOpen={showNavigationModal}
+        onClose={() => setShowNavigationModal(false)}
       />
 
       {/* Security Zones Map Modal */}
