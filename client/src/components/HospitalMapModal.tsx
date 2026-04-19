@@ -1,6 +1,5 @@
 import { X } from "lucide-react";
 import { type Specialty } from "../../../shared/data";
-import DigitalFloorPlan from "./DigitalFloorPlan";
 import { hospitalNodes } from "../../../shared/hospitalGraph";
 
 interface HospitalMapModalProps {
@@ -39,7 +38,7 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 animate-in fade-in">
-      <div className="w-full max-w-5xl bg-white rounded-xl shadow-2xl overflow-hidden">
+      <div className="w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex items-center justify-between text-white">
           <div>
@@ -56,26 +55,37 @@ export default function HospitalMapModal({ specialty, isOpen, onClose }: Hospita
           </button>
         </div>
 
-        {/* Floor Plan Container */}
+        {/* Content */}
         <div className="bg-slate-50 p-6">
-          <DigitalFloorPlan highlightModuleId={highlightNodeId} width={900} height={550} />
-        </div>
-
-        {/* Footer with Instructions */}
-        <div className="bg-blue-50 px-6 py-4 border-t border-blue-200">
-          <div className="flex items-start gap-3">
-            <div className="flex-1">
-              <p className="text-sm font-semibold text-blue-900 mb-2">
-                📍 Ubicación: {specialty.name}
+          <div className="space-y-4">
+            <div className="bg-white p-4 rounded-lg border border-blue-200">
+              <h3 className="font-semibold text-gray-900 mb-2">📍 Ubicación</h3>
+              <p className="text-gray-700">
+                <span className="font-medium">Módulo:</span> {specialty.module}
               </p>
-              <p className="text-xs text-blue-800">
-                Usa los controles de zoom para acercarte o alejarte. Arrastra el mapa para desplazarte.
-                El módulo {specialty.module} está resaltado en el plano digital.
+              <p className="text-gray-700">
+                <span className="font-medium">Piso:</span> {floor}
               </p>
             </div>
+
+            {specialty.description && (
+              <div className="bg-white p-4 rounded-lg border border-blue-200">
+                <h3 className="font-semibold text-gray-900 mb-2">ℹ️ Descripción</h3>
+                <p className="text-gray-700">{specialty.description}</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="bg-blue-50 px-6 py-4 border-t border-blue-200">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-blue-800">
+              Dirígete al módulo {specialty.module} para acceder a {specialty.name}
+            </p>
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium flex-shrink-0"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
             >
               Cerrar
             </button>
