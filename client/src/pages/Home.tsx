@@ -10,7 +10,7 @@ import SpecialtyDetail from "@/components/SpecialtyDetail";
 import ModuleGrid from "@/components/ModuleGrid";
 import QuickAccess from "@/components/QuickAccess";
 import RecentSpecialties from "@/components/RecentSpecialties";
-import HospitalMapModal from "@/components/HospitalMapModal";
+import DigitalFloorPlanModal from "@/components/DigitalFloorPlanModal";
 
 import SecurityZonesMap from "@/components/SecurityZonesMap";
 import { MODULES, SPECIALTIES, type Specialty, type Module } from "../../../shared/data";
@@ -246,8 +246,8 @@ export default function Home() {
         onShowMap={handleShowMap}
       />
 
-      {/* Hospital Map Modal */}
-      <HospitalMapModal
+      {/* Digital Floor Plan Modal */}
+      <DigitalFloorPlanModal
         specialty={mapSpecialty}
         isOpen={showMapModal}
         onClose={() => {
