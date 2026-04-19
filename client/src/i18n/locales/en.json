@@ -25,7 +25,8 @@
     "stairsIndicator": "Use stairs",
     "emergencyRoute": "Emergency route",
     "viewOnMap": "View on map",
-    "instructions": "Tap a module to see details. Use buttons to change floors."
+    "instructions": "Tap a module to see details. Use buttons to change floors.",
+    "specialtiesOnFloor": "{{count}} specialties on this floor"
   },
   "modules": {
     "title": "Modules",
@@ -34,7 +35,11 @@
     "location": "Location",
     "moduleDetails": "Module details",
     "selectModule": "Select a module to view its specialties",
-    "noSpecialties": "This module has no assigned specialties"
+    "noSpecialties": "This module has no assigned specialties",
+    "specialtiesOnFloor": "{{count}} specialties on {{floor}}",
+    "specialtiesCount": "{{count}} specialties",
+    "floorGroup": "Floor {{floor}}",
+    "allSpecialtiesForModule": "All specialties"
   },
   "tips": {
     "payment": "Payment information",

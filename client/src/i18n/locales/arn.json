@@ -27,7 +27,8 @@
     "stairsIndicator": "Usar escaleras",
     "emergencyRoute": "Ruta de emergencia",
     "viewOnMap": "Ver en mapa",
-    "instructions": "Toca un módulo para ver detalles. Usa los botones para cambiar de piso."
+    "instructions": "Toca un módulo para ver detalles. Usa los botones para cambiar de piso.",
+    "specialtiesOnFloor": "{{count}} espesyalite nan sòl sa a"
   },
   "modules": {
     "title": "Módulos",
@@ -36,7 +37,11 @@
     "location": "Ubicación",
     "moduleDetails": "Detalles del módulo",
     "selectModule": "Selecciona un módulo para ver sus especialidades",
-    "noSpecialties": "Este módulo no tiene especialidades asignadas"
+    "noSpecialties": "Este módulo no tiene especialidades asignadas",
+    "specialtiesOnFloor": "{{count}} espesyalite nan {{floor}}",
+    "specialtiesCount": "{{count}} espesyalite",
+    "floorGroup": "Etaj {{floor}}",
+    "allSpecialtiesForModule": "Tout espesyalite yo"
   },
   "tips": {
     "payment": "Información de pago",

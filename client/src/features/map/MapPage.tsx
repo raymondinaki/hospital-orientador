@@ -70,6 +70,29 @@ export default function MapPage() {
     return specialties.filter((s) => selectedModuleData.specialties.includes(s.id));
   }, [specialties, selectedModuleData]);
 
+  // Group specialties by floor for sidebar display
+  const specialtiesByFloor = useMemo(() => {
+    if (!selectedModuleSpecialties.length) return { 1: [], 2: [] };
+    const grouped = selectedModuleSpecialties.reduce(
+      (acc, s) => {
+        const floor = s.floor;
+        if (!acc[floor]) acc[floor] = [];
+        acc[floor].push(s);
+        return acc;
+      },
+      {} as Record<number, typeof selectedModuleSpecialties>
+    );
+    // Sort alphabetically by name in current language
+    Object.keys(grouped).forEach((floor) => {
+      grouped[Number(floor)].sort((a, b) => {
+        const nameA = a.name[language as Language] || a.name.es || '';
+        const nameB = b.name[language as Language] || b.name.es || '';
+        return nameA.localeCompare(nameB);
+      });
+    });
+    return grouped;
+  }, [selectedModuleSpecialties, language]);
+
   // Get route modules
   const originModule = useMemo(() => {
     if (!routeOrigin) return null;
@@ -227,30 +250,50 @@ export default function MapPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div>
-                      <h4 className="text-sm font-medium mb-2">{t('modules.specialties')}</h4>
-                      {selectedModuleSpecialties.length === 0 ? (
-                        <p className="text-sm text-muted-foreground">{t('modules.noSpecialties')}</p>
-                      ) : (
-                        <div className="space-y-1">
-                          {selectedModuleSpecialties.slice(0, 6).map((specialty) => (
-                            <Link key={specialty.id} href={`/module/${selectedModuleData.id}`}>
-                              <div className="text-sm p-2 rounded-md hover:bg-muted/50 transition-colors cursor-pointer">
-                                {specialty.name[language as Language] || specialty.name.es}
-                              </div>
-                            </Link>
-                          ))}
-                          {selectedModuleSpecialties.length > 6 && (
-                            <Link href={`/module/${selectedModuleData.id}`}>
-                              <Button variant="link" size="sm" className="text-primary">
-                                +{selectedModuleSpecialties.length - 6} {t('modules.specialties').toLowerCase()}
-                              </Button>
-                            </Link>
-                          )}
-                        </div>
-                      )}
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm font-medium">{t('modules.allSpecialtiesForModule')}</h4>
+                      <Badge variant="secondary" className="text-xs">
+                        {selectedModuleSpecialties.length}
+                      </Badge>
                     </div>
-
+                    {selectedModuleSpecialties.length === 0 ? (
+                      <p className="text-sm text-muted-foreground">{t('modules.noSpecialties')}</p>
+                    ) : (
+                      <div className="max-h-[300px] overflow-y-auto space-y-4 pr-1">
+                        {[1, 2].map((floor) => {
+                          const floorSpecialties = specialtiesByFloor[floor] || [];
+                          if (floorSpecialties.length === 0) return null;
+                          return (
+                            <div key={floor}>
+                              <div className="flex items-center gap-2 mb-2 sticky top-0 bg-background/95 backdrop-blur py-1 z-10">
+                                <Badge variant="outline" className="text-xs">
+                                  {floor === 1 ? t('floors.first') : t('floors.second')}
+                                </Badge>
+                                <span className="text-xs text-muted-foreground">
+                                  {t('map.specialtiesOnFloor', { count: floorSpecialties.length })}
+                                </span>
+                              </div>
+                              <div className="space-y-1">
+                                {floorSpecialties.map((specialty) => (
+                                  <Link key={specialty.id} href={`/module/${selectedModuleData.id}`}>
+                                    <div className="text-sm p-2 rounded-md hover:bg-muted/50 transition-colors cursor-pointer">
+                                      <span className="font-medium">
+                                        {specialty.name[language as Language] || specialty.name.es}
+                                      </span>
+                                      {specialty.description && (
+                                        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+                                          {specialty.description[language as Language] || specialty.description.es}
+                                        </p>
+                                      )}
+                                    </div>
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                     <div className="pt-2 border-t">
                       <Link href={`/module/${selectedModuleData.id}`}>
                         <Button variant="outline" className="w-full gap-2">

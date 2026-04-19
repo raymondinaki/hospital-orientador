@@ -25,7 +25,8 @@
     "stairsIndicator": "Sèvi ak eskalye",
     "emergencyRoute": "Wout ijans",
     "viewOnMap": "Wè nan plan",
-    "instructions": "Peze sou yon modil pou wè detay. Sèvi ak bouton yo pou chanje sòl."
+    "instructions": "Peze sou yon modil pou wè detay. Sèvi ak bouton yo pou chanje sòl.",
+    "specialtiesOnFloor": "{{count}} espesyalite nan sòl sa a"
   },
   "modules": {
     "title": "Modil",
@@ -34,7 +35,11 @@
     "location": "Location",
     "moduleDetails": "Detay modil",
     "selectModule": "Chwazi yon modil pou wè espesyalite li yo",
-    "noSpecialties": "Modil sa a pa gen espesyalite"
+    "noSpecialties": "Modil sa a pa gen espesyalite",
+    "specialtiesOnFloor": "{{count}} espesyalite nan {{floor}}",
+    "specialtiesCount": "{{count}} espesyalite",
+    "floorGroup": "Etaj {{floor}}",
+    "allSpecialtiesForModule": "Tout espesyalite yo"
   },
   "tips": {
     "payment": "Enfomasyon pou peye",
