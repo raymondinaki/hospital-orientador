@@ -1,12 +1,14 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
+import { InteractiveFloorPlan } from '@/components/InteractiveFloorPlan';
 
 interface MappedinMapModalProps {
   isOpen: boolean;
   onClose: () => void;
   moduleName?: string;
   moduleDescription?: string;
+  onModuleSelect?: (moduleId: string) => void;
 }
 
 export function MappedinMapModal({
@@ -14,6 +16,7 @@ export function MappedinMapModal({
   onClose,
   moduleName = 'Hospital',
   moduleDescription = 'Mapa Digital del Hospital',
+  onModuleSelect,
 }: MappedinMapModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -42,19 +45,8 @@ export function MappedinMapModal({
           </DialogHeader>
 
           {/* Map Container */}
-          <div className="flex-1 overflow-hidden bg-gray-50">
-            <iframe
-              src="https://app.mappedin.com/map/69e4fb85e0b785000bcf5441?embedded=true"
-              title="Mapa Digital del Hospital - Mappedin"
-              allow="clipboard-write 'self' https://app.mappedin.com; web-share 'self' https://app.mappedin.com"
-              scrolling="no"
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              style={{ border: 0 }}
-              loading="lazy"
-              className="w-full h-full"
-            />
+          <div className="flex-1 overflow-y-auto bg-gray-50 p-4">
+            <InteractiveFloorPlan onModuleSelect={onModuleSelect} />
           </div>
 
           {/* Footer Instructions */}
