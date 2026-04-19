@@ -12,6 +12,7 @@ import QuickAccess from "@/components/QuickAccess";
 import RecentSpecialties from "@/components/RecentSpecialties";
 import HospitalMapModal from "@/components/HospitalMapModal";
 import EmergencyPlanModal from "@/components/EmergencyPlanModal";
+import SecurityZonesMap from "@/components/SecurityZonesMap";
 import { MODULES, SPECIALTIES, type Specialty, type Module } from "../../../shared/data";
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
   const [showMapModal, setShowMapModal] = useState(false);
   const [mapSpecialty, setMapSpecialty] = useState<Specialty | null>(null);
   const [showEmergencyPlan, setShowEmergencyPlan] = useState(false);
+  const [showSecurityZones, setShowSecurityZones] = useState(false);
 
   const handleSelectSpecialty = (specialty: Specialty) => {
     setSelectedSpecialty(specialty);
@@ -57,6 +59,10 @@ export default function Home() {
             <button onClick={() => setShowEmergencyPlan(true)} className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium">
               <AlertTriangle className="w-5 h-5" />
               Plan de Emergencia
+            </button>
+            <button onClick={() => setShowSecurityZones(true)} className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+              <MapPin className="w-5 h-5" />
+              Zonas de Seguridad
             </button>
           </div>
         </div>
@@ -257,6 +263,12 @@ export default function Home() {
       <EmergencyPlanModal
         isOpen={showEmergencyPlan}
         onClose={() => setShowEmergencyPlan(false)}
+      />
+
+      {/* Security Zones Map Modal */}
+      <SecurityZonesMap
+        isOpen={showSecurityZones}
+        onClose={() => setShowSecurityZones(false)}
       />
 
       {/* Module Detail Modal */}
