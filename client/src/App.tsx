@@ -1,68 +1,44 @@
-import { Suspense, lazy } from 'react';
-import { I18nextProvider } from 'react-i18next';
-import { Toaster } from '@/components/ui/sonner';
-import { TooltipProvider } from '@/components/ui/tooltip';
-import { ThemeProvider } from '@/contexts/ThemeContext';
-import { useData } from '@/shared/hooks/useData';
-import { Header } from '@/shared/components/Header';
-import { OfflineIndicator } from '@/shared/components/OfflineIndicator';
-import i18n from '@/i18n';
-import { useTranslation } from 'react-i18next';
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import NotFound from "@/pages/NotFound";
+import { Route, Switch } from "wouter";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import Home from "./pages/Home";
+import Navigation from "./pages/Navigation";
 
-// Lazy load Router to enable code splitting
-const Router = lazy(() => import('./app/Router').then(m => ({ default: m.Router })));
 
-function LoadingScreen() {
+function Router() {
   return (
-    <div className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
-      <div className="text-center">
-        <div className="h-12 w-12 animate-pulse rounded-full bg-primary/20 mx-auto mb-4" />
-      </div>
-    </div>
+    <Switch>
+      <Route path={"/ "} component={Home} />
+      <Route path={""} component={Home} />
+      <Route path={"/navigation"} component={Navigation} />
+      <Route path={"/404"} component={NotFound} />
+      {/* Final fallback route */}
+      <Route component={NotFound} />
+    </Switch>
   );
 }
 
-function AppContent() {
-  const { isLoading } = useData();
-
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
-
-  return (
-    <Suspense fallback={<LoadingScreen />}>
-      <Router />
-    </Suspense>
-  );
-}
-
-function SkipToContent() {
-  const { t } = useTranslation();
-  return (
-    <a
-      href="#main-content"
-      className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground"
-    >
-      {t('accessibility.skipToContent')}
-    </a>
-  );
-}
+// NOTE: About Theme
+// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
+//   to keep consistent foreground/background color across components
+// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
 
 function App() {
   return (
-    <I18nextProvider i18n={i18n}>
-      <ThemeProvider defaultTheme="light">
+    <ErrorBoundary>
+      <ThemeProvider
+        defaultTheme="light"
+        // switchable
+      >
         <TooltipProvider>
           <Toaster />
-          <SkipToContent />
-          <Header />
-          <main id="main-content" tabIndex={-1}>
-            <AppContent />
-          </main>
-          <OfflineIndicator />
+          <Router />
         </TooltipProvider>
       </ThemeProvider>
-    </I18nextProvider>
+    </ErrorBoundary>
   );
 }
 

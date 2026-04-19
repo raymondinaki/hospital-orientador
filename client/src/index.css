@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "tailwind-animations";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -173,111 +172,6 @@
       padding-left: 2rem; /* 32px - desktop padding */
       padding-right: 2rem;
       max-width: 1280px; /* Standard content width */
-    }
-  }
-}
-
-/* Mobile-first responsive fixes */
-@layer base {
-  /* Prevent horizontal overflow on all pages */
-  html {
-    overflow-x: hidden;
-  }
-
-  body {
-    overflow-x: hidden;
-  }
-
-  /* Safe area padding for notched phones */
-  .safe-area-top {
-    padding-top: env(safe-area-inset-top, 0);
-  }
-
-  .safe-area-bottom {
-    padding-bottom: env(safe-area-inset-bottom, 0);
-  }
-
-  /* Touch action adjustments for map pinching */
-  [data-map-container] {
-    touch-action: pan-x pan-y pinch-zoom;
-  }
-
-  /* Minimum touch targets (44px) for all interactive elements */
-  button,
-  [role="button"],
-  a,
-  input,
-  select,
-  .clickable {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  /* Focus rings on all interactive elements */
-  :focus-visible {
-    outline: 2px solid var(--color-primary, #2E86C1);
-    outline-offset: 2px;
-  }
-
-  /* High contrast focus for keyboard navigation */
-  .focus-ring:focus-visible {
-    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-ring);
-  }
-
-  /* Ensure text contrast for accessibility */
-  .text-muted-foreground {
-    color: oklch(0.552 0.016 285.938);
-  }
-}
-
-@layer utilities {
-  /* Animated route path for map navigation */
-  @keyframes route-animated {
-    from {
-      stroke-dashoffset: 1000;
-    }
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  .route-animated {
-    animation: route-animated 2s ease-in-out forwards;
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 0;
-  }
-
-  /* Pulsing marker animation */
-  @keyframes marker-pulse {
-    0%, 100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.15);
-      opacity: 0.8;
-    }
-  }
-
-  .marker-pulse {
-    animation: marker-pulse 2s ease-in-out infinite;
-  }
-}
-
-@layer components {
-  /* Mobile-specific responsive grid adjustments */
-  @media (max-width: 640px) {
-    .grid-cols-2,
-    .grid-cols-3,
-    .grid-cols-4 {
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 641px) and (max-width: 768px) {
-    .grid-cols-3,
-    .grid-cols-4 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 }

@@ -150,15 +150,7 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-// Manus plugins only needed in development mode
-const isDev = process.env.NODE_ENV !== "production";
-
-const plugins = [
-  react(),
-  tailwindcss(),
-  jsxLocPlugin(),
-  ...(isDev ? [vitePluginManusRuntime(), vitePluginManusDebugCollector()] : []),
-];
+const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
 
 export default defineConfig({
   plugins,

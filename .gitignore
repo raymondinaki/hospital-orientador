@@ -110,10 +110,3 @@ temp/
 
 # Manus version file (auto-generated, not part of source)
 client/public/__manus__/version.json
-
-# SDD / OpenSpec artifacts
-.atl/
-openspec/
-
-# Transcription files (binary/encoding issues)
-transcription/*.md
