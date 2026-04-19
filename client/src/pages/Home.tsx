@@ -11,7 +11,7 @@ import ModuleGrid from "@/components/ModuleGrid";
 import QuickAccess from "@/components/QuickAccess";
 import RecentSpecialties from "@/components/RecentSpecialties";
 import HospitalMapModal from "@/components/HospitalMapModal";
-import EmergencyPlanModal from "@/components/EmergencyPlanModal";
+
 import SecurityZonesMap from "@/components/SecurityZonesMap";
 import { MODULES, SPECIALTIES, type Specialty, type Module } from "../../../shared/data";
 
@@ -22,7 +22,7 @@ export default function Home() {
   const [recentSpecialties, setRecentSpecialties] = useState<Specialty[]>([]);
   const [showMapModal, setShowMapModal] = useState(false);
   const [mapSpecialty, setMapSpecialty] = useState<Specialty | null>(null);
-  const [showEmergencyPlan, setShowEmergencyPlan] = useState(false);
+
   const [showSecurityZones, setShowSecurityZones] = useState(false);
 
   const handleSelectSpecialty = (specialty: Specialty) => {
@@ -56,10 +56,7 @@ export default function Home() {
               <MapPin className="w-5 h-5" />
               Ver Navegación Interactiva
             </a>
-            <button onClick={() => setShowEmergencyPlan(true)} className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium">
-              <AlertTriangle className="w-5 h-5" />
-              Plan de Emergencia
-            </button>
+
             <button onClick={() => setShowSecurityZones(true)} className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
               <MapPin className="w-5 h-5" />
               Zonas de Seguridad
@@ -257,12 +254,6 @@ export default function Home() {
           setShowMapModal(false);
           setMapSpecialty(null);
         }}
-      />
-
-      {/* Emergency Plan Modal */}
-      <EmergencyPlanModal
-        isOpen={showEmergencyPlan}
-        onClose={() => setShowEmergencyPlan(false)}
       />
 
       {/* Security Zones Map Modal */}
